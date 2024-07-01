@@ -1,0 +1,7 @@
+# never commit plaintext private keys to git
+key.pem
+*-key.pem
+*.tmp
+pkcs8.pem
+pkcs12.pem
+**/db/*.old

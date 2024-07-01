@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<EntityDescriptor
+  xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+  xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+  xmlns:shibmd="urn:mace:shibboleth:metadata:1.0"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+  xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui"
+  xmlns:req-attr="urn:oasis:names:tc:SAML:protocol:ext:req-attr"
+  entityID="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/shibboleth">
+
+    <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+
+        <Extensions>
+            <shibmd:Scope regexp="false">sis-dev.funidata.fi</shibmd:Scope>
+
+            <mdui:UIInfo>
+                <mdui:DisplayName xml:lang="en">SIS Dev IDP</mdui:DisplayName>
+                <mdui:Description xml:lang="en">SIS Dev SSO</mdui:Description>
+                <mdui:Logo height="24" width="202">https://sis-idp-dev.aws-sis-dev.funidata.cloud/images/funidata_logo.png</mdui:Logo>
+            </mdui:UIInfo>
+        </Extensions>
+
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>
+MIIFvDCCA6SgAwIBAgIBBjANBgkqhkiG9w0BAQsFADA2MREwDwYDVQQKDAhGdW5p
+ZGF0YTEUMBIGA1UECwwLYXdzLXNpcy1kZXYxCzAJBgNVBAMMAmNhMB4XDTIxMTEx
+MjA5NTQ0NVoXDTMxMTExMjA5NTQ0NVowWjERMA8GA1UECgwIRnVuaWRhdGExFDAS
+BgNVBAsMC2F3cy1zaXMtZGV2MS8wLQYDVQQDDCZzaXMtaWRwLWRldi5hd3Mtc2lz
+LWRldi5mdW5pZGF0YS5jbG91ZDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoC
+ggIBAM+Lhj9fFP68zFJZzw+IrltwYgm+HIRs/EEYjOhjJ4VpjHm/wy+rh2gFnIAD
+lZhIVuej7N8Vlo0e/a/CaxlDXnGT6fC2fv/XJoUubFCJm4VJe9gNJO5ePlgAIObb
+Uw3J3P0Zo2ojodV3SZUdatKUq3WTRLLGWKaFcUtE42aQITdyM8v7b4t3Kc6PSkIk
+8sNibIWgbjviPZLotC08MIi0ozd2p2BvB53nSPGrDPD33Bt62iNorrpEIOblTDTw
+6rqmOVNG/JFg5lMNOnzvpMZtLSf6/tgUhz4HXCr988JXWkgaJpHMoYgycO1DoSPc
+ljA7vAT5CeymEpmo+2Yo4QtQhB1BH4vUvOsOGpuvtpoAAeoly5Er3sIdXWltEC+q
+FH0Weqf0S3zjpd7uAWU+aOEASl4efbRzENvDLt55lhtDJImeQeg7tw+Qrl0kfCf/
+nieKa8M16rhj6cxsOzLFaPI3ov/5jbGhiVSIk27wMWicXnp2Vyti/2RcR6SIqXZy
+QjKQOklFL1w+ajO7L1XoF93snuH7vYRaqNjy0RkhCBIQ7pJZvZspyCgXwD7pj7pr
+lITiQJP0/23lvnB2gDwu1f/1gVv8Sz5Ta3VpyRq2frJESZPe0Nt2DGRN3Lrm7FEU
+viqYKztS2x6CwVfpz3YEpI7ocLwok5nBDOSHwMkgjt/DuMgvAgMBAAGjgbAwga0w
+DgYDVR0PAQH/BAQDAgWgMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEG
+CCsGAQUFBwMCMB0GA1UdDgQWBBScWa+HYCveDtzsbjTvrJygUGhnVDAfBgNVHSME
+GDAWgBTZ2w7Zm/MwJ6H9CHsmiTkL4Lw4fzAxBgNVHREEKjAogiZzaXMtaWRwLWRl
+di5hd3Mtc2lzLWRldi5mdW5pZGF0YS5jbG91ZDANBgkqhkiG9w0BAQsFAAOCAgEA
+QCFjY8A0Rp0cz4hTx94mWgQ5aVDt0uGijakHMQaRcfx//rbhVHzd133EgoWvXyRV
+mH79g+hnyLCVQksiKoEp3e6pMjviHR8OmLUbcq77o16gSPY6xXJ2+ZqwcSOEHz/j
+2PCyYECxRgTcyVVk5sVmxG/8JC+5kXsgTG/tRQO2eQikp+7FmHp51NsgAXVn+lfZ
+iMbllGesY3/32YVhqpjk8QLXgi3UZz8o+hNtzCOS6P3jd1xJZgtGiMnGqW4RyXfK
+q+zvxqZsLOFX/6JpV67EYM94dbpy8gr++7QNMae1l2mkD0nM/c5zX+aIAt6CQrA4
+gQiRnmJ6vcj/pNixqc+//qGU8xeHgcFepQMc3UT8HyeiAfl9jRXPA4Gwtr4r56n8
+wWmcdEEnRs3H8xjKZbhrsay/13uPu9HTk/eXMQG6seTbCo2Ltmhj9/vOUUtkfdpd
+64YKiyiom7FW+BR51ud3B+bwnekUuPJ3GimlhZI0xSXnJu9P7YPwAW2z4/uWPBWw
+cHnR6v2d8pPZJo/6QeRH8xxPc5i1shfVLVPoB+uDBLehiP3iIy0cXIBPglRuXiMU
+rUDrG3HT9lnyCHO/VjBWAsAhKxrm/IM/zkNA4GNDspZe2t6JSdIAmkw5JRLxcmZ5
+vSnoL+SzGlRfBn3CD6i3bIhcXxKJW7eX2UDfRC7ePmc=
+                        </ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+
+        </KeyDescriptor>
+        <KeyDescriptor use="encryption">
+            <ds:KeyInfo>
+                    <ds:X509Data>
+                        <ds:X509Certificate>
+MIIFvDCCA6SgAwIBAgIBBzANBgkqhkiG9w0BAQsFADA2MREwDwYDVQQKDAhGdW5p
+ZGF0YTEUMBIGA1UECwwLYXdzLXNpcy1kZXYxCzAJBgNVBAMMAmNhMB4XDTIxMTEx
+MjA5NTUxOFoXDTMxMTExMjA5NTUxOFowWjERMA8GA1UECgwIRnVuaWRhdGExFDAS
+BgNVBAsMC2F3cy1zaXMtZGV2MS8wLQYDVQQDDCZzaXMtaWRwLWRldi5hd3Mtc2lz
+LWRldi5mdW5pZGF0YS5jbG91ZDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoC
+ggIBAKhnL0ZlPdY7cKxVx6kwji5YqHH4+5Mq6jyafpRn6vayIW5tWysk1to6VzSX
+OJpIDaIA+WskWUrndDpG7fReRBNgsVUWD1IOJCBPxdGADADe5jT9Ax/M5kXDDVT8
+O+C871G5Q4NpfXuT+j/hX2swTsdf6DzI9s1HpWFxLgvFUyKG+dpxNI9azLUQXAVV
+bdYtZcJy12uEb3XaxGaerONvFb/QdDFbmQWp51oe+aMP0N81E1v+3DQOhLeYjl4W
+ok97YzGy13eyS0niEZGKJ5faWVxIdJ2y3ZV1Xkslu7nTNpUXQ5uY7yOZBiYrNpJc
+QaV/X2ffZUTYu2jcNU35thouVTvkWLQbr7m3mSu8mumr7ogS9YNccnraykYf2UzO
+Hci0+jJZIEwWiAaxLxx2nq11J4tyIn9gwTCKeRPlMXFqc0O1LHRbN66cKce/rOv9
+Ul2aaeXN1nFjCPUdq+Ds6+rZouR56KgoDYqwglpK9G5KMrkZBc7a/6WvV1cfBfvE
+jHzMFBkrTXiCR2vocdhpJizjPKTexyV7Wfm/DbRyhVokWlsQw0LJo9pPqV/AJlOh
+h/Q6zM4XN/whATgRtJPatgMxKhLS3GXKbL8AUpIRnEuRBa1aKruE1KkBsF9n94Vc
+1ojyngSm0/9mA2Tui2CPNPN5mMOC649rpP8RJcMHrjMHLOhnAgMBAAGjgbAwga0w
+DgYDVR0PAQH/BAQDAgWgMAkGA1UdEwQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwEG
+CCsGAQUFBwMCMB0GA1UdDgQWBBT1lcw9OZQ5cDY+msw6BK8S5DkYPzAfBgNVHSME
+GDAWgBTZ2w7Zm/MwJ6H9CHsmiTkL4Lw4fzAxBgNVHREEKjAogiZzaXMtaWRwLWRl
+di5hd3Mtc2lzLWRldi5mdW5pZGF0YS5jbG91ZDANBgkqhkiG9w0BAQsFAAOCAgEA
+lgJIU9YzH/ij8n7eYnf2NITFexo61Tj13vl/WLZ7x7XKLbkip98krCLMgdDuArNp
+OZOSnSU1t9W6pm68Q61NS7azg13TO4Wc0rrFdOIEVrrreBV22/uqU1/CehPZez+6
+W68KDpalXvIgcDJ1FwvdvyWbe54Jz4lJpwqIQOAuHsMIsoj1Usd3lqtNy6aANMfW
+os+0wsnsDyC3qzW8rBg/zr4HPhT59IcBTxzDixWOuxXKjsgHx6Z7U7rse9qM/kVb
+X2SVa1NKLAhneaLFwygY1ZYzmkN1dOq8klk1v9gt/cIcSt8yqp4sBv+D7g+817Zs
+NnS2y5BB/XQbg7i+7TMmW7K5kL/rpRoduIb3htFLbKwi5BN0kFf965o8NSS1n4ql
+hq2/8jPta8O3tKTGT7iecwi9vWtnGy9XBmNdLAKIkFiym4GDPB0pzSCzK/3taV0z
+PBOl+mRYyC7GvAzmZ6uExhzi4XcE6EGQ6W4fGdeT5ItqxMYjst4g31VzcgLqlsn7
+liXPjIScpvfyXp9tQ7Yv56RHChpsoSNEOUDRtqkFsuy3fYFNtXHFczZM/Ai5o1GR
+RNOcEKIn/cm9TRsdr8ubcSxYhRt7oZFxHRV0x9Mw0asLOoaLqT9ep2tIEUxW4dqQ
+jHUUJDfoX3qWCnP2+/z7tPsqc8FfZx06XjZcIUgo8pw=
+                        </ds:X509Certificate>
+                    </ds:X509Data>
+            </ds:KeyInfo>
+
+        </KeyDescriptor>
+
+        <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/SOAP/ArtifactResolution" index="2"/>
+
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/POST-SimpleSign/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/SOAP/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/Redirect/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/POST/SLO"/>
+
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" req-attr:supportsRequestedAttributes="true" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/POST/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" req-attr:supportsRequestedAttributes="true" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" req-attr:supportsRequestedAttributes="true" Location="https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/profile/SAML2/Redirect/SSO"/>
+    </IDPSSODescriptor>
+
+
+</EntityDescriptor>
