@@ -1,0 +1,43 @@
+- hosts: aws_oodikone_app
+  # assume only one postgres instance per environment
+  # and requires running against one environment at a time
+  run_once: true
+  tasks:
+    # https://jira.funidata.fi/browse/OTM-25196
+    - name: Create login users for oodikone application
+      postgresql_query:
+        login_host: "{{ oodikone_postgres_admin_host }}"
+        login_port: "{{ oodikone_postgres_admin_port }}"
+        login_user: "{{ oodikone_postgres_admin_user }}"
+        login_password: "{{ oodikone_postgres_admin_password }}"
+
+        db: user-db
+        query: |
+          INSERT INTO users (
+            full_name,
+            username,
+            language,
+            email,
+            sisu_person_id,
+            roles,
+            programme_rights
+          )
+          VALUES (
+            '{{ item.full_name }}',
+            '{{ item.eppn }}',
+            '{{ item.language }}',
+            '{{ item.eppn }}',
+            '{{ item.sisu_person_id }}',
+            ARRAY {{ item.roles }}::TEXT[],
+            ARRAY {{ item.programme_rights }}::TEXT[]
+          )
+          ON CONFLICT (username) 
+          DO UPDATE SET 
+            full_name = EXCLUDED.full_name,
+            language = EXCLUDED.language,
+            email = EXCLUDED.email,
+            sisu_person_id = EXCLUDED.sisu_person_id,
+            roles = EXCLUDED.roles,
+            programme_rights = EXCLUDED.programme_rights;
+      loop: "{{ oodikone_app_users }}"
+      tags: oodikone_app_login_users

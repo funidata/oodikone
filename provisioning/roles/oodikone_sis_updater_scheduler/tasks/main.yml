@@ -1,0 +1,60 @@
+- name: System group
+  group:
+    gid: "{{ oodikone_gid }}"
+    name: oodikone
+    state: present
+    system: true
+
+- name: System user
+  user:
+    uid: "{{ oodikone_uid }}"
+    name: oodikone
+    group: oodikone
+    state: present
+    system: true
+    create_home: false
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: oodikone
+  with_items:
+    - /opt/oodikone-sis-updater-scheduler
+
+- name: Pull oodikone.sis-updater-scheduler Docker image
+  docker_image:
+    name: "{{ oodikone_sis_updater_scheduler_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: oodikone_sis_updater_scheduler_docker_image
+
+- name: Deploy oodikone.sis-updater-scheduler Docker container
+  docker_container:
+    name: oodikone.sis-updater-scheduler
+    image: "{{ oodikone_sis_updater_scheduler_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
+    env:
+      REDIS_URI: //localhost:{{ valkey_port }}
+      SECRET_TOKEN: dev
+      SIS_IMPORTER_DATABASE: sis-importer-db # TODO sis-importer
+      SIS_IMPORTER_HOST: "{{ oodikone_postgres_host }}"
+      SIS_IMPORTER_PASSWORD: "{{ oodikone_postgres_password }}"
+      SIS_IMPORTER_USER: "{{ oodikone_postgres_username }}"
+      SIS_NATS_TOKEN: dev
+      SIS_NATS_URI: sis-updater-nats://localhost:4222
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.sis-updater-scheduler' }) }}"
+  register: oodikone_sis_updater_scheduler_docker_container
+  tags: oodikone_sis_updater_scheduler_docker_container

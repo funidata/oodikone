@@ -1,0 +1,71 @@
+- name: System group
+  group:
+    gid: "{{ oodikone_gid }}"
+    name: oodikone
+    state: present
+    system: true
+
+- name: System user
+  user:
+    uid: "{{ oodikone_uid }}"
+    name: oodikone
+    group: oodikone
+    state: present
+    system: true
+    create_home: false
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: oodikone
+  with_items:
+    - /opt/oodikone-frontend
+    - /opt/oodikone-frontend/config
+
+- name: Pull frontend Docker image
+  docker_image:
+    name: "{{ oodikone_frontend_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: oodikone_frontend_docker_image
+
+- name: Deploy frontend Docker container
+  docker_container:
+    name: oodikone.frontend
+    image: "{{ oodikone_frontend_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
+    env:
+      SERVICE_PROVIDER: 'Fd'
+      NODE_ENV: development
+      REACT_APP_STAGING: 'false'
+      REACT_APP_SENTRY_ENVIRONMENT: ''
+      REACT_APP_SENTRY_RELEASE: ''
+      REACT_APP_SENTRY_DSN: ''
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.frontend' }) }}"
+  register: oodikone_frontend_docker_container
+  tags: oodikone_frontend_docker_container
+
+- name: Wait for oodikone.frontend startup
+  uri:
+    url: "http://127.0.0.1:{{ oodikone_frontend_http_port }}/"
+    method: GET
+    status_code: 200
+  register: result
+  when: not ansible_check_mode
+  until: result.status == 200
+  retries: 60
+  delay: 1
+  tags: oodikone_frontend_wait

@@ -1,0 +1,32 @@
+- name: Depend on nginx role
+  import_role:
+    name: funidata.infra.nginx
+  vars:
+    nginx_remoteip_from: "{{ oodikone_nginx_remoteip_from }}"
+    nginx_docker_labels:
+      fi.funidata.oodikone.application: oodikone.nginx
+      fi.funidata.oodikone.site: "{{ oodikone_site }}"
+  tags: oodikone_nginx
+
+- name: Configure oodikone server
+  template:
+    src: "oodikone.conf.j2"
+    dest: "/opt/nginx/config/http.d/oodikone.conf"
+    owner: root
+    group: nginx
+    mode: 0644
+  notify: reload nginx
+  tags:
+    - oodikone_nginx_conf
+    - oodikone_nginx_oodikone_conf
+
+- name: Generate frontend env configs
+  copy:
+    content: |
+      {{ oodikone_nginx_env_configs | to_nice_json }}
+    dest: /opt/oodikone_nginx/config/frontend/config.json
+    owner: root
+    group: nginx
+    mode: 0644
+  notify: restart nginx
+  tags: oodikone_nginx_config

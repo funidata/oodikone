@@ -1,0 +1,96 @@
+upstream oodikone-backend {
+  server 127.0.0.1:{{ oodikone_backend_http_port }};
+}
+
+upstream oodikone-frontend {
+  server 127.0.0.1:{{ oodikone_frontend_http_port }};
+}
+
+upstream shib_authorizer_upstream {
+  server 127.0.0.1:{{ shibboleth_sp_authorizer_tcp_port }};
+}
+
+upstream shib_responder_upstream {
+  server 127.0.0.1:{{ shibboleth_sp_responder_tcp_port }};
+}
+
+# Redirect unauthenticated users to login
+map $cookie__shibsession_{{ shibboleth_sp_session_cookieName }} $redirect_to_login {
+  default 0;
+  "" 1;
+}
+
+server {
+    listen 80 default_server;
+
+    server_name {{ oodikone_server_name }};
+
+    include /etc/nginx/set_request_vars.conf;
+
+    root /usr/share/nginx/html;
+
+    more_set_headers "X-XSS-Protection: 1; mode=block";
+    more_set_headers "X-Content-Type-Options: nosniff";
+
+    # stats
+    location /.nginx/status {
+        access_log off;
+
+        stub_status on;
+
+        allow 127.0.0.1;
+        deny all;
+    }
+
+    # healthcheck
+    location /.nginx/health {
+        access_log off;
+
+        return 200 "Service alive and healthy!";
+    }
+
+    # The Shibboleth authorizer
+    location = @shibauthorizer {
+        internal;
+
+        fastcgi_pass shib_authorizer_upstream;
+        fastcgi_keep_conn off;
+
+        include /etc/nginx/fastcgi_params.conf;
+    }
+
+    # The Shibboleth responder
+    location /Shibboleth.sso {
+        fastcgi_pass shib_responder_upstream;
+        fastcgi_keep_conn off;
+
+        include /etc/nginx/fastcgi_params.conf;
+        more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'none'";
+    }
+
+
+{% if 'staging' == oodikone_version %}
+    location = / {
+        shib_request @shibauthorizer;
+        shib_request_use_headers on;
+        return 301 /oodikone;
+    }
+{% endif %}
+
+    location /{% if 'staging' == oodikone_version %}oodikone/{% endif%} {
+        shib_request @shibauthorizer;
+        shib_request_use_headers on;
+        proxy_pass http://oodikone-frontend/;
+{% if oodikone_nginx_identity_providers | length == 1 %}
+        if ($redirect_to_login) {
+            return 302 {{ oodikone_nginx_identity_providers[0].navigate }};
+        }
+{% endif %}
+    }
+
+    location /{% if 'staging' == oodikone_version %}oodikone/{% endif%}api/ {
+        shib_request @shibauthorizer;
+        shib_request_use_headers on;
+        proxy_pass http://oodikone-backend/api/;
+    }
+}

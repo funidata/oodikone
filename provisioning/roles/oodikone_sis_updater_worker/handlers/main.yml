@@ -1,0 +1,3 @@
+- name: restart oodikone.sis-updater-worker
+  command: docker restart oodikone.sis-updater-worker
+  when: not (oodikone_sis_updater_worker_docker_container is defined and oodikone_sis_updater_worker_docker_container.changed)

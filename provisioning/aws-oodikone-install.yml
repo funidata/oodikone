@@ -1,0 +1,52 @@
+- hosts: aws_oodikone_app
+  roles:
+    - role: funidata.infra.lvm_filesystem
+      vars:
+        lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"
+        lvm_filesystem_lv: lvValkey
+        lvm_filesystem_size: "{{ aws_oodikone_valkey_lvm_filesystem_size }}"
+        lvm_filesystem_mountpoint: "{{ valkey_data_path }}"
+        lvm_filesystem_owner: root
+        lvm_filesystem_group: valkey
+        lvm_filesystem_mode: '0775'
+      tags:
+        - lvm_filesystem
+        - lvm_filesystem_oodikone_valkey
+
+    - role: funidata.infra.valkey
+      tags: valkey
+    - role: oodikone_backend
+      tags: oodikone_backend
+    - role: oodikone_frontend
+      tags: oodikone_frontend
+
+    ## TODO fix and take into use
+    # - role: funidata.infra.lvm_filesystem
+    #   vars:
+    #     lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"
+    #     lvm_filesystem_lv: lvSisUpdaterNats
+    #     lvm_filesystem_size: "{{ aws_oodikone_sis_updater_nats_lvm_filesystem_size }}"
+    #     lvm_filesystem_mountpoint: "{{ aws_oodikone_sis_updater_nats_data_path }}"
+    #     lvm_filesystem_owner: root
+    #     lvm_filesystem_group: oodikone
+    #     lvm_filesystem_mode: '0775'
+    #   tags:
+    #     - lvm_filesystem
+    #     - lvm_filesystem_oodikone_sis_updater_nats
+
+    # - role: oodikone_sis_updater_nats
+    #   tags: oodikone_sis_updater_nats
+    # - role: oodikone_sis_updater_scheduler
+    #   tags: oodikone_sis_updater_scheduler
+    # - role: oodikone_sis_updater_worker
+    #   tags: oodikone_sis_updater_worker
+
+    - role: funidata.infra.shibboleth_sp
+      vars:
+        shibboleth_sp_docker_labels:
+          fi.funidata.oodikone.application: oodikone.shibboleth
+          fi.funidata.oodikone.site: "{{ oodikone_site }}"
+      tags: shibboleth_sp
+
+    - role: oodikone_nginx
+      tags: oodikone_nginx
