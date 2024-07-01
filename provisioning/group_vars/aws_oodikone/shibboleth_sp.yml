@@ -1,0 +1,44 @@
+shibboleth_sp_uid: "{{ system_users['shibboleth-sp'].uid }}"
+shibboleth_sp_gid: "{{ system_users['shibboleth-sp'].gid }}"
+
+shibboleth_sp_tcp_port: 1603
+shibboleth_sp_responder_tcp_port: 1604
+shibboleth_sp_authorizer_tcp_port: 1605
+
+# When this is false the IDP is expected to respond back after logout.
+# https://shibboleth.atlassian.net/wiki/spaces/SP3/pages/2065334353/Logout#Attributes
+shibboleth_sp_sessions_logout_asynchronous: false
+
+shibboleth_sp_errors_supportContact: asiakaspalvelu@funidata.fi
+
+shibboleth_sp_attribute_prefix: X-Shibboleth-
+
+shibboleth_sp_hosts:
+  - name: "{{ oodikone_server_name }}"
+
+shibboleth_sp_entityID: "https://{{ oodikone_server_name }}/Shibboleth.sso"
+
+shibboleth_sp_session_cookieName: sp_oodikone
+shibboleth_sp_session_lifetime: "{{ 20 * 60 * 60 }}" # 20h
+shibboleth_sp_session_timeout: "{{ 2 * 60 * 60 }}" # 2h
+shibboleth_sp_sessions_consistentAddress: true
+
+shibboleth_sp_metadata_maxRefreshDelay: 7200
+shibboleth_sp_metadata_generator_endpoints_base:
+  - "https://{{ oodikone_server_name }}"
+
+shibboleth_sp_credential_name: "{{ oodikone_server_name }}"
+shibboleth_sp_credentials:
+  - name: "{{ shibboleth_sp_credential_name }}"
+    cert_file: "certificates/{{ aws_environment }}/shibboleth/{{ shibboleth_sp_credential_name }}/cert.pem"
+    key_file: "certificates/{{ aws_environment }}/shibboleth/{{ shibboleth_sp_credential_name }}/key.pem.vault"
+
+shibboleth_sp_applications: []
+
+shibboleth_sp_session_initiator_sis_dev:
+  name: sis-idp-dev
+  location: /SISLogin
+  entityID: https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/shibboleth
+shibboleth_sp_metadata_sis_dev:
+  name: sis-idp-dev
+  file: files/shibboleth/idp-metadata/sis-idp-dev.xml

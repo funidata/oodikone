@@ -1,0 +1,4 @@
+# see inventory_plugins/aws_ec2.py for dynamic inventory variables
+aws_environment: "{{ aws_tags.Environment }}"
+aws_role: "{{ aws_tags.Role }}"
+aws_group: "{{ aws_tags.Group }}"

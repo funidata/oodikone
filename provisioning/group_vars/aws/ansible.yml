@@ -1,0 +1,1 @@
+ansible_user: root # requires ssh key for root from root_users

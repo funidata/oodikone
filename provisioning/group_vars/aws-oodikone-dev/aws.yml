@@ -1,0 +1,7 @@
+aws_ops_environment: aws-ops-dev
+aws_ops_influxdb_url: http://ops-influxdb-dev1.aws-ops-dev.funidata.internal:8086
+aws_ops_elasticsearch_urls:
+  - https://ops-elasticsearch-dev1.aws-ops-dev.funidata.internal:9200
+
+aws_ops_gateway_public_ipv4: 3.120.154.143/32 # aws-ops-dev ops-gateway-dev EIP
+aws_ops_gateway_public_ipv6: 2a05:d014:c6a:9d04:bbad:799b:a5a3:44cc/128 # aws-ops-dev ops-gateway-dev

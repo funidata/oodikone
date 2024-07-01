@@ -1,0 +1,10 @@
+# automatically detect attached vgData volumes
+aws_lvm_data_volume_devices: |-
+  {{ aws_volume_attachments | json_query("[?tags.VolumeGroup=='vgData'].attachment_device") }}
+aws_lvm_data_volume_size: |-
+  {{ aws_volume_attachments | json_query("[?tags.VolumeGroup=='vgData']") | sum(attribute='volume_size') }}
+
+aws_lvm_data_volume_group: vgData
+
+aws_lvm_filesystem_size_opt: 1g
+aws_lvm_filesystem_size_docker: 5g

@@ -1,0 +1,18 @@
+# static UID/GID allocations for system users
+# using 201-499 per roles/users/tasks/login_defs.yml and /usr/share/doc/setup-*/uidgid
+system_users:
+  valkey:
+    uid: 451
+    gid: 451
+
+  oodikone:
+    uid: 450
+    gid: 450
+
+  shibboleth-sp:
+    uid: 449
+    gid: 449
+
+  nginx:
+    uid: 448
+    gid: 448
