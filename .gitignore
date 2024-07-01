@@ -65,3 +65,6 @@ venv/
 
 # if using direnv
 .envrc
+
+# secrets
+/provisioning/*.secret
