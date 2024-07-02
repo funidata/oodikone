@@ -20,7 +20,7 @@
     - role: oodikone_frontend
       tags: oodikone_frontend
 
-    ## TODO fix and take into use
+    # TODO sis-importer-db
     # - role: funidata.infra.lvm_filesystem
     #   vars:
     #     lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"

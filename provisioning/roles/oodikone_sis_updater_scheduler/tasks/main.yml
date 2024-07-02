@@ -49,6 +49,7 @@
       SIS_IMPORTER_USER: "{{ oodikone_postgres_username }}"
       SIS_NATS_TOKEN: dev
       SIS_NATS_URI: sis-updater-nats://localhost:4222
+      HOSTNAME: "{{ oodikone_site }}-scheduler" # this defines CLIENT_ID
     read_only: true
     tmpfs:
       - /tmp

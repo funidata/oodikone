@@ -1,2 +1,2 @@
 aws_oodikone_sis_updater_nats_lvm_filesystem_size: 2g
-aws_oodikone_sis_updater_nats_data_path: /srv/sis-updater-nats/datastore
+aws_oodikone_sis_updater_nats_data_path: /srv/sis-updater-nats
