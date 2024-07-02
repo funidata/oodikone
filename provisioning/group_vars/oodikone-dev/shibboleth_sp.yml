@@ -1,0 +1,5 @@
+shibboleth_sp_session_initiators:
+  - "{{ shibboleth_sp_session_initiator_sis_dev }}"
+
+shibboleth_sp_metadata:
+  - "{{ shibboleth_sp_metadata_sis_dev }}"

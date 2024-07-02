@@ -1,0 +1,60 @@
+- hosts: aws_oodikone_app
+  # assume only one postgres instance per environment
+  # and requires running against one environment at a time
+  run_once: true
+  tasks:
+    - name: Install amazon-linux-extras
+      yum:
+        name: amazon-linux-extras
+        state: installed
+
+    # this version is compatible with given dumps
+    - name: install postgresql14
+      command: amazon-linux-extras install postgresql14
+
+    - name: Copy db files
+      vars:
+        file_name: "{{ item.value.split('/')[-1] }}"
+      copy:
+        content: "{{ lookup('file', '{{ item.value }}') }}"
+        dest: "/tmp/{{ file_name }}"
+        owner: root
+        group: oodikone
+        mode: 0640
+      loop: "{{ oodikone_postgres_db_dumps | dict2items }}"
+
+    - name: unarchive dumps
+      vars:
+        dump_path: "/tmp/{{ item.value.split('/')[-1] }}"
+      command: "pg_restore {{ dump_path }} --host=localhost -f {{ dump_path | replace('sqz', 'sql') }}"
+      loop: "{{ oodikone_postgres_db_dumps | dict2items }}"
+
+    - name: Restore dump
+      vars:
+        sql_file_name: "{{ item.value.split('/')[-1] | replace('sqz', 'sql')}}"
+      postgresql_db:
+        login_host: "{{ oodikone_postgres_admin_host }}"
+        login_port: "{{ oodikone_postgres_admin_port }}"
+        login_user: "{{ oodikone_postgres_admin_user }}"
+        login_password: "{{ oodikone_postgres_admin_password }}"
+
+        name: "{{ item.key }}"
+        state: restore
+        target: "/tmp/{{ sql_file_name }}"
+        owner: "{{ oodikone_postgres_username }}"
+      loop: "{{ oodikone_postgres_db_dumps | dict2items }}"
+      register: oodikone_postgres_restore_result
+
+    - name: Change owner of tables from postgres to {{ oodikone_postgres_username }}
+      vars:
+        db_name: "{{ item.key }}"
+      postgresql_owner:
+        login_host: "{{ oodikone_postgres_admin_host }}"
+        login_port: "{{ oodikone_postgres_admin_port }}"
+        login_user: "{{ oodikone_postgres_admin_user }}"
+        login_password: "{{ oodikone_postgres_admin_password }}"
+
+        db: "{{ db_name }}"
+        new_owner: "{{ oodikone_postgres_username }}"
+        reassign_owned_by: postgres
+      loop: "{{ oodikone_postgres_db_dumps | dict2items }}"

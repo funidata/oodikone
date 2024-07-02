@@ -1,0 +1,3 @@
+- name: restart oodikone.backend
+  command: docker restart oodikone.backend
+  when: not (oodikone_backend_docker_container is defined and oodikone_backend_docker_container.changed)

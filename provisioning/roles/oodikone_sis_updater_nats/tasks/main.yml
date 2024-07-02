@@ -1,0 +1,62 @@
+- name: System group
+  group:
+    gid: "{{ oodikone_gid }}"
+    name: oodikone
+    state: present
+    system: true
+
+- name: System user
+  user:
+    uid: "{{ oodikone_uid }}"
+    name: oodikone
+    group: oodikone
+    state: present
+    system: true
+    create_home: false
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: oodikone
+  with_items:
+    - /opt/oodikone-sis-updater-nats
+
+- name: Data directory
+  file:
+    path: "{{ aws_oodikone_sis_updater_nats_data_path }}/datastore"
+    state: directory
+    owner: root
+    group: oodikone
+    mode: 0775
+
+- name: Pull oodikone.sis-updater-nats Docker image
+  docker_image:
+    name: "{{ oodikone_sis_updater_nats_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: oodikone_sis_updater_nats_docker_image
+
+- name: Deploy oodikone.sis-updater-nats Docker container
+  docker_container:
+    name: oodikone.sis-updater-nats
+    image: "{{ oodikone_sis_updater_nats_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
+    command: -cid sis-updater-nats -m 8222 -p 4222 --max_channels 1000 --max_age 2h --hb_fail_count 2 --hb_timeout 10s --hb_interval 10s --auth dev --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs 0 -store file -dir /datastore
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - "{{ aws_oodikone_sis_updater_nats_data_path }}/datastore:/datastore:rw"
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.sis-updater-nats' }) }}"
+  register: oodikone_sis_updater_nats_docker_container
+  tags: oodikone_sis_updater_nats_docker_container

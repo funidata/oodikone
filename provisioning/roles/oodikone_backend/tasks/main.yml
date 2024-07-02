@@ -1,0 +1,100 @@
+- name: System group
+  group:
+    gid: "{{ oodikone_gid }}"
+    name: oodikone
+    state: present
+    system: true
+
+- name: System user
+  user:
+    uid: "{{ oodikone_uid }}"
+    name: oodikone
+    group: oodikone
+    state: present
+    system: true
+    create_home: false
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: oodikone
+  with_items:
+    - /opt/oodikone-backend
+    - /opt/oodikone-backend/config
+
+- name: Generate env secrets
+  copy:
+    content: |
+      IMPORTER_DB_API_TOKEN={{ oodikone_imported_db_api_token }}
+      PATE_TOKEN={{ oodikone_pate_token }}
+      CRYPT_KEY={{ oodikone_crypt_key }}
+    dest: /opt/{{ item }}/secrets.env
+    owner: root
+    group: oodikone
+    mode: 0640
+  with_items:
+    - oodikone-backend
+    - oodikone-frontend
+  tags: oodikone_secret_envs
+
+## backend
+- name: Pull backend Docker image
+  docker_image:
+    name: "{{ oodikone_backend_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: oodikone_backend_docker_image
+
+- name: Deploy backend Docker container
+  docker_container:
+    name: oodikone.backend
+    image: "{{ oodikone_backend_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
+    env:
+      FRONT_URL: http://localhost:{{ oodikone_frontend_http_port }}
+      DB_URL_KONE: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/kone-db
+      DB_URL_USER: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/user-db
+      SIS_DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
+      REDIS: localhost
+      SECRET_TOKEN: dev
+      SIS_UPDATER_URL: http://sis-updater-scheduler:8082 # TODO
+      IMPORTER_DB_API_URL: 'https://localhost:3005' # TODO
+      JAMI_URL: 'http://jami:3003/' # TODO
+      SERVICE_PROVIDER: 'Fd'
+      LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
+      NODE_ENV: development
+      REACT_APP_STAGING: 'false'
+      SENTRY_ENVIRONMENT: ''
+      SENTRY_RELEASE: ''
+      SIS_HOST: ''
+      SIS_GRAPHQL_APPLICATION_ACCOUNT: ''
+      SIS_GRAPHQL_APPLICATION_KEY: ''
+    env_file: /opt/oodikone-backend/secrets.env
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.backend' }) }}"
+  register: oodikone_backend_docker_container
+  tags: oodikone_backend_docker_container
+
+- name: Wait for oodikone.backend startup
+  uri:
+    url: "http://127.0.0.1:{{ oodikone_backend_http_port }}/"
+    method: GET
+    status_code: [200,403] # backend expects authenticated requests
+  register: result
+  when: not ansible_check_mode
+  until: result.status in [200,403]
+  retries: 60
+  delay: 1
+  tags: oodikone_backend_wait

@@ -1,0 +1,14 @@
+- hosts: aws_oodikone_app
+  # assume only one postgres instance per environment
+  # and requires running against one environment at a time
+  run_once: true
+  roles:
+    - role: funidata.infra.postgres_admin_user
+      tags: hybridilusmu_postgres_admin
+    - role: funidata.infra.postgres_login_users
+      tags: hybridilusmu_postgres_users
+
+- hosts: aws_oodikone_app
+  roles:
+    - role: oodikone_postgres_database
+      tag: oodikone_postgres_database

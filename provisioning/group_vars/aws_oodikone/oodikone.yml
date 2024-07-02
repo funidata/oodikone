@@ -1,0 +1,5 @@
+oodikone_uid: "{{ system_users['oodikone'].uid }}"
+oodikone_gid: "{{ system_users['oodikone'].gid }}"
+
+oodikone_backend_http_port: 8080
+oodikone_frontend_http_port: 5000

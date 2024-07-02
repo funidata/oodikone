@@ -1,0 +1,6 @@
+oodikone_nginx_remoteip_from: "{{ aws_vpc_alb_subnet + [aws_private_ipv4] }}"
+
+oodikone_nginx_env_configs:
+  access_headers_key: x-access
+  identityProviders: "{{ oodikone_nginx_identity_providers }}"
+  logoutUrl: "/Shibboleth.sso/Logout?return=https://{{ oodikone_server_name }}/login"

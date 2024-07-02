@@ -1,0 +1,43 @@
+oodikone_site: oodikone-dev
+
+oodikone_server_name: oodikone-dev.funidata.fi
+
+oodikone_version: production
+
+oodikone_backend_docker_image: "quay.io/toska/oodikone-backend:{{ oodikone_version }}"
+oodikone_frontend_docker_image: "quay.io/toska/oodikone-frontend:{{ oodikone_version }}"
+
+oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
+oodikone_sis_updater_scheduler_docker_image: "quay.io/toska/updater-scheduler:{{ oodikone_version }}"
+oodikone_sis_updater_worker_docker_image: "quay.io/toska/updater-worker:{{ oodikone_version }}"
+
+oodikone_postgres_database: oodikone
+
+oodikone_nginx_identity_providers:
+  - "{{ oodikone_nginx_env_configs_identityProvider_SIS }}"
+
+oodikone_nginx_env_configs_identityProvider_SIS:
+  name: SIS Login
+  navigate: /Shibboleth.sso/SISLogin?target=
+
+# DB needs to have user row ready in order for login to work
+oodikone_app_users:
+  - full_name: otm-test-50
+    eppn: otm-test-50@sis-dev.funidata.fi
+    language: fi
+    sisu_person_id: fd-hlo-0000050
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights:
+      - KH0_005
+  - full_name: otm-test-51
+    eppn: otm-test-51@sis-dev.funidata.fi
+    language: fi
+    sisu_person_id: fd-hlo-0000051
+    roles:
+      - basic
+    programme_rights: []

@@ -1,0 +1,6 @@
+# AWS VPC specifics
+aws_vpc_cidrs: "{{ aws_vpc_ipv4_cidrs + aws_vpc_ipv6_cidrs }}"
+
+# AWS ALB
+aws_vpc_alb_subnet:
+  - "{{ aws_vpc_cidr }}" # XXX: no separate subnet for connections from AWS ALB
