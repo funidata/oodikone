@@ -12,9 +12,4 @@ oodikone_admin_users:
 oodikone_read_users: []
 
 oodikone_postgres_read_users: "{{ oodikone_read_users }}"
-oodikone_postgres_admin_users: "{{ users + oodikone_admin_users }}"
-
-users: "{{ infra_users + oodikone_admin_users }}"
-admin_users: "{{ infra_users }}"
-docker_users: "{{ infra_users + oodikone_admin_users }}"
-root_users: "{{ infra_users }}"
+oodikone_postgres_admin_users: "{{ infra_users + oodikone_admin_users }}"

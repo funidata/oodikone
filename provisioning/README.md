@@ -7,5 +7,5 @@ Using the funidata.infra collection
 Required Ansible vault password secrets across all environments:
 
 * `vault-password.secret`
-* `vault-password-harri.secret`
+* `vault-password-oodikone.secret`
 * `vault-password-prod.secret`
