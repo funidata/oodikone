@@ -14,12 +14,6 @@ upstream shib_responder_upstream {
   server 127.0.0.1:{{ shibboleth_sp_responder_tcp_port }};
 }
 
-# Redirect unauthenticated users to login
-map $cookie__shibsession_{{ shibboleth_sp_session_cookieName }} $redirect_to_login {
-  default 0;
-  "" 1;
-}
-
 server {
     listen 80 default_server;
 
@@ -81,11 +75,6 @@ server {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
-{% if oodikone_nginx_identity_providers | length == 1 %}
-        if ($redirect_to_login) {
-            return 302 {{ oodikone_nginx_identity_providers[0].navigate }};
-        }
-{% endif %}
     }
 
     location /{% if 'staging' == oodikone_version %}oodikone/{% endif%}api/ {
