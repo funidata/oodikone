@@ -76,8 +76,9 @@ server {
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
 
-        location = /config.json {
-            alias /static/config.json;
+        location ~ ^/config.json {
+            try_files $uri =404;
+            expires -1;
         }
     }
 
