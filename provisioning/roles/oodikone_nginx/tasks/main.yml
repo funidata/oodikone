@@ -24,7 +24,7 @@
   copy:
     content: |
       {{ oodikone_nginx_env_configs | to_nice_json }}
-    dest: /opt/oodikone_nginx/config/frontend/config.json
+    dest: /opt/nginx/static/config.json
     owner: root
     group: nginx
     mode: 0644
