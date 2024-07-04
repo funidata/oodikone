@@ -67,6 +67,9 @@ server {
     location = / {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
+
+        include /etc/nginx/backend.conf;
+
         return 301 /oodikone;
     }
 {% endif %}
@@ -75,11 +78,21 @@ server {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
+
+        include /etc/nginx/backend.conf;
+
+        location ~ ^/config.json {
+            try_files $uri =404;
+            expires -1;
+        }
     }
 
     location /{% if 'staging' == oodikone_version %}oodikone/{% endif%}api/ {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
+
+        include /etc/nginx/backend.conf;
+
         proxy_pass http://oodikone-backend/api/;
     }
 }

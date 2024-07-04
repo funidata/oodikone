@@ -11,6 +11,7 @@ shibboleth_sp_sessions_logout_asynchronous: false
 
 shibboleth_sp_errors_supportContact: asiakaspalvelu@funidata.fi
 
+# This should match nginx more_clear_input_headers
 shibboleth_sp_attribute_prefix: X-Shibboleth-
 
 shibboleth_sp_hosts:
