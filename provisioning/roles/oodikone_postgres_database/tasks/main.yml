@@ -158,9 +158,12 @@
     login_user: "{{ oodikone_postgres_admin_user }}"
     login_password: "{{ oodikone_postgres_admin_password }}"
 
-    name: "{{ oodikone_postgres_database_read_role }}"
+    name: "{{ oodikone_postgres_database }}_read"
     role_attr_flags: NOLOGIN
     no_password_changes: true # attempts to ... WITH ENCRYPTED PASSWORD NULL ... on RDS
+  loop: "{{ oodikone_postgres_databases }}"
+  loop_control:
+    loop_var: oodikone_postgres_database
   tags: oodikone_postgres_database_read_role
 
 - name: Grant database read role database privileges
@@ -174,7 +177,7 @@
     database: "{{ oodikone_postgres_database }}"
     type: database
     privs: CONNECT,TEMPORARY
-    roles: "{{ oodikone_postgres_database_read_role }}"
+    roles: "{{ oodikone_postgres_database }}_read"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -192,7 +195,7 @@
     type: schema
     objs: public
     privs: USAGE
-    roles: "{{ oodikone_postgres_database_read_role }}"
+    roles: "{{ oodikone_postgres_database }}_read"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -214,7 +217,7 @@
     schema: public
     privs: SELECT
     objs: TABLES,SEQUENCES
-    roles: "{{ oodikone_postgres_database_read_role }}"
+    roles: "{{ oodikone_postgres_database }}_read"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -233,7 +236,7 @@
     type: table
     privs: SELECT
     objs: ALL_IN_SCHEMA
-    roles: "{{ oodikone_postgres_database_read_role }}"
+    roles: "{{ oodikone_postgres_database }}_read"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -252,7 +255,7 @@
     type: sequence
     privs: SELECT
     objs: ALL_IN_SCHEMA
-    roles: "{{ oodikone_postgres_database_read_role }}"
+    roles: "{{ oodikone_postgres_database }}_read"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -266,9 +269,12 @@
     login_user: "{{ oodikone_postgres_admin_user }}"
     login_password: "{{ oodikone_postgres_admin_password }}"
 
-    role: "{{ oodikone_postgres_database_read_role }}"
+    role: "{{ oodikone_postgres_database }}_read"
     members: "{{ oodikone_postgres_read_users }}"
     strict_membership: true
+  loop: "{{ oodikone_postgres_databases }}"
+  loop_control:
+    loop_var: oodikone_postgres_database
   tags:
     - oodikone_postgres_database_users
     - oodikone_postgres_database_read_users
@@ -284,9 +290,12 @@
     login_user: "{{ oodikone_postgres_admin_user }}"
     login_password: "{{ oodikone_postgres_admin_password }}"
 
-    name: "{{ oodikone_postgres_database_admin_role }}"
+    name: "{{ oodikone_postgres_database }}_admin"
     role_attr_flags: NOLOGIN
     no_password_changes: true # attempts to ... WITH ENCRYPTED PASSWORD NULL ... on RDS
+  loop: "{{ oodikone_postgres_databases }}"
+  loop_control:
+    loop_var: oodikone_postgres_database
   tags: oodikone_postgres_database_admin_role
 
 - name: Grant database admin role database privileges
@@ -300,7 +309,7 @@
     database: "{{ oodikone_postgres_database }}"
     type: database
     privs: ALL
-    roles: "{{ oodikone_postgres_database_admin_role }}"
+    roles: "{{ oodikone_postgres_database }}_admin"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -318,7 +327,7 @@
     type: schema
     objs: public
     privs: ALL
-    roles: "{{ oodikone_postgres_database_admin_role }}"
+    roles: "{{ oodikone_postgres_database }}_admin"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -340,7 +349,7 @@
     schema: public
     privs: ALL
     objs: TABLES,SEQUENCES
-    roles: "{{ oodikone_postgres_database_admin_role }}"
+    roles: "{{ oodikone_postgres_database }}_admin"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -359,7 +368,7 @@
     type: table
     privs: ALL
     objs: ALL_IN_SCHEMA
-    roles: "{{ oodikone_postgres_database_admin_role }}"
+    roles: "{{ oodikone_postgres_database }}_admin"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -378,7 +387,7 @@
     type: sequence
     privs: ALL
     objs: ALL_IN_SCHEMA
-    roles: "{{ oodikone_postgres_database_admin_role }}"
+    roles: "{{ oodikone_postgres_database }}_admin"
   loop: "{{ oodikone_postgres_databases }}"
   loop_control:
     loop_var: oodikone_postgres_database
@@ -392,9 +401,12 @@
     login_user: "{{ oodikone_postgres_admin_user }}"
     login_password: "{{ oodikone_postgres_admin_password }}"
 
-    role: "{{ oodikone_postgres_database_admin_role }}"
+    role: "{{ oodikone_postgres_database }}_admin"
     members: "{{ oodikone_postgres_admin_users }}"
     strict_membership: true
+  loop: "{{ oodikone_postgres_databases }}"
+  loop_control:
+    loop_var: oodikone_postgres_database
   tags:
     - oodikone_postgres_database_users
     - oodikone_postgres_database_admin_users

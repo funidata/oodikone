@@ -14,5 +14,6 @@ oodikone_postgres_database_settings:
   TimeZone: 'UTC'
 
 oodikone_postgres_database_user_pgaudit_log: 'ROLE,DDL'
-oodikone_postgres_database_read_role: "{{ oodikone_postgres_database }}_read"
-oodikone_postgres_database_admin_role: "{{ oodikone_postgres_database }}_admin"
+# oodikone_postgres_database role creates multiple databases
+# oodikone_postgres_database_read_role: "{{ oodikone_postgres_database }}_read"
+# oodikone_postgres_database_admin_role: "{{ oodikone_postgres_database }}_admin"
