@@ -4,9 +4,9 @@
   run_once: true
   roles:
     - role: funidata.infra.postgres_admin_user
-      tags: hybridilusmu_postgres_admin
+      tags: oodikone_postgres_admin
     - role: funidata.infra.postgres_login_users
-      tags: hybridilusmu_postgres_users
+      tags: oodikone_postgres_users
 
 - hosts: aws_oodikone_app
   roles:
