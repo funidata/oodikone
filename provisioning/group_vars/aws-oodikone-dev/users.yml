@@ -8,6 +8,7 @@ infra_users:
 oodikone_admin_users:
   - mattir
   - janr
+  - harrih
 
 oodikone_read_users: []
 
