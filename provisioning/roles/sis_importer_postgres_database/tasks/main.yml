@@ -1,0 +1,10 @@
+# Note that simple_postgres_admin_* vars are defined in this roles vars/main.yml
+
+- name: Provision importer-db database
+  vars:
+    simple_postgres_database: "{{ sis_importer_postgres_importer_db_database }}"
+  import_role:
+    name: simple_postgres_database
+  tags:
+    - sis_importer_postgres_database 
+    - sis_importer_importer_db_database
