@@ -1,0 +1,3 @@
+- name: restart nats
+  command: docker restart nats
+  when: not (nats_docker_container is defined and nats_docker_container.changed)

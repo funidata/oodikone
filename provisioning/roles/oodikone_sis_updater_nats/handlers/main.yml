@@ -1,3 +1,0 @@
-- name: restart oodikone.sis-updater-nats
-  command: docker restart oodikone.sis-updater-nats
-  when: not (oodikone_sis_updater_nats_docker_container is defined and oodikone_sis_updater_nats_docker_container.changed)
