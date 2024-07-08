@@ -2,18 +2,3 @@ oodikone_postgres_admin_host: "{{ aws_rds_primary }}"
 oodikone_postgres_admin_port: 5432
 oodikone_postgres_admin_user: postgres
 oodikone_postgres_admin_password: "{{ postgres_passwords[oodikone_postgres_admin_user] }}"
-
-oodikone_postgres_database_encoding: UTF8
-oodikone_postgres_database_locale: en_US.UTF-8
-
-oodikone_postgres_database_extensions:
-  - pg_stat_statements
-  - pgaudit
-
-oodikone_postgres_database_settings:
-  TimeZone: 'UTC'
-
-oodikone_postgres_database_user_pgaudit_log: 'ROLE,DDL'
-# oodikone_postgres_database role creates multiple databases
-# oodikone_postgres_database_read_role: "{{ oodikone_postgres_database }}_read"
-# oodikone_postgres_database_admin_role: "{{ oodikone_postgres_database }}_admin"

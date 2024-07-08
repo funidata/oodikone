@@ -1,1 +1,0 @@
-oodikone_postgres_database_password_changes: false # default to not trigger spurious "changed" on AWS RDS

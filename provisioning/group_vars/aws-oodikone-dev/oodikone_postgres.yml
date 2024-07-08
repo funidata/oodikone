@@ -1,9 +1,20 @@
 oodikone_postgres_username: oodikone
 oodikone_postgres_password: "{{ postgres_passwords[oodikone_postgres_username] }}"
-oodikone_postgres_databases:
-  - kone-db
-  - sis-db
-  - user-db
+
+oodikone_postgres_kone_db_database:
+  name: kone-db
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"
+
+oodikone_postgres_sis_db_database:
+  name: sis-db
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"
+
+oodikone_postgres_user_db_database:
+  name: user-db
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"
 
 oodikone_postgres_host: oodikone-postgres-dev
 oodikone_postgres_port: 5432
