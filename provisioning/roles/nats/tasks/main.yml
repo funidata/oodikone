@@ -24,6 +24,19 @@
   with_items:
     - /opt/nats
 
+- name: Create NATS secrets configuration file
+  copy:
+    content: |
+      streaming: {
+        token: {{ nats_auth_token }}
+      }
+    dest: /opt/nats/nats.cfg
+    owner: root
+    group: "{{ nats_group_name }}"
+    mode: 0640
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: nats_secrets
+
 - name: Data directory
   file:
     path: "{{ aws_nats_data_path }}/datastore"
@@ -48,12 +61,13 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
-    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} --max_channels 1000 --max_age 2h --hb_fail_count 2 --hb_timeout 10s --hb_interval 10s --auth {{ nats_auth_token}} --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs 0 -store file -dir /datastore"
+    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} -sc /opt/nats/nats.cfg --max_channels 1000 --max_age 2h --hb_fail_count 2 --hb_timeout 10s --hb_interval 10s --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs 0 -store file -dir /datastore"
     read_only: true
     tmpfs:
       - /tmp
     volumes:
       - "{{ aws_nats_data_path }}/datastore:/datastore:rw"
+      - "/opt/nats:/opt/nats:ro"
     cap_drop:
       - net_raw
     log_driver: "{{ docker_log_driver }}"
