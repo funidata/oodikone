@@ -16,7 +16,7 @@ oodikone_postgres_user_db_database:
   user: "{{ oodikone_postgres_username }}"
   password: "{{ oodikone_postgres_password }}"
 
-oodikone_postgres_host: oodikone-postgres-dev
+oodikone_postgres_host: "{{ aws_rds_primary }}"
 oodikone_postgres_port: 5432
 oodikone_postgres_user_password_length: 32
 
