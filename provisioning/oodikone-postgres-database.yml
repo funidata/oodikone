@@ -12,3 +12,8 @@
   roles:
     - role: oodikone_postgres_database
       tag: oodikone_postgres_database
+
+- hosts: aws_sis_importer_app
+  roles:
+    - role: sis_importer_postgres_database
+      tag: sis_importer_postgres_database
