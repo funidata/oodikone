@@ -4,6 +4,8 @@
     name: nats
     state: present
     system: true
+  tags:
+    - nats_user
 
 - name: System user
   user:
@@ -13,6 +15,8 @@
     state: present
     system: true
     create_home: false
+  tags:
+    - nats_user
 
 - name: Config directories
   file:
