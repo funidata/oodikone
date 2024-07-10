@@ -56,6 +56,22 @@
     - role: funidata.infra.lvm_filesystem
       vars:
         lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"
+        lvm_filesystem_lv: lvValkey
+        lvm_filesystem_size: "{{ aws_valkey_lvm_filesystem_size }}"
+        lvm_filesystem_mountpoint: "{{ aws_valkey_data_path }}"
+        lvm_filesystem_owner: root
+        lvm_filesystem_group: valkey
+        lvm_filesystem_mode: '0775'
+      tags:
+        - lvm_filesystem
+        - lvm_filesystem_sis_importer_valkey
+
+    - role: funidata.infra.valkey
+      tags: sis_importer_valkey
+
+    - role: funidata.infra.lvm_filesystem
+      vars:
+        lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"
         lvm_filesystem_lv: lvNats
         lvm_filesystem_size: "{{ aws_nats_lvm_filesystem_size }}"
         lvm_filesystem_mountpoint: "{{ aws_nats_data_path }}"
