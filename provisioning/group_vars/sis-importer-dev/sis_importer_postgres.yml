@@ -1,8 +1,9 @@
 sis_importer_postgres_username: sis-importer
 sis_importer_postgres_password: "{{ postgres_passwords[sis_importer_postgres_username] }}"
+sis_importer_postgres_database: importer-db
 
 sis_importer_postgres_importer_db_database:
-  name: importer-db
+  name: "{{ sis_importer_postgres_database }}"
   user: "{{ sis_importer_postgres_username }}"
   password: "{{ sis_importer_postgres_password }}"
 

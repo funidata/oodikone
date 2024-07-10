@@ -1,0 +1,10 @@
+sis_importer_version: fd-dev-20240710
+
+sis_importer_mankeli_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer/importer-mankeli:{{ sis_importer_version }}"
+sis_importer_db_api_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer/importer-db-api:{{ sis_importer_version }}"
+sis_importer_api_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer/importer-api:{{ sis_importer_version }}"
+
+sis_importer_nats_uri: nats://localhost:4222
+sis_importer_nats_auth_token: "{{ nats_auth_token }}"
+
+sis_importer_valkey_uri: redis://localhost:6379
