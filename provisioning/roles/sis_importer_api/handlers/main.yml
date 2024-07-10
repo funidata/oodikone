@@ -1,0 +1,3 @@
+- name: restart sis-importer.api
+  command: docker restart sis-importer.api
+  when: not (sis_importer_api_docker_container is defined and sis_importer_api_docker_container.changed)

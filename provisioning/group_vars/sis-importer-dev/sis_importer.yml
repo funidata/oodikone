@@ -8,3 +8,5 @@ sis_importer_nats_uri: nats://localhost:4222
 sis_importer_nats_auth_token: "{{ nats_auth_token }}"
 
 sis_importer_valkey_uri: redis://localhost:6379
+
+sis_importer_api_sonic: 0
