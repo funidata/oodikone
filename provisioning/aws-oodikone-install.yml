@@ -87,11 +87,9 @@
 
     - role: sis_importer_db_api
       tags: sis_importer_db_api
-
     - role: sis_importer_api
       tags: sis_importer_api
-
-    # - role: sis_importer_mankeli
-    #   tags: sis_importer_mankeli
+    - role: sis_importer_mankeli
+      tags: sis_importer_mankeli
 
 
