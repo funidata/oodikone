@@ -16,3 +16,7 @@ system_users:
   nginx:
     uid: 448
     gid: 448
+
+  nats:
+    uid: 447
+    gid: 447
