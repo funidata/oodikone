@@ -1,0 +1,2 @@
+nats_uid: "{{ system_users['nats'].uid }}"
+nats_gid: "{{ system_users['nats'].gid }}"

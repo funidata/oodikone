@@ -67,9 +67,4 @@
         - lvm_filesystem_nats
 
     - role: nats
-      vars:
-        nats_gid: "{{ oodikone_gid }}"
-        nats_group_name: oodikone
-        nats_uid: "{{ oodikone_uid }}"
-        nats_user_name: oodikone
       tags: sis_importer_nats
