@@ -20,3 +20,7 @@ system_users:
   nats:
     uid: 447
     gid: 447
+
+  sis-importer:
+    uid: 446
+    gid: 446
