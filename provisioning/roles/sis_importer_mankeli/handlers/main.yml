@@ -1,0 +1,3 @@
+- name: restart sis-importer.mankeli
+  command: docker restart sis-importer.mankeli
+  when: not (sis_importer_mankeli_docker_container is defined and sis_importer_mankeli_docker_container.changed)
