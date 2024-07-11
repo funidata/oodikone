@@ -63,7 +63,7 @@
       SIS_DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
       REDIS: localhost
       SIS_UPDATER_URL: http://localhost:8082
-      IMPORTER_DB_API_URL: 'https://localhost:3005' # TODO
+      IMPORTER_DB_API_URL: "http://{{ importer_db_api_host }}:3005"
       JAMI_URL: 'http://jami:3003/' # TODO
       SERVICE_PROVIDER: 'Fd'
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
