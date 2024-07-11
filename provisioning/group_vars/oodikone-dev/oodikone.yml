@@ -11,6 +11,9 @@ oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
 oodikone_sis_updater_scheduler_docker_image: "quay.io/toska/updater-scheduler:{{ oodikone_version }}"
 oodikone_sis_updater_worker_docker_image: "quay.io/toska/updater-worker:{{ oodikone_version }}"
 
+oodikone_nats_uri: nats://localhost:4222
+oodikone_valkey_uri: redis://localhost:6379
+
 # oodikone_postgres_database: oodikone
 
 oodikone_nginx_identity_providers:

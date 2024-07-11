@@ -34,12 +34,12 @@
         - lvm_filesystem_oodikone_sis_updater_nats
 
     - role: nats
-      tags: oodikone_oodikone_sis_updater_nats
+      tags: oodikone_sis_updater_nats
 
-    # - role: oodikone_sis_updater_scheduler
-    #   tags: oodikone_sis_updater_scheduler
-    # - role: oodikone_sis_updater_worker
-    #   tags: oodikone_sis_updater_worker
+    - role: oodikone_sis_updater_scheduler
+      tags: oodikone_sis_updater_scheduler
+    - role: oodikone_sis_updater_worker
+      tags: oodikone_sis_updater_worker
 
     - role: funidata.infra.shibboleth_sp
       vars:

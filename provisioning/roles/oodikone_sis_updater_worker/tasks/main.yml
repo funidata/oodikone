@@ -24,6 +24,18 @@
   with_items:
     - /opt/oodikone-sis-updater-worker
 
+- name: Generate env secrets
+  copy:
+    content: |
+      SIS_IMPORTER_PASSWORD="{{ oodikone_postgres_password }}"
+      SIS_NATS_TOKEN="{{ nats_auth_token }}"
+    dest: /opt/oodikone-sis-updater-worker/secrets.env
+    owner: root
+    group: oodikone
+    mode: 0640
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: oodikone_sis_updater_worker_secret_envs
+
 - name: Pull oodikone.sis-updater-worker Docker image
   docker_image:
     name: "{{ oodikone_sis_updater_worker_docker_image }}"
@@ -46,11 +58,10 @@
       SECRET_TOKEN: dev
       SIS_IMPORTER_DATABASE: sis-importer-db
       SIS_IMPORTER_HOST: "{{ oodikone_postgres_host }}"
-      SIS_IMPORTER_PASSWORD: "{{ oodikone_postgres_password }}"
       SIS_IMPORTER_USER: "{{ oodikone_postgres_username }}"
-      SIS_NATS_TOKEN: dev
-      SIS_NATS_URI: sis-updater-nats://localhost:4222
+      SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-worker" # this defines CLIENT_ID
+    env_file: /opt/oodikone-sis-updater-worker/secrets.env
     read_only: true
     tmpfs:
       - /tmp
