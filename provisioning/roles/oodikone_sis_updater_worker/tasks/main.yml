@@ -29,6 +29,7 @@
     content: |
       SIS_IMPORTER_PASSWORD={{ sis_importer_postgres_password }}
       SIS_NATS_TOKEN={{ nats_auth_token }}
+      SECRET_TOKEN={{ oodikone_secret_token }}
     dest: /opt/oodikone-sis-updater-worker/secrets.env
     owner: root
     group: oodikone
@@ -54,8 +55,7 @@
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
       DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
-      REDIS_URI: //localhost:{{ valkey_port }}
-      SECRET_TOKEN: dev
+      REDIS_URI: "{{ oodikone_valkey_uri }}"
       SIS_IMPORTER_DATABASE: "{{ sis_importer_postgres_database }}"
       SIS_IMPORTER_HOST: "{{ sis_importer_postgres_host }}"
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_username}}" # TODO should probably be a read only user

@@ -54,8 +54,7 @@
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
-      REDIS_URI: //localhost:{{ valkey_port }}
-      SECRET_TOKEN: dev
+      REDIS_URI: "{{ oodikone_valkey_uri }}"
       SIS_IMPORTER_DATABASE: "{{ sis_importer_postgres_database }}"
       SIS_IMPORTER_HOST: "{{ sis_importer_postgres_host }}"
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_username }}" # TODO should probably be a read only user
