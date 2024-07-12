@@ -11,7 +11,7 @@ oodikone_infra_version: fd-infra-20240712-03
 #oodikone_backend_docker_image: "quay.io/toska/oodikone-backend:{{ oodikone_version }}"
 oodikone_backend_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/oodikone-backend:{{ oodikone_infra_version }}"
 #oodikone_frontend_docker_image: "quay.io/toska/oodikone-frontend:{{ oodikone_version }}"
-oodikone_backend_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/oodikone-frontend:{{ oodikone_infra_version }}"
+oodikone_frontend_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/oodikone-frontend:{{ oodikone_infra_version }}"
 
 oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
 
