@@ -32,6 +32,7 @@
       PATE_TOKEN={{ oodikone_pate_token }}
       CRYPT_KEY={{ oodikone_crypt_key }}
       SECRET_TOKEN={{ oodikone_secret_token }}
+      SIS_GRAPHQL_APPLICATION_KEY={{ oodikone_sis_application_account_key }}
     dest: /opt/oodikone-backend/secrets.env
     owner: root
     group: oodikone
@@ -57,23 +58,23 @@
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
-      FRONT_URL: http://localhost:{{ oodikone_frontend_http_port }}
-      DB_URL_KONE: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/kone-db
-      DB_URL_USER: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/user-db
-      SIS_DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
-      REDIS: localhost
-      SIS_UPDATER_URL: http://localhost:8082
-      IMPORTER_DB_API_URL: "http://{{ importer_db_api_host }}:3005"
+      FRONT_URL: "http://localhost:{{ oodikone_frontend_http_port }}"
+      DB_URL_KONE: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/kone-db"
+      DB_URL_USER: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/user-db"
+      SIS_DB_URL: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db"
+      REDIS: "{{ oodikone_redis_url }}"
+      SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
+      IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
       JAMI_URL: 'http://jami:3003/' # TODO
-      SERVICE_PROVIDER: 'Fd'
+      SERVICE_PROVIDER: 'Fd' # TODO remove
+      REACT_APP_SERVICE_PROVIDER: 'Fd'
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
-      NODE_ENV: development # TODO: should probably be production
+      NODE_ENV: development # changing this to production breaks login
       REACT_APP_STAGING: 'false'
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
-      SIS_HOST: ''
-      SIS_GRAPHQL_APPLICATION_ACCOUNT: ''
-      SIS_GRAPHQL_APPLICATION_KEY: ''
+      SIS_HOST: "{{ oodikone_sis_host }}"
+      SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     tmpfs:

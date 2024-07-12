@@ -65,6 +65,7 @@
       DB_DATABASE: "{{ sis_importer_postgres_database }}"
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
+      HOSTNAME: "{{ sis_importer_site }}-mankeli" # defines NATS client_id
     env_file: /opt/sis-importer-mankeli/secrets.env
     read_only: true
     tmpfs:

@@ -34,6 +34,7 @@
     content: |
       DB_PASSWORD={{ sis_importer_postgres_password }}
       NATS_TOKEN={{ sis_importer_nats_auth_token }}
+      SIS_API_PASSWORD={{ sis_importer_sis_integration_user_password }}
     dest: /opt/sis-importer-api/secrets.env
     owner: root
     group: sis-importer
@@ -66,6 +67,11 @@
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SONIC: "{{ sis_importer_api_sonic | default(0) | to_json }}"
+      HOSTNAME: "{{ sis_importer_site }}-api" # defines NATS client_id
+      SIS_API_URL: "{{ sis_importer_sis_host }}"
+      SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
+      SERVICE_PROVIDER: 'Fd'
+      REACT_APP_SERVICE_PROVIDER: 'Fd'
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:

@@ -27,8 +27,8 @@
 - name: Generate env secrets
   copy:
     content: |
-      SIS_IMPORTER_PASSWORD="{{ oodikone_postgres_password }}"
-      SIS_NATS_TOKEN="{{ nats_auth_token }}"
+      SIS_IMPORTER_PASSWORD={{ sis_importer_postgres_password }}
+      SIS_NATS_TOKEN={{ nats_auth_token }}
     dest: /opt/oodikone-sis-updater-worker/secrets.env
     owner: root
     group: oodikone
@@ -56,11 +56,11 @@
       DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
       REDIS_URI: //localhost:{{ valkey_port }}
       SECRET_TOKEN: dev
-      SIS_IMPORTER_DATABASE: sis-importer-db
-      SIS_IMPORTER_HOST: "{{ oodikone_postgres_host }}"
-      SIS_IMPORTER_USER: "{{ oodikone_postgres_username }}"
+      SIS_IMPORTER_DATABASE: "{{ sis_importer_postgres_database }}"
+      SIS_IMPORTER_HOST: "{{ sis_importer_postgres_host }}"
+      SIS_IMPORTER_USER: "{{ sis_importer_postgres_username}}" # TODO should probably be a read only user
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
-      HOSTNAME: "{{ oodikone_site }}-worker" # this defines CLIENT_ID
+      HOSTNAME: "{{ oodikone_site }}-worker" # defines NATS client_id
     env_file: /opt/oodikone-sis-updater-worker/secrets.env
     read_only: true
     tmpfs:
