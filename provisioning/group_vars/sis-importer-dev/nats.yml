@@ -1,1 +1,1 @@
-nats_cid: sis-importer-nats
+nats_cid: importer-nats # hardcoded in application code
