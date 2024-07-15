@@ -66,8 +66,7 @@
       SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
       IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
       JAMI_URL: 'http://jami:3003/' # TODO
-      SERVICE_PROVIDER: 'Fd' # TODO remove
-      REACT_APP_SERVICE_PROVIDER: 'Fd'
+      SERVICE_PROVIDER: 'Fd'
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
       NODE_ENV: development # changing this to production breaks login
       REACT_APP_STAGING: 'false'
