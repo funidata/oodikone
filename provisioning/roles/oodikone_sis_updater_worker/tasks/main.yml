@@ -61,6 +61,7 @@
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_username}}" # TODO should probably be a read only user
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-worker" # defines NATS client_id
+      ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
     env_file: /opt/oodikone-sis-updater-worker/secrets.env
     read_only: true
     tmpfs:
