@@ -23,7 +23,7 @@
     group: oodikone
   with_items:
     - /opt/oodikone-backend
-    - /opt/oodikone-backend/config
+    - "{{ oodikone_backend_configs_dir }}"
 
 - name: Generate env secrets
   copy:
@@ -48,6 +48,17 @@
     source: pull
     force_source: yes
   tags: oodikone_backend_docker_image
+
+- name: Generate backend organisationConfig
+  copy:
+    content: |
+      {{ oodikone_backend_organisation_config | to_nice_json }}
+    dest: "{{ oodikone_backend_configs_dir }}/organizationConfig.json"
+    owner: root
+    group: oodikone
+    mode: 0644
+  tags: oodikone_backend_configs_json
+
 
 - name: Deploy backend Docker container
   docker_container:
@@ -77,6 +88,8 @@
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
+    volumes:
+      - "{{ oodikone_backend_configs_dir }}:/opt/app-root/src/dist/src/environment:ro"
     tmpfs:
       - /tmp
     cap_drop:
