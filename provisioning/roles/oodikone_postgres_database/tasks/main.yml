@@ -1,7 +1,12 @@
-# Note that simple_postgres_admin_* vars are defined in this roles vars/main.yml
-
 - name: Provision kone-db database
   vars:
+    simple_postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+    simple_postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+    simple_postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+    simple_postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+    simple_postgres_database_read_users: "{{ oodikone_postgres_read_users }}"
+    simple_postgres_database_admin_users: "{{ oodikone_postgres_admin_users }}"
+
     simple_postgres_database: "{{ oodikone_postgres_kone_db_database }}"
   import_role:
     name: simple_postgres_database
@@ -11,6 +16,13 @@
 
 - name: Provision sis-db database
   vars:
+    simple_postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+    simple_postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+    simple_postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+    simple_postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+    simple_postgres_database_read_users: "{{ oodikone_postgres_read_users }}"
+    simple_postgres_database_admin_users: "{{ oodikone_postgres_admin_users }}"
+
     simple_postgres_database: "{{ oodikone_postgres_sis_db_database }}"
   import_role:
     name: simple_postgres_database
@@ -20,6 +32,13 @@
 
 - name: Provision user-db database
   vars:
+    simple_postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+    simple_postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+    simple_postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+    simple_postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+    simple_postgres_database_read_users: "{{ oodikone_postgres_read_users }}"
+    simple_postgres_database_admin_users: "{{ oodikone_postgres_admin_users }}"
+
     simple_postgres_database: "{{ oodikone_postgres_user_db_database }}"
   import_role:
     name: simple_postgres_database
