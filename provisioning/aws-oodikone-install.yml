@@ -7,7 +7,7 @@
         lvm_filesystem_size: "{{ aws_valkey_lvm_filesystem_size }}"
         lvm_filesystem_mountpoint: "{{ aws_valkey_data_path }}"
         lvm_filesystem_owner: root
-        lvm_filesystem_group: valkey
+        lvm_filesystem_group: "{{ valkey_gid }}"
         lvm_filesystem_mode: '0775'
       tags:
         - lvm_filesystem
@@ -27,7 +27,7 @@
         lvm_filesystem_size: "{{ aws_nats_lvm_filesystem_size }}"
         lvm_filesystem_mountpoint: "{{ aws_nats_data_path }}"
         lvm_filesystem_owner: root
-        lvm_filesystem_group: nats
+        lvm_filesystem_group: "{{ nats_gid }}"
         lvm_filesystem_mode: '0775'
       tags:
         - lvm_filesystem
@@ -60,7 +60,7 @@
         lvm_filesystem_size: "{{ aws_valkey_lvm_filesystem_size }}"
         lvm_filesystem_mountpoint: "{{ aws_valkey_data_path }}"
         lvm_filesystem_owner: root
-        lvm_filesystem_group: valkey
+        lvm_filesystem_group: "{{ valkey_gid }}"
         lvm_filesystem_mode: '0775'
       tags:
         - lvm_filesystem
@@ -76,7 +76,7 @@
         lvm_filesystem_size: "{{ aws_nats_lvm_filesystem_size }}"
         lvm_filesystem_mountpoint: "{{ aws_nats_data_path }}"
         lvm_filesystem_owner: root
-        lvm_filesystem_group: nats
+        lvm_filesystem_group: "{{ nats_gid }}"
         lvm_filesystem_mode: '0775'
       tags:
         - lvm_filesystem
