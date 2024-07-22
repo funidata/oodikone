@@ -23,7 +23,7 @@
     group: oodikone
   with_items:
     - /opt/oodikone-backend
-    - "{{ oodikone_backend_configs_dir }}"
+    - /opt/oodikone-backend/config
 
 - name: Generate env secrets
   copy:
@@ -53,7 +53,7 @@
   copy:
     content: |
       {{ oodikone_backend_organisation_config | to_nice_json }}
-    dest: "{{ oodikone_backend_configs_dir }}/organizationConfig.json"
+    dest: /opt/oodikone-backend/config/organizationConfig.json
     owner: root
     group: oodikone
     mode: 0644
@@ -89,7 +89,7 @@
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:
-      - "{{ oodikone_backend_configs_dir }}:/opt/app-root/src/dist/src/environment:ro"
+      - /opt/oodikone-backend/config:/opt/app-root/src/dist/src/environment:ro
     tmpfs:
       - /tmp
     cap_drop:

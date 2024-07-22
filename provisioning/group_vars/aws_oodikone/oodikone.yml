@@ -5,5 +5,3 @@ oodikone_backend_http_port: 8080
 oodikone_frontend_http_port: 5000
 
 importer_db_api_host: "{{ groups['aws_sis_importer_app'] | first }}"
-
-oodikone_backend_configs_dir: /opt/oodikone-backend/config
