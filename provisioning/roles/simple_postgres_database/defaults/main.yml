@@ -11,3 +11,6 @@ simple_postgres_database_extensions:
 
 simple_postgres_database_settings:
   TimeZone: 'UTC'
+
+simple_postgres_database_read_role: "{{ simple_postgres_database.name}}_read"
+simple_postgres_database_admin_role: "{{ simple_postgres_database.name}}_admin"

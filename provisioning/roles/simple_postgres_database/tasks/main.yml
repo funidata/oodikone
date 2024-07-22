@@ -151,7 +151,7 @@
     login_user: "{{ simple_postgres_admin_user }}"
     login_password: "{{ simple_postgres_admin_password }}"
 
-    name: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    name: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
     role_attr_flags: NOLOGIN
     no_password_changes: true # attempts to ... WITH ENCRYPTED PASSWORD NULL ... on RDS
   tags: simple_postgres_database_read_role
@@ -167,7 +167,7 @@
     database: "{{ simple_postgres_database.name }}"
     type: database
     privs: CONNECT,TEMPORARY
-    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') | default(simple_postgres_database.name + '_read') }}"
+    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
   tags: simple_postgres_database_read_role
 
 - name: Provision database read role schema privileges
@@ -182,7 +182,7 @@
     type: schema
     objs: public
     privs: USAGE
-    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
   tags: simple_postgres_database_read_role
 
 # Use default privileges to grant access to tables added in the future
@@ -201,7 +201,7 @@
     schema: public
     privs: SELECT
     objs: TABLES,SEQUENCES
-    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
   tags: simple_postgres_database_read_role
 
 - name: Provision database read role schema table select privileges
@@ -217,7 +217,7 @@
     type: table
     privs: SELECT
     objs: ALL_IN_SCHEMA
-    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
   tags: simple_postgres_database_read_role
 
 - name: Provision database read role schema sequence select privileges
@@ -233,7 +233,7 @@
     type: sequence
     privs: SELECT
     objs: ALL_IN_SCHEMA
-    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    roles: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
   tags: simple_postgres_database_read_role
 
 # Read users
@@ -244,7 +244,7 @@
     login_user: "{{ simple_postgres_admin_user }}"
     login_password: "{{ simple_postgres_admin_password }}"
 
-    role: "{{ simple_postgres_database.read_role | default(simple_postgres_database.name + '_read') }}"
+    role: "{{ simple_postgres_database.read_role | default(simple_postgres_database_read_role) }}"
     members: "{{ simple_postgres_database_read_users }}"
     strict_membership: true
   tags:
@@ -262,7 +262,7 @@
     login_user: "{{ simple_postgres_admin_user }}"
     login_password: "{{ simple_postgres_admin_password }}"
 
-    name: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    name: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
     role_attr_flags: NOLOGIN
     no_password_changes: true # attempts to ... WITH ENCRYPTED PASSWORD NULL ... on RDS
   tags: simple_postgres_database_admin_role
@@ -278,7 +278,7 @@
     database: "{{ simple_postgres_database.name }}"
     type: database
     privs: ALL
-    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
   tags: simple_postgres_database_admin_role
 
 - name: Provision database admin role schema privileges
@@ -293,7 +293,7 @@
     type: schema
     objs: public
     privs: ALL
-    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
   tags: simple_postgres_database_admin_role
 
 # Use default privileges to grant access to tables added in the future
@@ -312,7 +312,7 @@
     schema: public
     privs: ALL
     objs: TABLES,SEQUENCES
-    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
   tags: simple_postgres_database_admin_role
 
 - name: Provision database admin role schema privileges
@@ -328,7 +328,7 @@
     type: table
     privs: ALL
     objs: ALL_IN_SCHEMA
-    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
   tags: simple_postgres_database_admin_role
 
 - name: Provision database admin role schema sequence privileges
@@ -344,7 +344,7 @@
     type: sequence
     privs: ALL
     objs: ALL_IN_SCHEMA
-    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    roles: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
   tags: simple_postgres_database_admin_role
 
 # Admin users
@@ -355,7 +355,7 @@
     login_user: "{{ simple_postgres_admin_user }}"
     login_password: "{{ simple_postgres_admin_password }}"
 
-    role: "{{ simple_postgres_database.admin_role | default(simple_postgres_database.name + '_admin') }}"
+    role: "{{ simple_postgres_database.admin_role | default(simple_postgres_database_admin_role) }}"
     members: "{{ simple_postgres_database_admin_users }}"
     strict_membership: true
   tags:
