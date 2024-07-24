@@ -11,7 +11,7 @@
         login_user: "{{ oodikone_postgres_admin_user }}"
         login_password: "{{ oodikone_postgres_admin_password }}"
 
-        db: user-db
+        db: "{{ oodikone_postgres_user_db_database.name }}"
         query: |
           INSERT INTO users (
             full_name,

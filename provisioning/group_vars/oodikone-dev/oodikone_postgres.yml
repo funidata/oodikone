@@ -1,0 +1,9 @@
+oodikone_postgres_username: oodikone
+oodikone_postgres_password: "{{ postgres_passwords[oodikone_postgres_username] }}"
+
+oodikone_postgres_prefix: oodikone_dev
+
+oodikone_postgres_db_dumps:
+  kone-db: files/oodikone-postgres/kone-db.sqz
+  sis-db: files/oodikone-postgres/sis-db.sqz
+  user-db: files/oodikone-postgres/user-db.sqz

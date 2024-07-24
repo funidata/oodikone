@@ -32,7 +32,7 @@
 - name: Generate env secrets
   copy:
     content: |
-      DB_PASSWORD={{ sis_importer_postgres_password }}
+      DB_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
     dest: /opt/sis-importer-db-api/secrets.env
     owner: root
     group: sis-importer
@@ -58,10 +58,10 @@
     network_mode: host
     user: "{{ sis_importer_uid }}:{{ sis_importer_gid }}"
     env:
-      DB_USERNAME: "{{ sis_importer_postgres_username }}"
+      DB_USERNAME: "{{ sis_importer_postgres_importer_db_database.user }}"
       DB_PORT: "{{ sis_importer_postgres_port | to_json }}"
       DB_HOST: "{{ sis_importer_postgres_host }}"
-      DB_DATABASE: "{{ sis_importer_postgres_database }}"
+      DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SIS_API_URL: "{{ sis_importer_sis_host }}"
     env_file: /opt/sis-importer-db-api/secrets.env

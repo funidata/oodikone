@@ -33,6 +33,9 @@
       CRYPT_KEY={{ oodikone_crypt_key }}
       SECRET_TOKEN={{ oodikone_secret_token }}
       SIS_GRAPHQL_APPLICATION_KEY={{ oodikone_sis_application_account_key }}
+      DB_URL_KONE=postgres://{{ oodikone_postgres_kone_db_database.user }}:{{ oodikone_postgres_kone_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_kone_db_database.name }}
+      DB_URL_USER=postgres://{{ oodikone_postgres_user_db_database.user }}:{{ oodikone_postgres_user_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_user_db_database.name }}
+      SIS_DB_URL=postgres://{{ oodikone_postgres_sis_db_database.user }}:{{ oodikone_postgres_sis_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_sis_db_database.name }}
     dest: /opt/oodikone-backend/secrets.env
     owner: root
     group: oodikone
@@ -70,9 +73,6 @@
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
       FRONT_URL: "http://localhost:{{ oodikone_frontend_http_port }}"
-      DB_URL_KONE: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/kone-db"
-      DB_URL_USER: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/user-db"
-      SIS_DB_URL: "postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db"
       REDIS: localhost
       SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
       IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
