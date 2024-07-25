@@ -71,7 +71,6 @@
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
       SERVICE_PROVIDER: 'Fd'
-      REACT_APP_SERVICE_PROVIDER: 'Fd'
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:

@@ -79,13 +79,14 @@
       JAMI_URL: 'http://jami:3003/' # TODO
       SERVICE_PROVIDER: 'Fd'
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
+      SIS_HOST: "{{ oodikone_sis_host }}"
+      SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
+      ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
       NODE_ENV: development # changing this to production breaks login
       REACT_APP_STAGING: 'false'
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
-      SIS_HOST: "{{ oodikone_sis_host }}"
-      SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
-      ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
+      SENTRY_DSN: ''
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:

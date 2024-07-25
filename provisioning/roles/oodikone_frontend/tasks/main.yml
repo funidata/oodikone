@@ -42,7 +42,6 @@
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
-      SERVICE_PROVIDER: 'Fd' # TODO: Remove
       NODE_ENV: development
       REACT_APP_SERVICE_PROVIDER: 'Fd'
       REACT_APP_STAGING: 'false'
