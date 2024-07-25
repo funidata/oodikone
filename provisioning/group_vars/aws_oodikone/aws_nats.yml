@@ -1,0 +1,2 @@
+aws_nats_lvm_filesystem_size: 2g
+aws_nats_data_path: /srv/nats

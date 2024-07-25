@@ -24,6 +24,19 @@
   with_items:
     - /opt/oodikone-sis-updater-scheduler
 
+- name: Generate env secrets
+  copy:
+    content: |
+      SIS_IMPORTER_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
+      SIS_NATS_TOKEN={{ nats_auth_token }}
+      SECRET_TOKEN={{ oodikone_secret_token }}
+    dest: /opt/oodikone-sis-updater-scheduler/secrets.env
+    owner: root
+    group: oodikone
+    mode: 0640
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: oodikone_sis_updater_scheduler_secret_envs
+
 - name: Pull oodikone.sis-updater-scheduler Docker image
   docker_image:
     name: "{{ oodikone_sis_updater_scheduler_docker_image }}"
@@ -41,15 +54,13 @@
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
-      REDIS_URI: //localhost:{{ valkey_port }}
-      SECRET_TOKEN: dev
-      SIS_IMPORTER_DATABASE: sis-importer-db # TODO sis-importer
-      SIS_IMPORTER_HOST: "{{ oodikone_postgres_host }}"
-      SIS_IMPORTER_PASSWORD: "{{ oodikone_postgres_password }}"
-      SIS_IMPORTER_USER: "{{ oodikone_postgres_username }}"
-      SIS_NATS_TOKEN: dev
-      SIS_NATS_URI: sis-updater-nats://localhost:4222
-      HOSTNAME: "{{ oodikone_site }}-scheduler" # this defines CLIENT_ID
+      REDIS_URI: "{{ oodikone_valkey_uri }}"
+      SIS_IMPORTER_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
+      SIS_IMPORTER_HOST: "{{ sis_importer_postgres_host }}"
+      SIS_IMPORTER_USER: "{{ sis_importer_postgres_importer_db_database.user }}" # TODO should probably be a read only user
+      SIS_NATS_URI: "{{ oodikone_nats_uri }}"
+      HOSTNAME: "{{ oodikone_site }}-scheduler" # defines NATS client_id
+    env_file: /opt/oodikone-sis-updater-scheduler/secrets.env
     read_only: true
     tmpfs:
       - /tmp

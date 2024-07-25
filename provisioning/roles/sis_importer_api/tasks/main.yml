@@ -1,0 +1,84 @@
+- name: System group
+  group:
+    gid: "{{ sis_importer_gid }}"
+    name: sis-importer
+    state: present
+    system: true
+  tags:
+    - sis_importer_api_user
+
+- name: System user
+  user:
+    uid: "{{ sis_importer_uid }}"
+    name: sis-importer
+    group: sis-importer
+    state: present
+    system: true
+    create_home: false
+  tags:
+    - sis_importer_api_user
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: sis-importer
+  with_items:
+    - /opt/sis-importer-api
+    - /opt/sis-importer-api/config
+
+- name: Generate env secrets
+  copy:
+    content: |
+      DB_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
+      NATS_TOKEN={{ sis_importer_nats_auth_token }}
+      SIS_API_PASSWORD={{ sis_importer_sis_integration_user_password }}
+    dest: /opt/sis-importer-api/secrets.env
+    owner: root
+    group: sis-importer
+    mode: 0640
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: sis_importer_api_secret_envs
+
+## backend
+- name: Pull backend Docker image
+  docker_image:
+    name: "{{ sis_importer_api_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: sis_importer_api_docker_image
+
+- name: Deploy api Docker container
+  docker_container:
+    name: sis-importer.api
+    image: "{{ sis_importer_api_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ sis_importer_uid }}:{{ sis_importer_gid }}"
+    env:
+      DB_USERNAME: "{{ sis_importer_postgres_importer_db_database.user }}"
+      DB_PORT: "{{ sis_importer_postgres_port | to_json }}"
+      DB_HOST: "{{ sis_importer_postgres_host }}"
+      DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
+      NATS_URI: "{{ sis_importer_nats_uri }}"
+      REDIS_URI: "{{ sis_importer_valkey_uri }}"
+      SONIC: "{{ sis_importer_api_sonic | default(0) | to_json }}"
+      HOSTNAME: "{{ sis_importer_site }}-api" # defines NATS client_id
+      SIS_API_URL: "{{ sis_importer_sis_host }}"
+      SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
+      SERVICE_PROVIDER: 'Fd'
+      REACT_APP_SERVICE_PROVIDER: 'Fd'
+    env_file: /opt/sis-importer-api/secrets.env
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'sis-importer.api' }) }}"
+  register: sis_importer_api_docker_container
+  tags: sis_importer_api_docker_container

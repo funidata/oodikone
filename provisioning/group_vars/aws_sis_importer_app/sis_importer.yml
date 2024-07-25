@@ -1,0 +1,2 @@
+sis_importer_gid: "{{ system_users['sis-importer'].gid }}"
+sis_importer_uid: "{{ system_users['sis-importer'].uid }}"

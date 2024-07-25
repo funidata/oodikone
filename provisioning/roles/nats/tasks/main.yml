@@ -1,0 +1,80 @@
+- name: System group
+  group:
+    gid: "{{ nats_gid }}"
+    name: nats
+    state: present
+    system: true
+  tags:
+    - nats_user
+
+- name: System user
+  user:
+    uid: "{{ nats_uid }}"
+    name: nats
+    group: nats
+    state: present
+    system: true
+    create_home: false
+  tags:
+    - nats_user
+
+- name: Config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0750
+    owner: root
+    group: nats
+  with_items:
+    - /opt/nats
+
+- name: Create NATS secrets configuration file
+  copy:
+    content: |
+      authorization: {
+        token: {{ nats_auth_token }}
+      }
+    dest: /opt/nats/nats.cfg
+    owner: root
+    group: nats
+    mode: 0640
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: nats_secrets
+
+- name: Data directory
+  file:
+    path: "{{ aws_nats_data_path }}/datastore"
+    state: directory
+    owner: root
+    group: "{{ nats_gid }}"
+    mode: 0775
+
+- name: Pull NATS Docker image
+  docker_image:
+    name: "{{ nats_docker_image }}"
+    state: present
+    source: pull
+    force_source: yes
+  tags: nats_docker_image
+
+- name: Deploy NATS Docker container
+  docker_container:
+    name: nats
+    image: "{{ nats_docker_image }}"
+    state: started
+    restart_policy: unless-stopped
+    network_mode: host
+    user: "{{ nats_uid }}:{{ nats_gid }}"
+    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} -sc /opt/nats/nats.cfg --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs 0 -store file -dir /datastore"
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - "{{ aws_nats_data_path }}/datastore:/datastore:rw"
+      - "/opt/nats:/opt/nats:ro"
+    cap_drop:
+      - net_raw
+    log_driver: "{{ docker_log_driver }}"
+    log_options: "{{ docker_log_opts | combine({ 'tag': 'nats' }) }}"
+  register: nats_docker_container
+  tags: nats_docker_container

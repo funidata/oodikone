@@ -1,0 +1,16 @@
+simple_postgres_database_password_changes: false # default to not trigger spurious "changed" on AWS RDS
+
+simple_postgres_database_encoding: UTF8
+simple_postgres_database_locale: en_US.UTF-8
+
+simple_postgres_database_user_pgaudit_log: "ROLE,DDL"
+
+simple_postgres_database_extensions:
+  - name: pg_stat_statements
+  - name: pgaudit
+
+simple_postgres_database_settings:
+  TimeZone: 'UTC'
+
+simple_postgres_database_read_role: "{{ simple_postgres_database.name}}_read"
+simple_postgres_database_admin_role: "{{ simple_postgres_database.name}}_admin"

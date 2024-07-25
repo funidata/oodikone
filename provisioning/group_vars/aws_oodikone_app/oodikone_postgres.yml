@@ -1,0 +1,14 @@
+oodikone_postgres_kone_db_database:
+  name: "{{ oodikone_postgres_prefix }}_kone-db"
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"
+
+oodikone_postgres_sis_db_database:
+  name: "{{ oodikone_postgres_prefix }}_sis-db"
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"
+
+oodikone_postgres_user_db_database:
+  name: "{{ oodikone_postgres_prefix }}_user-db"
+  user: "{{ oodikone_postgres_username }}"
+  password: "{{ oodikone_postgres_password }}"

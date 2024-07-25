@@ -28,17 +28,20 @@
 - name: Generate env secrets
   copy:
     content: |
-      IMPORTER_DB_API_TOKEN={{ oodikone_imported_db_api_token }}
+      IMPORTER_DB_API_TOKEN={{ oodikone_importer_db_api_token }}
       PATE_TOKEN={{ oodikone_pate_token }}
       CRYPT_KEY={{ oodikone_crypt_key }}
-    dest: /opt/{{ item }}/secrets.env
+      SECRET_TOKEN={{ oodikone_secret_token }}
+      SIS_GRAPHQL_APPLICATION_KEY={{ oodikone_sis_application_account_key }}
+      DB_URL_KONE=postgres://{{ oodikone_postgres_kone_db_database.user }}:{{ oodikone_postgres_kone_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_kone_db_database.name }}
+      DB_URL_USER=postgres://{{ oodikone_postgres_user_db_database.user }}:{{ oodikone_postgres_user_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_user_db_database.name }}
+      SIS_DB_URL=postgres://{{ oodikone_postgres_sis_db_database.user }}:{{ oodikone_postgres_sis_db_database.password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/{{ oodikone_postgres_sis_db_database.name }}
+    dest: /opt/oodikone-backend/secrets.env
     owner: root
     group: oodikone
     mode: 0640
-  with_items:
-    - oodikone-backend
-    - oodikone-frontend
-  tags: oodikone_secret_envs
+  diff: "{{ diff_secrets | default(false) }}"
+  tags: oodikone_backend_secret_envs
 
 ## backend
 - name: Pull backend Docker image
@@ -49,6 +52,17 @@
     force_source: yes
   tags: oodikone_backend_docker_image
 
+- name: Generate backend organisationConfig
+  copy:
+    content: |
+      {{ oodikone_backend_organisation_config | to_nice_json }}
+    dest: /opt/oodikone-backend/config/organizationConfig.json
+    owner: root
+    group: oodikone
+    mode: 0644
+  tags: oodikone_backend_configs_json
+
+
 - name: Deploy backend Docker container
   docker_container:
     name: oodikone.backend
@@ -58,26 +72,24 @@
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
-      FRONT_URL: http://localhost:{{ oodikone_frontend_http_port }}
-      DB_URL_KONE: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/kone-db
-      DB_URL_USER: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/user-db
-      SIS_DB_URL: postgres://{{ oodikone_postgres_username }}:{{ oodikone_postgres_password }}@{{ oodikone_postgres_host }}:{{ oodikone_postgres_port }}/sis-db
+      FRONT_URL: "http://localhost:{{ oodikone_frontend_http_port }}"
       REDIS: localhost
-      SECRET_TOKEN: dev
-      SIS_UPDATER_URL: http://sis-updater-scheduler:8082 # TODO
-      IMPORTER_DB_API_URL: 'https://localhost:3005' # TODO
+      SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
+      IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
       JAMI_URL: 'http://jami:3003/' # TODO
       SERVICE_PROVIDER: 'Fd'
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
-      NODE_ENV: development
+      NODE_ENV: development # changing this to production breaks login
       REACT_APP_STAGING: 'false'
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
-      SIS_HOST: ''
-      SIS_GRAPHQL_APPLICATION_ACCOUNT: ''
-      SIS_GRAPHQL_APPLICATION_KEY: ''
+      SIS_HOST: "{{ oodikone_sis_host }}"
+      SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
+      ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
+    volumes:
+      - /opt/oodikone-backend/config:/opt/app-root/src/dist/src/environment:ro
     tmpfs:
       - /tmp
     cap_drop:

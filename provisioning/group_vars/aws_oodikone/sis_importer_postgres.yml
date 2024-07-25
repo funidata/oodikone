@@ -1,0 +1,7 @@
+sis_importer_postgres_host: "{{ aws_rds_primary }}"
+sis_importer_postgres_port: 5432
+
+sis_importer_postgres_importer_db_database:
+  name: "{{ sis_importer_postgres_prefix }}_importer-db"
+  user: "{{ sis_importer_postgres_username }}"
+  password: "{{ sis_importer_postgres_password }}"

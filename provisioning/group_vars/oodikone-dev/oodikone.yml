@@ -1,17 +1,33 @@
 oodikone_site: oodikone-dev
-
 oodikone_server_name: oodikone-dev.funidata.fi
+
+oodikone_sis_application_account: fd-oodikone-dev-01
+oodikone_sis_host: https://sis-demo.funidata.fi
+oodikone_root_org_id: testu-university-root-id
 
 oodikone_version: production
 
+# manually built images
+oodikone_infra_version: fd-infra-20240712-04
 oodikone_backend_docker_image: "quay.io/toska/oodikone-backend:{{ oodikone_version }}"
+# oodikone_backend_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/oodikone-backend:{{ oodikone_infra_version }}"
 oodikone_frontend_docker_image: "quay.io/toska/oodikone-frontend:{{ oodikone_version }}"
+# oodikone_frontend_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/oodikone-frontend:{{ oodikone_infra_version }}"
 
 oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
+
 oodikone_sis_updater_scheduler_docker_image: "quay.io/toska/updater-scheduler:{{ oodikone_version }}"
 oodikone_sis_updater_worker_docker_image: "quay.io/toska/updater-worker:{{ oodikone_version }}"
+# oodikone_sis_updater_scheduler_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/updater-scheduler:{{ oodikone_infra_version }}"
+# oodikone_sis_updater_worker_docker_image: "637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone/updater-worker:{{ oodikone_infra_version }}"
 
-oodikone_postgres_database: oodikone
+oodikone_nats_uri: "{{ nats_cid }}://localhost:4222"
+oodikone_valkey_uri: "//localhost:{{ valkey_port }}"
+
+oodikone_sis_updater_scheduler_url: http://localhost:8082
+oodikone_sis_importer_db_api_url: "http://{{ importer_db_api_host }}:3000"
+
+# oodikone_postgres_database: oodikone
 
 oodikone_nginx_identity_providers:
   - "{{ oodikone_nginx_env_configs_identityProvider_SIS }}"
@@ -41,3 +57,14 @@ oodikone_app_users:
     roles:
       - basic
     programme_rights: []
+
+oodikone_backend_organisation_config:
+  facultyCodes: 
+    - '01'
+    - 'KTT'
+    - 'HTK'
+    - 'EPÄTOIVO1001'
+    - 'TSKK-TL'
+    - 'grr'
+  magicFacultyCode: '01'
+  ignoredFacultyCodes: []
