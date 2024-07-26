@@ -1,0 +1,12 @@
+- name: List running {{ title }} containers
+  check_mode: no # always run
+  command: docker container ls {% raw %}--format '{{.Names}}'{% endraw %}{% for filter in filters %} --filter {{ filter | quote }}{% endfor %}
+  register: list_containers
+  changed_when: list_containers.rc is defined and list_containers.rc == 0 and list_containers.stdout_lines is defined and (list_containers.stdout_lines | length) > 0
+  failed_when: list_containers.rc != 0
+
+- name: Stop running {{ title }} containers
+  vars:
+    containers: "{{ list_containers.stdout_lines | difference(exclude_containers | default([])) }}"
+  command: docker container stop {{ containers | join(' ') }}
+  when: containers

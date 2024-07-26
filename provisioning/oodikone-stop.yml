@@ -1,0 +1,43 @@
+- hosts: aws_oodikone_app
+  tasks:
+    - name: Stop Oodikone
+      import_tasks:
+        file: tasks/docker/stop_containers.yml
+      vars:
+        title: Oodikone
+        filters:
+          - label=fi.funidata.oodikone.deploy
+      tags: oodikone_backends
+
+    - name: Stop Oodikone infra containers
+      import_tasks:
+        file: tasks/docker/stop_containers.yml
+      vars:
+        title: Oodikone infra
+        filters:
+          - name=nats
+          - name=nginx
+          - name=shibboleth-sp-authorizer
+          - name=shibboleth-sp-responder
+          - name=shibboleth-sp
+          - name=valkey
+      tags: oodikone_infra
+
+    - name: Stop sis-importer
+      import_tasks:
+        file: tasks/docker/stop_containers.yml
+      vars:
+        title: Sis-importer
+        filters:
+          - label=fi.funidata.sis-importer.deploy
+      tags: sis_importer_backends
+
+    - name: Stop Sis-importer infra containers
+      import_tasks:
+        file: tasks/docker/stop_containers.yml
+      vars:
+        title: Sis-importer infra
+        filters:
+          - name=nats
+          - name=valkey
+      tags: sis_importer_infra

@@ -1,0 +1,11 @@
+- name: List all {{ title }} containers
+  check_mode: no # always run
+  command: docker container ls --all {% raw %}--format '{{.Names}}'{% endraw %}{% for filter in filters %} --filter {{ filter }}{% endfor %}
+  register: list_containers
+  changed_when: list_containers.stdout_lines
+
+- name: Start all {{ title }} containers
+  vars:
+    containers: "{{ list_containers.stdout_lines }}"
+  command: docker container start {{ containers | join(' ') }}
+  when: containers
