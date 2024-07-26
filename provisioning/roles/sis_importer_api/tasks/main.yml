@@ -55,6 +55,10 @@
   docker_container:
     name: sis-importer.api
     image: "{{ sis_importer_api_docker_image }}"
+    labels:
+      fi.funidata.sis-importer.application: api
+      fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
+      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host

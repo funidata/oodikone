@@ -37,6 +37,10 @@
   docker_container:
     name: oodikone.frontend
     image: "{{ oodikone_frontend_docker_image }}"
+    labels:
+      fi.funidata.oodikone.application: frontend
+      fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
+      fi.funidata.oodikone.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
