@@ -45,13 +45,6 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
-    env:
-      NODE_ENV: development
-      REACT_APP_SERVICE_PROVIDER: 'Fd'
-      REACT_APP_STAGING: 'false'
-      REACT_APP_SENTRY_ENVIRONMENT: ''
-      REACT_APP_SENTRY_RELEASE: ''
-      REACT_APP_SENTRY_DSN: ''
     read_only: true
     tmpfs:
       - /tmp
