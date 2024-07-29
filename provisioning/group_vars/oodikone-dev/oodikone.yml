@@ -9,6 +9,8 @@ oodikone_version: fd-infra-20240726 #staging
 # oodikone_registry_base: quay.io/toska
 oodikone_registry_base: 637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone
 
+oodikone_use_basepath: true
+
 oodikone_backend_docker_image: "{{ oodikone_registry_base }}/oodikone-backend:{{ oodikone_version }}"
 oodikone_frontend_docker_image: "{{ oodikone_registry_base }}/oodikone-frontend:{{ oodikone_version }}"
 

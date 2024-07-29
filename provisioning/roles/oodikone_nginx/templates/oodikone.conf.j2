@@ -63,7 +63,7 @@ server {
     }
 
 
-{% if 'staging' == oodikone_version %}
+{% if oodikone_use_basepath %}
     location = / {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
@@ -72,9 +72,19 @@ server {
 
         return 301 /oodikone;
     }
+
+    # staging image should default to basepath /oodikone but some requests go to /api
+    location /api/ {
+        shib_request @shibauthorizer;
+        shib_request_use_headers on;
+
+        include /etc/nginx/backend.conf;
+
+        proxy_pass http://oodikone-backend/api/;
+    }
 {% endif %}
 
-    location /{% if 'staging' == oodikone_version %}oodikone/{% endif%} {
+    location /{% if oodikone_use_basepath %}oodikone/{% endif%} {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
@@ -87,7 +97,7 @@ server {
         }
     }
 
-    location /{% if 'staging' == oodikone_version %}oodikone/{% endif%}api/ {
+    location /{% if oodikone_use_basepath %}oodikone/{% endif%}api/ {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
 
