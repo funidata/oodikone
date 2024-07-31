@@ -66,7 +66,7 @@
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-worker" # defines NATS client_id
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
-      STAGING: 'true' # should prevent https://funidata.atlassian.net/browse/OOD-13
+      SERVICE_PROVIDER: fd
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''

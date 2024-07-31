@@ -64,7 +64,7 @@
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_importer_db_database.user }}" # TODO should probably be a read only user
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-scheduler" # defines NATS client_id
-      STAGING: 'true' # should prevent https://funidata.atlassian.net/browse/OOD-13
+      SERVICE_PROVIDER: fd
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''

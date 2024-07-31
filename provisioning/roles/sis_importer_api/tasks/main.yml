@@ -74,8 +74,7 @@
       HOSTNAME: "{{ sis_importer_site }}-api" # defines NATS client_id
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
-      SERVICE_PROVIDER: 'Fd'
-      STAGING: 'true' # https://funidata.atlassian.net/browse/OOD-13
+      SERVICE_PROVIDER: fd
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:

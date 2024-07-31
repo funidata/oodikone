@@ -5,9 +5,9 @@ oodikone_sis_application_account: fd-oodikone-dev-01
 oodikone_sis_host: https://sis-demo.funidata.fi
 oodikone_root_org_id: testu-university-root-id
 
-oodikone_version: fd-infra-20240726-02
+oodikone_version: fd-infra-20240731
 # containers have been built with staging = 'true', use staging configuration in oodikone_nginx
-oodikone_staging: true
+oodikone_staging: false
 
 # oodikone_registry_base: quay.io/toska
 oodikone_registry_base: 637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone

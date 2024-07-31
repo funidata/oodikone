@@ -68,7 +68,7 @@
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SIS_API_URL: "{{ sis_importer_sis_host }}"
-      STAGING: 'true' # https://funidata.atlassian.net/browse/OOD-13
+      SERVICE_PROVIDER: fd
     env_file: /opt/sis-importer-db-api/secrets.env
     read_only: true
     tmpfs:

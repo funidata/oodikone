@@ -70,7 +70,7 @@
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       HOSTNAME: "{{ sis_importer_site }}-mankeli" # defines NATS client_id
-      STAGING: 'true' # https://funidata.atlassian.net/browse/OOD-13
+      SERVICE_PROVIDER: fd
     env_file: /opt/sis-importer-mankeli/secrets.env
     read_only: true
     tmpfs:
