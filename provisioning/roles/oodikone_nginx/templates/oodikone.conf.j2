@@ -64,13 +64,8 @@ server {
 
 
 {% if oodikone_use_basepath %}
-    location = / {
-        shib_request @shibauthorizer;
-        shib_request_use_headers on;
-
-        include /etc/nginx/backend.conf;
-
-        return 301 /oodikone;
+    location / {
+        rewrite ^/(.*)$ /oodikone/$1 permanent;
     }
 
     # staging image should default to basepath /oodikone but some requests go to /api
