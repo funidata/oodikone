@@ -63,7 +63,8 @@ server {
     }
 
 
-{% if oodikone_use_basepath %}
+
+{% if oodikone_staging %}
     location / {
         rewrite ^/(.*)$ /oodikone/$1 permanent;
     }
@@ -79,7 +80,8 @@ server {
     }
 {% endif %}
 
-    location /{% if oodikone_use_basepath %}oodikone/{% endif%} {
+
+    location /{% if oodikone_staging %}oodikone/{% endif%} {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
@@ -92,7 +94,7 @@ server {
         }
     }
 
-    location /{% if oodikone_use_basepath %}oodikone/{% endif%}api/ {
+    location /{% if oodikone_staging %}oodikone/{% endif%}api/ {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
 
