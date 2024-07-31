@@ -65,6 +65,7 @@
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-scheduler" # defines NATS client_id
       SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ oodikone_node_env }}"
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''

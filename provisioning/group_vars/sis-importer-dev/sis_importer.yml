@@ -3,7 +3,9 @@ sis_importer_site: sis-importer-dev
 sis_importer_sis_host: https://sis-demo.funidata.fi
 sis_importer_sis_integration_user: funidata-oodikone-dev.e
 
-sis_importer_version: fd-infra-20240726-02
+sis_importer_version: infra-dev-20240731-03
+sis_importer_node_env: production
+
 sis_importer_registry_base: 637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer
 
 sis_importer_mankeli_docker_image: "{{ sis_importer_registry_base }}/importer-mankeli:{{ sis_importer_version }}"

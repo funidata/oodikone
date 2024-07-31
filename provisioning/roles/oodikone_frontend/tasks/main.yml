@@ -42,7 +42,7 @@
       fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
       fi.funidata.oodikone.site: "{{ oodikone_site }}"
     env:
-      NODE_ENV: production
+      NODE_ENV: "{{ oodikone_node_env }}"
       REACT_APP_SERVICE_PROVIDER: fd
     state: started
     restart_policy: unless-stopped

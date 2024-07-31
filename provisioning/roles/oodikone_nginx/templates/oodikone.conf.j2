@@ -76,7 +76,7 @@ server {
 
         include /etc/nginx/backend.conf;
 
-        proxy_pass http://oodikone-backend/api/;
+        proxy_pass http://oodikone-backend/{% if oodikone_node_env == 'development' %}api/{% endif %};
     }
 {% endif %}
 
@@ -100,6 +100,6 @@ server {
 
         include /etc/nginx/backend.conf;
 
-        proxy_pass http://oodikone-backend/api/;
+        proxy_pass http://oodikone-backend/{% if oodikone_node_env == 'development' %}api/{% endif %};
     }
 }

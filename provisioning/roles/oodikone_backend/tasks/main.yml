@@ -86,7 +86,7 @@
       SIS_HOST: "{{ oodikone_sis_host }}"
       SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
-      NODE_ENV: production
+      NODE_ENV: "{{ oodikone_node_env }}"
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''

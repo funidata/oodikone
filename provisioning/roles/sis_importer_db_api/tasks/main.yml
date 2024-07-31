@@ -69,6 +69,7 @@
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ sis_importer_node_env }}"
     env_file: /opt/sis-importer-db-api/secrets.env
     read_only: true
     tmpfs:

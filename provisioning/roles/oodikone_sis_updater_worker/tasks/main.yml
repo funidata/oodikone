@@ -67,6 +67,7 @@
       HOSTNAME: "{{ oodikone_site }}-worker" # defines NATS client_id
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
       SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ oodikone_node_env }}"
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''
