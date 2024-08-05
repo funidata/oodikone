@@ -16,6 +16,7 @@ shibboleth_sp_attribute_prefix: X-Shibboleth-
 
 shibboleth_sp_hosts:
   - name: "{{ oodikone_server_name }}"
+    require_session: true
 
 shibboleth_sp_entityID: "https://{{ oodikone_server_name }}/Shibboleth.sso"
 
@@ -40,6 +41,7 @@ shibboleth_sp_session_initiator_sis_dev:
   name: sis-idp-dev
   location: /SISLogin
   entityID: https://sis-idp-dev.aws-sis-dev.funidata.cloud/idp/shibboleth
+  isDefault: true
 shibboleth_sp_metadata_sis_dev:
   name: sis-idp-dev
   file: files/shibboleth/idp-metadata/sis-idp-dev.xml
