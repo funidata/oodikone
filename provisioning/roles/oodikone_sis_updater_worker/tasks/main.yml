@@ -50,6 +50,10 @@
   docker_container:
     name: oodikone.sis-updater-worker
     image: "{{ oodikone_sis_updater_worker_docker_image }}"
+    labels:
+      fi.funidata.oodikone.application: sis-updater-worker
+      fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
+      fi.funidata.oodikone.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -62,6 +66,11 @@
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-worker" # defines NATS client_id
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
+      SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ oodikone_node_env }}"
+      SENTRY_ENVIRONMENT: ''
+      SENTRY_RELEASE: ''
+      SENTRY_DSN: ''
     env_file: /opt/oodikone-sis-updater-worker/secrets.env
     read_only: true
     tmpfs:

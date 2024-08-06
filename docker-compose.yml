@@ -1,0 +1,68 @@
+
+
+services:
+  
+  oodikone-backend:
+    build:
+      context: ${OODIKONE_REPO:-../oodikone-contrib/services/backend}
+      args:
+        SENTRY_ENVIRONMENT: ''
+        SENTRY_RELEASE: ''
+        SENTRY_DSN: ''
+        SERVICE_PROVIDER: 'Fd' # Not fixed in oodikone to handle lowercase
+        NODE_ENV: 'production'
+    image: ${DOCKER_OODIKONE_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone}/oodikone-backend:${DOCKER_IMAGE_TAG:-dev}
+
+  oodikone-frontend:
+    build:
+      context: ${OODIKONE_REPO:-../oodikone-contrib/services/frontend}
+      args:
+        SENTRY_ENVIRONMENT: ''
+        SENTRY_RELEASE: ''
+        SENTRY_DSN: ''
+        SERVICE_PROVIDER: 'fd'
+        NODE_ENV: 'production'
+    image: ${DOCKER_OODIKONE_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone}/oodikone-frontend:${DOCKER_IMAGE_TAG:-dev}
+
+  updater-scheduler:
+    build:
+      context: ${OODIKONE_REPO:-../oodikone-contrib/updater/sis-updater-scheduler}
+      args:
+        SENTRY_ENVIRONMENT: ''
+        SENTRY_RELEASE: ''
+        SENTRY_DSN: ''
+        NODE_ENV: 'production'
+    image: ${DOCKER_OODIKONE_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone}/updater-scheduler:${DOCKER_IMAGE_TAG:-dev}
+  
+  updater-worker:
+    build:
+      context: ${OODIKONE_REPO:-../oodikone-contrib/updater/sis-updater-worker}
+      args:
+        SENTRY_ENVIRONMENT: ''
+        SENTRY_RELEASE: ''
+        SENTRY_DSN: ''
+        SERVICE_PROVIDER: 'fd'
+        NODE_ENV: 'production'
+    image: ${DOCKER_OODIKONE_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone}/updater-worker:${DOCKER_IMAGE_TAG:-dev}
+  
+  importer-api:
+    build:
+      context: ${SIS_IMPORTER_REPO:-../sis-importer-contrib/importer-api}
+      args:
+        NODE_ENV: 'production'
+    image: ${DOCKER_SIS_IMPORTER_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer}/importer-api:${DOCKER_IMAGE_TAG:-dev}
+  
+  importer-mankeli:
+    build:
+      context: ${SIS_IMPORTER_REPO:-../sis-importer-contrib/importer-mankeli}
+      args:
+        NODE_ENV: 'production'
+    image: ${DOCKER_SIS_IMPORTER_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer}/importer-mankeli:${DOCKER_IMAGE_TAG:-dev}
+  
+  importer-db-api:
+    build:
+      context: ${SIS_IMPORTER_REPO:-../sis-importer-contrib/importer-db-api}
+      args:
+        NODE_ENV: 'production'
+    image: ${DOCKER_SIS_IMPORTER_NAMESPACE:-637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer}/importer-db-api:${DOCKER_IMAGE_TAG:-dev}
+  

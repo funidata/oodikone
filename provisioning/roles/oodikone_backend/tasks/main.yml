@@ -67,6 +67,10 @@
   docker_container:
     name: oodikone.backend
     image: "{{ oodikone_backend_docker_image }}"
+    labels:
+      fi.funidata.oodikone.application: backend
+      fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
+      fi.funidata.oodikone.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -77,15 +81,15 @@
       SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
       IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
       JAMI_URL: 'http://jami:3003/' # TODO
-      SERVICE_PROVIDER: 'Fd'
+      SERVICE_PROVIDER: Fd
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"
-      NODE_ENV: development # changing this to production breaks login
-      REACT_APP_STAGING: 'false'
-      SENTRY_ENVIRONMENT: ''
-      SENTRY_RELEASE: ''
       SIS_HOST: "{{ oodikone_sis_host }}"
       SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
+      NODE_ENV: "{{ oodikone_node_env }}"
+      SENTRY_ENVIRONMENT: ''
+      SENTRY_RELEASE: ''
+      SENTRY_DSN: ''
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:

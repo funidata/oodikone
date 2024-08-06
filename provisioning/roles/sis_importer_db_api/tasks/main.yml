@@ -53,6 +53,10 @@
   docker_container:
     name: sis-importer.db-api
     image: "{{ sis_importer_db_api_docker_image }}"
+    labels:
+      fi.funidata.sis-importer.application: db-api
+      fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
+      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -64,6 +68,8 @@
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SIS_API_URL: "{{ sis_importer_sis_host }}"
+      SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ sis_importer_node_env }}"
     env_file: /opt/sis-importer-db-api/secrets.env
     read_only: true
     tmpfs:
@@ -74,3 +80,15 @@
     log_options: "{{ docker_log_opts | combine({ 'tag': 'sis-importer.db-api' }) }}"
   register: sis_importer_db_api_docker_container
   tags: sis_importer_db_api_docker_container
+
+- name: Wait for sis-importer.db-api startup
+  uri:
+    url: "http://127.0.0.1:3000/health"
+    method: GET
+    status_code: [200,403] # backend expects authenticated requests
+  register: result
+  when: not ansible_check_mode
+  until: result.status in [200,403]
+  retries: 60
+  delay: 1
+  tags: sis_importer_db_api_wait

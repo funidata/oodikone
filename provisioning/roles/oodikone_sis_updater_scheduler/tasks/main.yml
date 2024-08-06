@@ -49,6 +49,10 @@
   docker_container:
     name: oodikone.sis-updater-scheduler
     image: "{{ oodikone_sis_updater_scheduler_docker_image }}"
+    labels:
+      fi.funidata.oodikone.application: sis-updater-scheduler
+      fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
+      fi.funidata.oodikone.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -60,6 +64,11 @@
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_importer_db_database.user }}" # TODO should probably be a read only user
       SIS_NATS_URI: "{{ oodikone_nats_uri }}"
       HOSTNAME: "{{ oodikone_site }}-scheduler" # defines NATS client_id
+      SERVICE_PROVIDER: fd
+      NODE_ENV: "{{ oodikone_node_env }}"
+      SENTRY_ENVIRONMENT: ''
+      SENTRY_RELEASE: ''
+      SENTRY_DSN: ''
     env_file: /opt/oodikone-sis-updater-scheduler/secrets.env
     read_only: true
     tmpfs:
