@@ -35,7 +35,7 @@ pipeline {
     buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '100'))
     timestamps()
   }
-
+  // TODO copy repos from toska
   stages {
     stage("Setup") {
       environment {
@@ -188,7 +188,7 @@ pipeline {
     stage("Deploy oodikone-dev") {
       when {
         allOf {
-          branch 'master'
+          branch 'main'
           expression { params.MASTER_DEPLOY_JOB }
         }
       }
