@@ -1,0 +1,94 @@
+pipeline {
+  agent { label 'docker' }
+
+  options {
+    ansiColor('xterm')
+    timestamps()
+  }
+
+  environment {
+    ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -l ${params.ANSIBLE_OODIKONE_HOSTS}"
+    ANSIBLE_FORCE_COLOR = "true"
+
+    // Ansible aws_ec2 inventory plugin settings
+    AWS_EC2_PROFILE = "none" // use IAM account credentials from env
+
+    // container for ansible-playbooks, build locally
+    DOCKER_IMAGE_NAMESPACE = "${AWS_ECR_REGISTRY}/oodikone"
+    DOCKER_IMAGE_TAG = "${env.BUILD_TAG}"
+    DOCKER_IMAGE_NAME = "${env.DOCKER_IMAGE_NAMESPACE}/provisioning:${env.DOCKER_IMAGE_TAG}"
+
+    DOCKER_AGENT_ARGS = "--net=host --name=jenkins-agent.${env.BUILD_TAG}.provisioning --read-only --tmpfs /tmp:exec"
+  }
+
+  stages {
+    stage("Setup") {
+      environment {
+        // Enable new feature for secret build argument
+        DOCKER_BUILDKIT = "1"
+        BUILD_UID = "${UID}"
+        BUILD_GID = "${GID}"
+
+        TMP_PATH = pwd(tmp: true)
+      }
+
+      options {
+        withCredentials([
+          usernamePassword(
+            credentialsId: params.GITHUB_CREDENTIALS,
+            usernameVariable: 'GITHUB_USERNAME',
+            passwordVariable: 'GITHUB_TOKEN',
+          )
+        ])
+      }
+
+      steps {
+        dir('provisioning') {
+          sh "env | sort"
+
+          // credentials for private common infra repo
+          sh 'echo "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com" > $TMP_PATH/.git-credentials'
+          sh 'docker build  --build-arg GITHUB_USERNAME=${GITHUB_USERNAME} --build-arg BUILD_UID --build-arg BUILD_GID --secret id=gitcreds,src=$TMP_PATH/.git-credentials -t ${DOCKER_IMAGE_NAME} .'
+        }
+      }
+
+      post {
+        always {
+          dir("${env.TMP_PATH}") {
+            deleteDir()
+          }
+        }
+      }
+    }
+
+    stage("Deploy") {
+      agent {
+        docker {
+          image "${env.DOCKER_IMAGE_NAME}"
+          args "${env.DOCKER_AGENT_ARGS}"
+          reuseNode true
+        }
+      }
+
+      options {
+        withCredentials([
+          usernamePassword(
+            credentialsId: params.AWS_CREDENTIALS,
+            usernameVariable: 'AWS_ACCESS_KEY_ID',
+            passwordVariable: 'AWS_SECRET_ACCESS_KEY',
+          ),
+          file(credentialsId: params.ANSIBLE_VAULT_CREDENTIALS, variable: 'ANSIBLE_VAULT_PASSWORD_FILE'),
+        ])
+      }
+
+      steps {
+        sshagent(credentials: [params.ANSIBLE_SSH_CREDENTIALS]) {
+          dir('provisioning') {
+            sh(script: "${env.ANSIBLE_PLAYBOOK} oodikone-stop.yml")
+            sh(script: "${env.ANSIBLE_PLAYBOOK} aws-oodikone-install.yml -e oodikone_version=${params.VERSION}")
+          }
+        }
+      }
+    }
+  }
+}
