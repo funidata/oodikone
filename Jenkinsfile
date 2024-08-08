@@ -25,7 +25,7 @@ pipeline {
     DOCKER_IMAGE_TAG = "${env.VERSION}"
 
     // used to build only dependent docker image layers
-    DOCKER_BUILDKIT = "1"
+    DOCKER_BUILDKIT = "0"
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     // used for running e2e tests builds if skip-e2e label has not been set
     RUN_E2E_TESTS = "${env.CHANGE_ID ? !pullRequest.labels.contains("skip-e2e") : true}"
