@@ -1,0 +1,31 @@
+plugin: funidata.infra.aws_ec2
+
+aws_profile: aws_oodikone_test
+aws_region: eu-north-1
+
+filters:
+  tag:Environment: aws-oodikone-test
+
+hostname: aws_tags['Hostname']
+ansible_host: aws_private_ipv4
+
+groups:
+  zero: aws_tags.Index | int(-1) == 0
+  one: aws_tags.Index | int(-1) == 1
+  odd: aws_tags.Index | int(-1) is odd
+  even: aws_tags.Index | int(-1) is even
+
+keyed_groups:
+  - prefix: ''
+    separator: ''
+    key: aws_tags.Environment
+    parent_group: aws
+  - prefix: ''
+    separator: ''
+    key: aws_tags.Role
+    parent_group: aws
+
+  - prefix: ''
+    separator: ''
+    key: aws_tags.Group
+    parent_group: "{{ aws_tags.Environment }}"
