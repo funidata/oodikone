@@ -6,3 +6,6 @@ oodikone_postgres_admin_password: "{{ postgres_passwords[oodikone_postgres_admin
 oodikone_postgres_host: "{{ aws_rds_primary }}"
 oodikone_postgres_port: 5432
 oodikone_postgres_user_password_length: 32
+
+oodikone_postgres_username: "{{ oodikone_postgres_prefix }}"
+oodikone_postgres_password: "{{ postgres_passwords[oodikone_postgres_username] }}"

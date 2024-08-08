@@ -1,4 +1,3 @@
 sis_importer_postgres_username: sis-importer
-sis_importer_postgres_password: "{{ postgres_passwords[sis_importer_postgres_username] }}"
 
 sis_importer_postgres_prefix: sis_importer_dev
