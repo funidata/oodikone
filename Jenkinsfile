@@ -29,8 +29,8 @@ pipeline {
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     // used for running e2e tests builds if skip-e2e label has not been set
     RUN_E2E_TESTS = "${env.CHANGE_ID ? !pullRequest.labels.contains("skip-e2e") : true}"
-    OODIKONE_REPO = "${env.OODIKONE_REPO ? env.OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
-    SIS_IMPORTER_REPO = "${env.SIS_IMPORTER_REPO ? env.SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
+    TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
+    TOSKA_SIS_IMPORTER_REPO = "${env.TOSKA_SIS_IMPORTER_REPO ? env.TOSKA_SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
   }
 
   options {
@@ -48,15 +48,15 @@ pipeline {
       steps {
         sh "env | sort"
         sh "pwd"
-        sh "git -C ../oodikone-contrib pull || git clone ${env.OODIKONE_REPO} ../oodikone-contrib"
-        sh "git -C ../sis-importer-contrib pull || git clone ${env.SIS_IMPORTER_REPO} ../sis-importer-contrib"
+        sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
+        sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
     }
 
     stage("Docker build images") {
-      environment {
-        TARGET_BUILD_STAGE = 'prod'
-      }
+      // environment {
+      //   TARGET_BUILD_STAGE = 'prod'
+      // }
 
       steps {
         sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
