@@ -29,15 +29,17 @@ pipeline {
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     // used for running e2e tests builds if skip-e2e label has not been set
     RUN_E2E_TESTS = "${env.CHANGE_ID ? !pullRequest.labels.contains("skip-e2e") : true}"
+    OODIKONE_REPO = "${env.OODIKONE_REPO ? env.OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
+    SIS_IMPORTER_REPO = "${env.SIS_IMPORTER_REPO ? env.SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
   }
 
   options {
     buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '100'))
     timestamps()
   }
-  // TODO copy repos from toska
+
   stages {
-    stage("Setup") {
+    stage("Copy repos") {
       environment {
         WORKER_UID = "${env.UID}"
         WORKER_GID = "${env.GID}"
@@ -45,125 +47,22 @@ pipeline {
 
       steps {
         sh "env | sort"
+        sh "pwd"
+        sh "git clone ${env.OODIKONE_REPO}" ../oodikone-contrib
+        sh "git clone ${env.SIS_IMPORTER_REPO}" ../sis-importer-contrib
+      }
+    }
 
-        // Used during the tests and eventually pushed to ECR
+    stage("Docker build images") {
+      environment {
+        TARGET_BUILD_STAGE = 'prod'
+      }
+
+      steps {
         sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
         sh "docker-compose build importer-api importer-mankeli importer-db-api"
       }
     }
-
-    // stage("Lint") {
-    //   steps {
-    //     sh "docker-compose -f tests/docker-compose.yml run --rm --no-deps into-backend flake8"
-    //     sh "docker-compose -f tests/docker-compose.yml run --rm --no-deps vapa-backend flake8"
-    //   }
-    // }
-
-    // stage("Unit test") {
-    //   steps {
-    //     sh "docker-compose -f tests/docker-compose.yml up into-backend"
-    //     sh "docker-compose -f tests/docker-compose.yml up vapa-backend"
-    //     sh "docker-compose -f tests/docker-compose.yml up into-frontend"
-    //   }
-
-    //   // TODO: some coverage reports?
-    //   post {
-    //     always {
-    //       junit testResults: 'tests/reports/backend/*.xml', checksName: "Backend Unit Tests"
-    //       junit testResults: 'tests/reports/frontend/*.xml', checksName: "Frontend Unit Tests"
-
-    //       publishCoverage(
-    //         adapters: [
-    //           cobertura(
-    //             path: 'tests/reports/backend/coverage/*.xml',
-    //             thresholds: [
-    //               [
-    //                 thresholdTarget: 'Line', 
-    //                 unhealthyThreshold: 0.7, 
-    //                 unstableThreshold: 0.7,
-    //                 failUnhealthy: true
-    //               ],
-    //               [
-    //                 thresholdTarget: 'Class', 
-    //                 unhealthyThreshold: 0.7, 
-    //                 unstableThreshold: 0.7,
-    //                 failUnhealthy: true
-    //               ]
-    //             ]
-    //           )
-    //         ],
-    //         calculateDiffForChangeRequests: true,
-    //       )
-    //     }
-
-    //     cleanup {
-    //       sh "docker-compose -f tests/docker-compose.yml down -v"
-    //     }
-    //   }
-    // }
-
-    // stage("Docker build backends") {
-    //   environment {
-    //     TARGET_BUILD_STAGE = 'prod'
-    //   }
-
-    //   steps {
-    //     sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-    //     sh "docker-compose build importer-api importer-mankeli importer-db-api"
-    //   }
-    // }
-
-    // stage("E2E tests") {
-    //   when {
-    //     environment(name: 'RUN_E2E_TESTS', value: 'true')
-    //   }
-
-    //   stages {
-    //     stage("E2E - Build test containers") {
-    //       environment {
-    //         WORKER_UID = "${env.UID}"
-    //         WORKER_GID = "${env.GID}"
-    //       }
-
-    //       steps {
-    //         sh "docker-compose -f tests/robot-compose.yml build"
-    //       }
-    //     }
-
-    //     stage("E2E test - Firefox") {
-    //       environment {
-    //         ROBOT_BROWSER = "firefox"
-    //       }
-
-    //       steps {
-    //         sh "docker-compose -f tests/robot-compose.yml up -d into-backend vapa-backend"
-    //         sh "docker-compose -f tests/robot-compose.yml run --rm robot-tests"
-    //       }
-
-    //       // TODO: some coverage reports?
-    //       post {
-    //         always {
-    //           junit testResults: "tests/reports/robot/${ROBOT_BROWSER}/junit.xml", checksName: "Firefox E2E Tests"
-    //         }
-
-    //         cleanup {
-    //           sh "docker-compose -f tests/robot-compose.yml down -v"
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    // stage("Docker build remaining prod images") {
-    //   environment {
-    //     TARGET_BUILD_STAGE = 'prod'
-    //   }
-
-    //   steps {
-    //     sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-    //     sh "docker-compose build importer-api importer-mankeli importer-db-api"
-    //   }
-    // }
 
     stage("Docker push to ECR") {
       when {
@@ -202,11 +101,4 @@ pipeline {
       }
     }
   }
-
-//   post {
-//     cleanup {
-//       sh "docker-compose -f tests/docker-compose.yml down -v"
-//       sh "docker-compose -f tests/robot-compose.yml down -v"
-//     }
-//   }
 }
