@@ -69,6 +69,10 @@ pipeline {
         expression { params.AWS_ECR_REGISTRY }
         environment(name: 'PUSH_TO_ECR', value: 'true')
       }
+      
+      environment {
+        DOCKER_CONFIG = "${env.HOME}/.aws-docker"
+      }
 
       steps {
         withCredentials([
