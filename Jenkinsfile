@@ -4,7 +4,7 @@ pipeline {
   parameters {
     // Same registry account and IAM user as for Harri
     string(name: "AWS_ECR_REGISTRY", defaultValue: '637423527834.dkr.ecr.eu-north-1.amazonaws.com', description: "AWS ECR registry")
-    string(name: "AWS_ECR_CREDENTIALS",  defaultValue: 'aws-oodikone.iam.oodikone-jenkins-dev', description: "Jenkins credentials for AWS ECR")
+    string(name: "AWS_ECR_CREDENTIALS",  defaultValue: 'aws-oodikone.dev.iam.oodikone-jenkins-dev', description: "Jenkins credentials for AWS ECR")
   
     string(name: "MASTER_DEPLOY_JOB", defaultValue: 'oodikone-dev', description: "Trigger job for main branch deploy")
   }
