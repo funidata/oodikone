@@ -48,8 +48,8 @@ pipeline {
       steps {
         sh "env | sort"
         sh "pwd"
-        sh "git clone ${env.OODIKONE_REPO}" ../oodikone-contrib
-        sh "git clone ${env.SIS_IMPORTER_REPO}" ../sis-importer-contrib
+        sh "git clone ${env.OODIKONE_REPO} ../oodikone-contrib"
+        sh "git clone ${env.SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
     }
 
