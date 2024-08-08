@@ -23,15 +23,6 @@ pipeline {
 
   stages {
     stage("Setup") {
-      environment {
-        // Enable new feature for secret build argument
-        DOCKER_BUILDKIT = "1"
-        BUILD_UID = "${UID}"
-        BUILD_GID = "${GID}"
-
-        TMP_PATH = pwd(tmp: true)
-      }
-
       options {
         withCredentials([
           usernamePassword(
@@ -45,18 +36,8 @@ pipeline {
       steps {
         dir('provisioning') {
           sh "env | sort"
-
-          // credentials for private common infra repo
-          sh 'echo "https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com" > $TMP_PATH/.git-credentials'
-          sh 'docker build  --build-arg GITHUB_USERNAME=${GITHUB_USERNAME} --build-arg BUILD_UID --build-arg BUILD_GID --secret id=gitcreds,src=$TMP_PATH/.git-credentials -t ${DOCKER_IMAGE_NAME} .'
-        }
-      }
-
-      post {
-        always {
-          dir("${env.TMP_PATH}") {
-            deleteDir()
-          }
+          // build provisioning image using GITHUB_USERNAME env and GITHUB_TOKEN secret
+          sh "./docker-compose.sh build provisioning"
         }
       }
     }

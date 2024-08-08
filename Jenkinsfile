@@ -23,8 +23,6 @@ pipeline {
     DOCKER_IMAGE_NAMESPACE = "${params.AWS_ECR_REGISTRY ? "${params.AWS_ECR_REGISTRY}/oodikone" : "oodikone-dev"}"
     DOCKER_IMAGE_TAG = "${env.VERSION}"
 
-    // used to build only dependent docker image layers
-    DOCKER_BUILDKIT = "1"
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
     TOSKA_SIS_IMPORTER_REPO = "${env.TOSKA_SIS_IMPORTER_REPO ? env.TOSKA_SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
@@ -37,14 +35,8 @@ pipeline {
 
   stages {
     stage("Copy repos") {
-      environment {
-        WORKER_UID = "${env.UID}"
-        WORKER_GID = "${env.GID}"
-      }
-
       steps {
         sh "env | sort"
-        sh "pwd"
         sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
         sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
@@ -59,8 +51,10 @@ pipeline {
 
     stage("Docker push to ECR") {
       when {
-        expression { params.AWS_ECR_REGISTRY }
-        environment(name: 'PUSH_TO_ECR', value: 'true')
+        allOf {
+          expression { params.AWS_ECR_REGISTRY }
+          environment(name: 'PUSH_TO_ECR', value: 'true')
+        }
       }
 
       environment {
