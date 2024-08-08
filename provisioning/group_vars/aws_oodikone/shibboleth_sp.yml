@@ -45,3 +45,14 @@ shibboleth_sp_session_initiator_sis_dev:
 shibboleth_sp_metadata_sis_dev:
   name: sis-idp-dev
   file: files/shibboleth/idp-metadata/sis-idp-dev.xml
+
+shibboleth_sp_session_initiator_jyu:
+  name: jyu
+  location: /JYULogin
+  entityID: https://login.jyu.fi/idp/shibboleth
+shibboleth_sp_metadata_haka_jyu:
+  name: jyu-haka
+  url:  https://haka.funet.fi/metadata/haka-metadata-v9.xml
+  metadata_signing_cert: files/shibboleth/metadata-signing-certs/haka-sign-v9.pem
+  includes:
+    - https://login.jyu.fi/idp/shibboleth
