@@ -37,6 +37,7 @@ pipeline {
     stage("Copy repos") {
       steps {
         sh "env | sort"
+        sh "pwd"
         sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
         sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
@@ -44,8 +45,8 @@ pipeline {
 
     stage("Docker build images") {
       steps {
-        sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-        sh "docker-compose build importer-api importer-mankeli importer-db-api"
+        sh "docker-compose -f docker-compose.yml build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
+        sh "docker-compose -f docker-compose.yml build importer-api importer-mankeli importer-db-api"
       }
     }
 
@@ -69,8 +70,8 @@ pipeline {
             passwordVariable: 'AWS_SECRET_ACCESS_KEY',
           )
         ]) {
-          sh "docker-compose push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-          sh "docker-compose push importer-api importer-mankeli importer-db-api"
+          sh "docker-compose -f docker-compose.yml push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
+          sh "docker-compose -f docker-compose.yml push importer-api importer-mankeli importer-db-api"
         }
       }
     }
