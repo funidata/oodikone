@@ -1,4 +1,1 @@
 oodikone_postgres_prefix: oodikone_jyu
-
-oodikone_postgres_username: "{{ oodikone_postgres_prefix }}_oodikone"
-oodikone_postgres_password: "{{ postgres_passwords[oodikone_postgres_username] }}"
