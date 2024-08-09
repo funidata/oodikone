@@ -29,18 +29,17 @@ oodikone_app_users:
       - studyGuidanceGroups
       - facultyStatistics
       - teachers
-    # TODO: Should there be something here?
-    # programme_rights:
-    #   - KH0_005
+    programme_rights: []
 oodikone_backend_organisation_config:
-  # TODO: what should these be
-  # facultyCodes: 
-  #   - '01'
-  #   - 'KTT'
-  #   - 'HTK'
-  #   - 'EPÄTOIVO1001'
-  #   - 'TSKK-TL'
-  #   - 'grr'
-  # magicFacultyCode: '01'
-  # ignoredFacultyCodes: []
+  facultyCodes:
+    - 'jy-ORG-12'
+    - 'jy-ORG-24'
+    - 'jy-ORG-25'
+    - 'jy-ORG-27'
+    - 'jy-ORG-39'
+    - 'jy-ORG-41'
+    - 'jy-ORG-52'
+    - 'jy-ORG-5'
+  magicFacultyCode: 'jy-ORG-25'
+  ignoredFacultyCodes: []
 
