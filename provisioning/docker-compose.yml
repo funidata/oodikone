@@ -1,0 +1,27 @@
+services:
+  provisioning:
+    build:
+      context: .
+      args:
+        CENTOS_STREAM9_IMAGE: ${DOCKER_CENTOS_STREAM9_IMAGE:-quay.io/centos/centos:stream9}
+        BUILD_UID: ${BUILD_UID}
+        BUILD_GID: ${BUILD_GID}
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+      secrets:
+        - github-token
+    image: ${DOCKER_IMAGE_NAMESPACE:-registry.funidata.fi/otm-dev}/provisioning:${DOCKER_IMAGE_TAG:-dev}
+    network_mode: host
+    environment:
+      SSH_AUTH_SOCK: /home/build/.ssh/agent
+    volumes:
+      - ${SSH_AUTH_SOCK:-/dev/null}:/home/build/.ssh/agent
+      - ./:/build:rw
+    tmpfs:
+      - /tmp:exec
+    working_dir: /build
+    read_only: true
+
+secrets:
+  # used for provisioning image build
+  github-token:
+    environment: "GITHUB_TOKEN"
