@@ -65,8 +65,8 @@
     user: "{{ sis_importer_uid }}:{{ sis_importer_gid }}"
     env:
       DB_USERNAME: "{{ sis_importer_postgres_importer_db_database.user }}"
-      DB_PORT: "{{ sis_importer_postgres_port | to_json }}"
-      DB_HOST: "{{ sis_importer_postgres_host }}"
+      DB_PORT: "{{ oodikone_postgres_port | to_json }}"
+      DB_HOST: "{{ oodikone_postgres_host }}"
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
