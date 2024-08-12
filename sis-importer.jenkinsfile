@@ -26,6 +26,7 @@ pipeline {
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_SIS_IMPORTER_REPO = "${env.TOSKA_SIS_IMPORTER_REPO ? env.TOSKA_SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
+    REMOTE_JENKINS = "${env.RJPP_SCM_URL != null}"
   }
 
   options {
@@ -38,6 +39,9 @@ pipeline {
       steps {
         sh "env | sort"
         sh "pwd"
+        if(REMOTE_JENKINS){
+            sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
+        }
         sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
     }
