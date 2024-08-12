@@ -41,9 +41,11 @@ pipeline {
         environment(name: 'REMOTE_JENKINS', value: 'true')
       }
       steps {
-        sh "git -C /srv/git/oodikone.git pull || git clone ${env.RJPP_SCM_URL} /srv/git/oodikone.git"
-        sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
-        sh "git checkout ${env.RJPP_BRANCH}"
+        // sh "git -C /srv/git/oodikone.git pull || git clone ${env.RJPP_SCM_URL} /srv/git/oodikone.git"
+        // sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
+        // sh "git checkout ${env.RJPP_BRANCH}"
+        sh "env | sort"
+        checkout scm
       }
     }
 
