@@ -26,6 +26,7 @@ pipeline {
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
+    OODIKONE_REPO = "${env.OODIKONE_REPO ? env.OODIKONE_REPO : "https://github.com/funidata/oodikone"}"
     REMOTE_JENKINS = "${env.RJPP_SCM_URL != null}"
   }
 
@@ -40,7 +41,9 @@ pipeline {
         environment(name: 'REMOTE_JENKINS', value: 'true')
       }
       steps {
+        sh "git -C /srv/git/oodikone.git pull || git clone ${env.RJPP_SCM_URL} /srv/git/oodikone.git"
         sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
+        sh "git checkout ${env.RJPP_BRANCH}"
       }
     }
 
