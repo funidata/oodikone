@@ -89,7 +89,7 @@ pipeline {
     stage("Deploy oodikone-dev") {
       when {
         allOf {
-          branch 'main'
+          branch 'master'
           expression { params.MASTER_DEPLOY_JOB }
         }
       }
