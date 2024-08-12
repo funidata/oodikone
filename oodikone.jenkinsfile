@@ -23,6 +23,7 @@ pipeline {
     // does not need to be unique across builds, could even be shared across jobs
     DOCKER_IMAGE_NAMESPACE = "${params.AWS_ECR_REGISTRY ? "${params.AWS_ECR_REGISTRY}/oodikone" : "oodikone-dev"}"
     DOCKER_IMAGE_TAG = "${env.VERSION}"
+    DOCKER_BUILDKIT = 0
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
@@ -81,7 +82,6 @@ pipeline {
           )
         ]) {
           sh "docker-compose -f docker-compose.yml push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-          sh "docker-compose -f docker-compose.yml push importer-api importer-mankeli importer-db-api"
         }
       }
     }
