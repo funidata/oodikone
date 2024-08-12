@@ -35,13 +35,19 @@ pipeline {
   }
 
   stages {
+    stage("Copy oodikone.git") {
+      when {
+        environment(name: 'REMOTE_JENKINS', value: 'true')
+      }
+      steps {
+        sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
+      }
+    }
+
     stage("Copy repos") {
       steps {
         sh "env | sort"
         sh "pwd"
-        if(REMOTE_JENKINS){
-            sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
-        }
         sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
       }
     }
