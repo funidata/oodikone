@@ -45,9 +45,9 @@ pipeline {
         // sh "git checkout ${env.RJPP_BRANCH}"
         sh "env | sort"
         // checkout scm
-        git branch: '${env.RJPP_BRANCH}',
-            credentialsId: 'github-app',
-            url: '${env.RJPP_SCM_URL}'
+        git branch: "${env.RJPP_BRANCH}",
+            credentialsId: "github-app",
+            url: "${env.RJPP_SCM_URL}"
       }
     }
 
