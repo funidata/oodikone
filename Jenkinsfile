@@ -22,6 +22,7 @@ pipeline {
     // does not need to be unique across builds, could even be shared across jobs
     DOCKER_IMAGE_NAMESPACE = "${params.AWS_ECR_REGISTRY ? "${params.AWS_ECR_REGISTRY}/oodikone" : "oodikone-dev"}"
     DOCKER_IMAGE_TAG = "${env.VERSION}"
+    DOCKER_BUILDKIT = 0
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
@@ -89,6 +90,7 @@ pipeline {
         build job: params.MASTER_DEPLOY_JOB, wait: false, propagate: false, parameters: [
           // docker image tag
           [$class: 'StringParameterValue', name: 'VERSION', value: "${env.VERSION}"],
+          [$class: 'StringParameterValue', name: 'ANSIBLE_LIMIT', value: ""],
         ]
       }
     }

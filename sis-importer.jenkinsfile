@@ -23,6 +23,7 @@ pipeline {
     // does not need to be unique across builds, could even be shared across jobs
     DOCKER_IMAGE_NAMESPACE = "${params.AWS_ECR_REGISTRY ? "${params.AWS_ECR_REGISTRY}/oodikone" : "oodikone-dev"}"
     DOCKER_IMAGE_TAG = "${env.VERSION}"
+    DOCKER_BUILDKIT = 0
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_SIS_IMPORTER_REPO = "${env.TOSKA_SIS_IMPORTER_REPO ? env.TOSKA_SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
@@ -35,23 +36,18 @@ pipeline {
   }
 
   stages {
-    stage("Copy oodikone.git") {
+    stage("Copy funidata oodikone") {
       when {
         environment(name: 'REMOTE_JENKINS', value: 'true')
       }
       steps {
-        // sh "git -C /srv/git/oodikone.git pull || git clone ${env.RJPP_SCM_URL} /srv/git/oodikone.git"
-        // sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
-        // sh "git checkout ${env.RJPP_BRANCH}"
-        sh "env | sort"
-        // checkout scm
         git branch: "${env.RJPP_BRANCH}",
-            credentialsId: "github-app",
-            url: "${env.RJPP_SCM_URL}"
+          credentialsId: "github-app",
+          url: "${env.RJPP_SCM_URL}"
       }
     }
 
-    stage("Copy repos") {
+    stage("Copy toska repo") {
       steps {
         sh "env | sort"
         sh "pwd"
