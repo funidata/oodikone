@@ -45,7 +45,10 @@ pipeline {
         // sh "cp -r /srv/git/oodikone.git ${env.WORKSPACE}"
         // sh "git checkout ${env.RJPP_BRANCH}"
         sh "env | sort"
-        checkout scm
+        // checkout scm
+        git branch: '${env.RJPP_BRANCH}',
+            credentialsId: 'github-app',
+            url: '${env.RJPP_SCM_URL}'
       }
     }
 
