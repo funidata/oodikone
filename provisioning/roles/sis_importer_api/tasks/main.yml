@@ -76,6 +76,7 @@
       SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
+      ROOT_ORG_ID: "{{ sis_importer_root_org_id }}"
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:
