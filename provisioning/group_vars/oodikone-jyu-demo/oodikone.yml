@@ -20,9 +20,9 @@ oodikone_nginx_env_configs_identityProvider_SIS:
 # DB needs to have user row ready in order for login to work
 oodikone_app_users:
   - full_name: Jukka T. Honkala
-    eppn: jukka.t.honkala@jyu.fi
+    eppn: jutahonk@jyu.fi
     language: fi
-    # sisu_person_id: TODO: check
+    sisu_person_id: jy-jutahonk
     roles:
       - admin
       - courseStatistics
@@ -30,6 +30,29 @@ oodikone_app_users:
       - facultyStatistics
       - teachers
     programme_rights: []
+  - full_name: Kirsi Rinnesalo
+    eppn: kirkopo@jyu.fi
+    language: fi
+    sisu_person_id: jy-kirkopo
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Anna Saastamoinen
+    eppn: ankamesa@jyu.fi
+    language: fi
+    sisu_person_id: jy-ankamesa
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+
 oodikone_backend_organisation_config:
   facultyCodes:
     - 'jy-ORG-12'
