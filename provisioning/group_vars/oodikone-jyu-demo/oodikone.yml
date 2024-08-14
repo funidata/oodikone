@@ -15,7 +15,7 @@ oodikone_nginx_identity_providers:
 
 oodikone_nginx_env_configs_identityProvider_SIS:
   name: SIS Login
-  navigate: /Shibboleth.sso/SISLogin?target=
+  navigate: /Shibboleth.sso/JYULogin?target=
 
 # DB needs to have user row ready in order for login to work
 oodikone_app_users:
