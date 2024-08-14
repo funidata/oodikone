@@ -50,6 +50,7 @@ shibboleth_sp_session_initiator_jyu:
   name: jyu
   location: /JYULogin
   entityID: https://login.jyu.fi/idp/shibboleth
+  isDefault: true
 shibboleth_sp_metadata_haka_jyu:
   name: jyu-haka
   url:  https://haka.funet.fi/metadata/haka-metadata-v9.xml
