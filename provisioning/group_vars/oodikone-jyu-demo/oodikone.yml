@@ -62,7 +62,8 @@ oodikone_backend_organisation_config:
     - 'jy-ORG-39'
     - 'jy-ORG-41'
     - 'jy-ORG-52'
-    - 'jy-ORG-5'
+    - 'jy-ORG-55'
+    - 'jy-ORG-35'
   magicFacultyCode: 'jy-ORG-25'
   ignoredFacultyCodes: []
 
