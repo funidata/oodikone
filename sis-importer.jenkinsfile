@@ -86,6 +86,12 @@ pipeline {
       }
     }
 
+    stage("CHECKOUT DEV BRANCH TO TEST DEPLOYMENT") {
+      steps {
+        sh "git checkout infra-1143-jenkins-remote-repo"
+      }
+    }
+
     stage("Deploy oodikone-dev") {
       when {
         allOf {

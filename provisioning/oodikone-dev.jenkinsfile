@@ -37,7 +37,6 @@ pipeline {
         dir('provisioning') {
           sh "env | sort"
           // build provisioning image using GITHUB_USERNAME env and GITHUB_TOKEN secret
-          sh "chmod +x docker-compose.sh" // CAN BE REMOVED WHEN PR IS MERGED
           sh "./docker-compose.sh build provisioning"
         }
       }
