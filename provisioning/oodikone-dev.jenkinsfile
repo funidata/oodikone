@@ -7,9 +7,9 @@ pipeline {
   }
 
   environment {
-    ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -l ${params.ANSIBLE_OODIKONE_HOSTS}"
-    ANSIBLE_FORCE_COLOR = "true"
     ANSIBLE_LIMIT = "${params.ANSIBLE_LIMIT ? ${params.ANSIBLE_LIMIT} : "aws_oodikone" }"
+    ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -l ${env.ANSIBLE_LIMIT}"
+    ANSIBLE_FORCE_COLOR = "true"
 
     // Ansible aws_ec2 inventory plugin settings
     AWS_EC2_PROFILE = "none" // use IAM account credentials from env
@@ -66,8 +66,8 @@ pipeline {
       steps {
         sshagent(credentials: [params.ANSIBLE_SSH_CREDENTIALS]) {
           dir('provisioning') {
-            sh(script: "${env.ANSIBLE_PLAYBOOK} oodikone-stop.yml -l ${env.ANSIBLE_LIMIT}")
-            sh(script: "${env.ANSIBLE_PLAYBOOK} aws-oodikone-install.yml -e oodikone_version=${params.VERSION} -l ${env.ANSIBLE_LIMIT}")
+            sh(script: "${env.ANSIBLE_PLAYBOOK} oodikone-stop.yml")
+            sh(script: "${env.ANSIBLE_PLAYBOOK} aws-oodikone-install.yml -e oodikone_version=${params.VERSION}")
           }
         }
       }
