@@ -1,0 +1,9 @@
+ansible==8.2.0
+argon2_cffi==21.3.0
+bcrypt==4.0.1
+boto3==1.34.29
+cryptography==41.0.2
+ec2instanceconnectcli==1.0.3
+jinja2==3.1.2
+netaddr==0.8.0
+passlib==1.7.4
