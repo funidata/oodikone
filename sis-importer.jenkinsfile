@@ -98,7 +98,7 @@ pipeline {
         // deploy to oodikone-dev
         build job: params.MASTER_DEPLOY_JOB, wait: false, propagate: false, parameters: [
           // docker image tag
-          [$class: 'StringParameterValue', name: 'GIT_BRANCH', value: "origin/infra-1143-jenkins-remote-repo"] // FOR TESTING
+          [$class: 'StringParameterValue', name: 'GIT_BRANCH', value: "origin/infra-1143-jenkins-remote-repo"], // FOR TESTING
           [$class: 'StringParameterValue', name: 'VERSION', value: "${env.VERSION}"],
           [$class: 'StringParameterValue', name: 'ANSIBLE_LIMIT', value: params.ANSIBLE_LIMIT],
         ]
