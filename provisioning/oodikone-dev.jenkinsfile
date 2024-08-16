@@ -36,7 +36,6 @@ pipeline {
       steps {
         dir('provisioning') {
           sh "env | sort"
-          sh "git checkout infra-1143-jenkins-remote-repo"
           // build provisioning image using GITHUB_USERNAME env and GITHUB_TOKEN secret
           sh "./docker-compose.sh build provisioning"
         }
