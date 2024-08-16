@@ -90,7 +90,7 @@ pipeline {
         build job: params.MASTER_DEPLOY_JOB, wait: false, propagate: false, parameters: [
           // docker image tag
           [$class: 'StringParameterValue', name: 'VERSION', value: "${env.VERSION}"],
-          [$class: 'StringParameterValue', name: 'ANSIBLE_LIMIT', value: ""],
+          [$class: 'StringParameterValue', name: 'ANSIBLE_LIMIT', value: "aws_oodikone"],
         ]
       }
     }

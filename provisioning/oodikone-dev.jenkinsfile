@@ -9,7 +9,7 @@ pipeline {
   environment {
     ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -l ${params.ANSIBLE_OODIKONE_HOSTS}"
     ANSIBLE_FORCE_COLOR = "true"
-    ANSIBLE_LIMIT = "${params.ANSIBLE_LIMIT ? ${params.ANSIBLE_LIMIT} : "" }"
+    ANSIBLE_LIMIT = "${params.ANSIBLE_LIMIT ? ${params.ANSIBLE_LIMIT} : "aws_oodikone" }"
 
     // Ansible aws_ec2 inventory plugin settings
     AWS_EC2_PROFILE = "none" // use IAM account credentials from env
