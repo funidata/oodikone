@@ -89,7 +89,7 @@ pipeline {
     stage("Deploy oodikone-dev") {
       when {
         allOf {
-          branch 'infra-1143-jenkins-remote-repo' // master
+          branch 'master'
           expression { params.MASTER_DEPLOY_JOB }
         }
       }
