@@ -35,47 +35,6 @@ pipeline {
   }
 
   stages {
-    stage("Copy repos") {
-      steps {
-        sh "env | sort"
-        sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
-        sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
-      }
-    }
-
-    stage("Docker build images") {
-      steps {
-        sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-        sh "docker-compose build importer-api importer-mankeli importer-db-api"
-      }
-    }
-
-    stage("Docker push to ECR") {
-      when {
-        allOf {
-          expression { params.AWS_ECR_REGISTRY }
-          environment(name: 'PUSH_TO_ECR', value: 'true')
-        }
-      }
-
-      environment {
-        DOCKER_CONFIG = "${env.HOME}/.aws-docker"
-      }
-
-      steps {
-        withCredentials([
-          usernamePassword(
-            credentialsId: params.AWS_ECR_CREDENTIALS,
-            usernameVariable: 'AWS_ACCESS_KEY_ID',
-            passwordVariable: 'AWS_SECRET_ACCESS_KEY',
-          )
-        ]) {
-          sh "docker-compose push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
-          sh "docker-compose push importer-api importer-mankeli importer-db-api"
-        }
-      }
-    }
-
     stage("Deploy oodikone-dev") {
       when {
         allOf {

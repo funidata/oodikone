@@ -49,7 +49,6 @@ pipeline {
     stage("Copy toska repo") {
       steps {
         sh "env | sort"
-        sh "pwd"
         sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
       }
     }
