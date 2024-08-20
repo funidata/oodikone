@@ -7,8 +7,7 @@ pipeline {
   }
 
   environment {
-    ANSIBLE_LIMIT = "${params.ANSIBLE_LIMIT ? ${params.ANSIBLE_LIMIT} : "aws_oodikone" }"
-    ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -i aws-oodikone.ini -l ${env.ANSIBLE_LIMIT}"
+    ANSIBLE_PLAYBOOK = "ansible-playbook --diff -i ${params.ANSIBLE_AWS_ENVIRONMENT}.aws_ec2.yml -i aws-oodikone.ini -l ${params.ANSIBLE_OODIKONE_HOSTS}"
     ANSIBLE_FORCE_COLOR = "true"
 
     // Ansible aws_ec2 inventory plugin settings
