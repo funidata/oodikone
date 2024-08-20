@@ -4,7 +4,8 @@ services:
   
   oodikone-backend:
     build:
-      context: ${OODIKONE_REPO:-../oodikone-contrib/services/backend}
+      context: ${OODIKONE_REPO:-../oodikone-contrib/services}
+      dockerfile: backend/Dockerfile
       args:
         SENTRY_ENVIRONMENT: ''
         SENTRY_RELEASE: ''
@@ -15,7 +16,8 @@ services:
 
   oodikone-frontend:
     build:
-      context: ${OODIKONE_REPO:-../oodikone-contrib/services/frontend}
+      context: ${OODIKONE_REPO:-../oodikone-contrib/services}
+      dockerfile: frontend/Dockerfile
       args:
         SENTRY_ENVIRONMENT: ''
         SENTRY_RELEASE: ''
