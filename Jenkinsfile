@@ -27,6 +27,7 @@ pipeline {
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
     TOSKA_OODIKONE_REPO = "${env.TOSKA_OODIKONE_REPO ? env.TOSKA_OODIKONE_REPO : "https://github.com/UniversityOfHelsinkiCS/oodikone"}"
     TOSKA_SIS_IMPORTER_REPO = "${env.TOSKA_SIS_IMPORTER_REPO ? env.TOSKA_SIS_IMPORTER_REPO : "https://github.com/UniversityOfHelsinkiCS/sis-importer"}"
+    REMOTE_JENKINS = "${env.RJPP_SCM_URL != null}"
   }
 
   options {
@@ -35,6 +36,17 @@ pipeline {
   }
 
   stages {
+    stage("Copy funidata oodikone") {
+      when {
+        environment(name: 'REMOTE_JENKINS', value: 'true')
+      }
+      steps {
+        git branch: "${env.RJPP_BRANCH}",
+          credentialsId: "github-app",
+          url: "${env.RJPP_SCM_URL}"
+      }
+    }
+
     stage("Copy repos") {
       steps {
         sh "env | sort"
