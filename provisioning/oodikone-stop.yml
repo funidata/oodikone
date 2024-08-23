@@ -23,6 +23,8 @@
           - name=valkey
       tags: oodikone_infra
 
+- hosts: aws_sis_importer_app
+  tasks:
     - name: Stop sis-importer
       import_tasks:
         file: tasks/docker/stop_containers.yml
