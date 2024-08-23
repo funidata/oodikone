@@ -62,7 +62,6 @@
     mode: 0644
   tags: oodikone_backend_configs_json
 
-
 - name: Deploy backend Docker container
   docker_container:
     name: oodikone.backend
@@ -90,6 +89,7 @@
       SENTRY_ENVIRONMENT: ''
       SENTRY_RELEASE: ''
       SENTRY_DSN: ''
+      NODE_OPTIONS: '--max-old-space-size={{ oodikone_backend_max_old_space_size }}'
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:
