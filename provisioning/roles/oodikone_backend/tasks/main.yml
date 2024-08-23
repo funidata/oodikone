@@ -28,7 +28,7 @@
 - name: Generate env secrets
   copy:
     content: |
-      IMPORTER_DB_API_TOKEN={{ oodikone_importer_db_api_token }}
+      IMPORTER_DB_API_PASSWORD={{ oodikone_sis_importer_db_api_password }}
       PATE_TOKEN={{ oodikone_pate_token }}
       CRYPT_KEY={{ oodikone_crypt_key }}
       SECRET_TOKEN={{ oodikone_secret_token }}
@@ -79,6 +79,7 @@
       REDIS: localhost
       SIS_UPDATER_URL: "{{ oodikone_sis_updater_scheduler_url }}"
       IMPORTER_DB_API_URL: "{{ oodikone_sis_importer_db_api_url }}"
+      IMPORTER_DB_API_USER: "{{ oodikone_sis_importer_db_api_user }}"
       JAMI_URL: 'http://jami:3003/' # TODO
       SERVICE_PROVIDER: Fd
       LOGOUT_URL: "{{ oodikone_nginx_env_configs.logoutUrl }}"

@@ -33,6 +33,7 @@
   copy:
     content: |
       DB_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
+      IMPORTER_DB_API_PASSWORD={{ oodikone_sis_importer_db_api_password }}
     dest: /opt/sis-importer-db-api/secrets.env
     owner: root
     group: sis-importer
@@ -70,6 +71,7 @@
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
+      IMPORTER_DB_API_USER: "{{ oodikone_sis_importer_db_api_user }}"
     env_file: /opt/sis-importer-db-api/secrets.env
     read_only: true
     tmpfs:
