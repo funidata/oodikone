@@ -57,7 +57,7 @@
     labels:
       fi.funidata.sis-importer.application: mankeli
       fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
-      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
+      fi.funidata.sis-importer.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -69,7 +69,7 @@
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
-      HOSTNAME: "{{ sis_importer_site }}-mankeli" # defines NATS client_id
+      HOSTNAME: "{{ oodikone_site }}-mankeli" # defines NATS client_id
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
     env_file: /opt/sis-importer-mankeli/secrets.env

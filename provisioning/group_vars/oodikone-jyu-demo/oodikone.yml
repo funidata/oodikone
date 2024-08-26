@@ -1,4 +1,4 @@
-oodikone_site: oodikone-jyu-demo
+oodikone_site: oodikone-jyu-demo # matching name with sis_importer_site
 oodikone_server_name: oodikone-jyu-demo.funidata.fi
 
 oodikone_sis_application_account: oodikone-jyu-demo
@@ -66,4 +66,3 @@ oodikone_backend_organisation_config:
     - 'jy-ORG-35'
   magicFacultyCode: 'jy-ORG-25'
   ignoredFacultyCodes: []
-

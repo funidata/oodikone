@@ -1,4 +1,4 @@
-sis_importer_site: sis-importer-jyu-demo
+oodikone_site: oodikone-jyu-demo # matching name with oodikone_site
 
 sis_importer_sis_host: https://sis-jyu-staging.funidata.fi
 sis_importer_sis_integration_user: jyu-oodikone-demo.e

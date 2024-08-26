@@ -57,7 +57,7 @@
     labels:
       fi.funidata.sis-importer.application: db-api
       fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
-      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
+      fi.funidata.sis-importer.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host

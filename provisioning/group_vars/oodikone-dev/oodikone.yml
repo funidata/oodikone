@@ -1,4 +1,4 @@
-oodikone_site: oodikone-dev
+oodikone_site: oodikone-dev # matching name with sis_importer_site
 oodikone_server_name: oodikone-dev.funidata.fi
 
 oodikone_sis_application_account: fd-oodikone-dev-01
@@ -39,7 +39,7 @@ oodikone_app_users:
     programme_rights: []
 
 oodikone_backend_organisation_config:
-  facultyCodes: 
+  facultyCodes:
     - '01'
     - 'KTT'
     - 'HTK'
