@@ -87,10 +87,13 @@
   uri:
     url: "http://127.0.0.1:3000/health"
     method: GET
-    status_code: [200,403] # backend expects authenticated requests
+    status_code: 200
+    user: "{{ oodikone_sis_importer_db_api_user }}"
+    password: "{{ oodikone_sis_importer_db_api_password }}"
+    force_basic_auth: true
   register: result
   when: not ansible_check_mode
-  until: result.status in [200,403]
+  until: result.status == 200
   retries: 60
   delay: 1
   tags: sis_importer_db_api_wait
