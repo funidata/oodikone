@@ -6,9 +6,10 @@ ansible_ca_bundle: /etc/ssl/certs/ca-bundle.crt # on host
 # * Amazon Linux 2 / python3 (3.7)
 ansible_python_interpreter: /usr/bin/python3
 
+# INFRA-791: bump ControlPersist to avoid SIGPIPE race conditions with task executions coinciding with ssh ControlMaster timeouts
 # use StrictHostKeyChecking=accept-new to reject changed host keys (OpenSSH 7.6+)
 # use versioned per-host ssh known_hosts files
-ansible_ssh_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile={{ playbook_dir }}/ssh/known_hosts.d/{{ inventory_hostname }} -o HashKnownHosts=no -o ServerAliveInterval=5 -o ServerAliveCountMax=1"
+ansible_ssh_args: "-o ControlMaster=auto -o ControlPersist=300s -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile={{ playbook_dir }}/ssh/known_hosts.d/{{ inventory_hostname }} -o HashKnownHosts=no -o ServerAliveInterval=5 -o ServerAliveCountMax=1"
 
 # optional SSH jumphost, not used by default (assumes AWS ops VPN)
 ansible_ssh_jumphost: "{{ lookup('env', 'ANSIBLE_SSH_JUMPHOST')}}"
