@@ -87,10 +87,10 @@
       SIS_GRAPHQL_APPLICATION_ACCOUNT: "{{ oodikone_sis_application_account }}"
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
       NODE_ENV: "{{ oodikone_node_env }}"
-      SENTRY_ENVIRONMENT: ''
-      SENTRY_RELEASE: ''
-      SENTRY_DSN: ''
-      NODE_OPTIONS: '--max-old-space-size={{ oodikone_backend_max_old_space_size }}'
+      SENTRY_ENVIRONMENT: ""
+      SENTRY_RELEASE: ""
+      SENTRY_DSN: ""
+      NODE_OPTIONS: "--max-old-space-size={{ oodikone_backend_max_old_space_size }}"
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:

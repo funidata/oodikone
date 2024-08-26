@@ -72,7 +72,7 @@
       HOSTNAME: "{{ oodikone_site }}-mankeli" # defines NATS client_id
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
-      NODE_OPTIONS: '--max-old-space-size={{ oodikone_sis_importer_mankeli_max_old_space_size }}'
+      NODE_OPTIONS: "--max-old-space-size={{ oodikone_sis_importer_mankeli_max_old_space_size }}"
     env_file: /opt/sis-importer-mankeli/secrets.env
     read_only: true
     tmpfs:
