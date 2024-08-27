@@ -1,6 +1,7 @@
 oodikone_postgres_admin_host: "{{ aws_rds_primary }}"
 oodikone_postgres_admin_port: 5432
 oodikone_postgres_admin_user: postgres
+oodikone_postgres_admin_database: postgres
 oodikone_postgres_admin_password: "{{ postgres_passwords[oodikone_postgres_admin_user] }}"
 
 oodikone_postgres_username: "{{ oodikone_postgres_prefix }}"
