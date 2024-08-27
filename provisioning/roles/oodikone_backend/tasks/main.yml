@@ -91,6 +91,7 @@
       SENTRY_RELEASE: ""
       SENTRY_DSN: ""
       NODE_OPTIONS: "--max-old-space-size={{ oodikone_backend_max_old_space_size }}"
+      LANGUAGE_CENTER_VIEW_ENABLED: 'false' # currently no intention to be enabled
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:
