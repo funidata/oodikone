@@ -36,25 +36,6 @@ pipeline {
   }
 
   stages {
-    stage("Copy funidata oodikone") {
-      when {
-        environment(name: 'REMOTE_JENKINS', value: 'true')
-      }
-      steps {
-        git branch: "${env.RJPP_BRANCH}",
-          credentialsId: "github-app",
-          url: "${env.RJPP_SCM_URL}"
-      }
-    }
-
-    stage("Copy repos") {
-      steps {
-        sh "env | sort"
-        sh "git -C ../oodikone-contrib pull || git clone ${env.TOSKA_OODIKONE_REPO} ../oodikone-contrib"
-        sh "git -C ../sis-importer-contrib pull || git clone ${env.TOSKA_SIS_IMPORTER_REPO} ../sis-importer-contrib"
-      }
-    }
-
     stage("Docker build images") {
       steps {
         sh "docker-compose build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
