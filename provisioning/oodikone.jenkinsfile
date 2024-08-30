@@ -36,7 +36,7 @@ pipeline {
   stages {
     stage("Docker build images") {
       steps {
-        sh "docker-compose -f docker-compose.fd.yml build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
+        sh "docker-compose -f docker-compose.fd.ci.yml build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
       }
     }
 
@@ -60,7 +60,7 @@ pipeline {
             passwordVariable: 'AWS_SECRET_ACCESS_KEY',
           )
         ]) {
-          sh "docker-compose -f docker-compose.fd.yml push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
+          sh "docker-compose -f docker-compose.fd.ci.yml push oodikone-backend oodikone-frontend updater-scheduler updater-worker"
         }
       }
     }

@@ -36,7 +36,7 @@ pipeline {
   stages {
     stage("Docker build images") {
       steps {
-        sh "docker-compose -f docker-compose.fd.yml build importer-api importer-mankeli importer-db-api"
+        sh "docker-compose -f docker-compose.fd.ci.yml build importer-api importer-mankeli importer-db-api"
       }
     }
 
@@ -60,7 +60,7 @@ pipeline {
             passwordVariable: 'AWS_SECRET_ACCESS_KEY',
           )
         ]) {
-          sh "docker-compose -f docker-compose.fd.yml push importer-api importer-mankeli importer-db-api"
+          sh "docker-compose -f docker-compose.fd.ci.yml push importer-api importer-mankeli importer-db-api"
         }
       }
     }
