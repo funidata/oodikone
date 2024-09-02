@@ -25,8 +25,8 @@ pipeline {
     DOCKER_BUILDKIT = 0
 
     PUSH_TO_ECR = "${env.CHANGE_ID ? pullRequest.labels.contains("push-to-ecr") : true}"
-    OODIKONE_REPO = "https://github.com/UniversityOfHelsinkiCS/oodikone"
-    SIS_IMPORTER_REPO = "https://github.com/UniversityOfHelsinkiCS/sis-importer"
+    OODIKONE_REPO = "https://github.com/UniversityOfHelsinkiCS/oodikone.git#master:"
+    SIS_IMPORTER_REPO = "https://github.com/UniversityOfHelsinkiCS/sis-importer.git#master:"
     REMOTE_JENKINS = "${env.RJPP_SCM_URL != null}"
   }
 
