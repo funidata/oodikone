@@ -1,0 +1,69 @@
+oodikone_site: oodikone-jyu-demo
+oodikone_server_name: oodikone-jyu-demo.funidata.fi
+
+oodikone_sis_application_account: oodikone-jyu-demo
+oodikone_sis_host: https://sis-jyu-staging.funidata.fi
+oodikone_root_org_id: jyu-university-root-id
+
+oodikone_version: infra-dev-20240816-01
+# containers have been built with staging = 'true', use staging configuration in oodikone_nginx
+oodikone_staging: false
+oodikone_node_env: production
+
+oodikone_nginx_identity_providers:
+  - "{{ oodikone_nginx_env_configs_identityProvider_SIS }}"
+
+oodikone_nginx_env_configs_identityProvider_SIS:
+  name: SIS Login
+  navigate: /Shibboleth.sso/JYULogin?target=
+
+# DB needs to have user row ready in order for login to work
+oodikone_app_users:
+  - full_name: Jukka T. Honkala
+    eppn: jutahonk@jyu.fi
+    language: fi
+    sisu_person_id: jy-jutahonk
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Kirsi Rinnesalo
+    eppn: kirkopo@jyu.fi
+    language: fi
+    sisu_person_id: jy-kirkopo
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Anna Saastamoinen
+    eppn: ankamesa@jyu.fi
+    language: fi
+    sisu_person_id: jy-ankamesa
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+
+oodikone_backend_organisation_config:
+  facultyCodes:
+    - 'jy-ORG-12'
+    - 'jy-ORG-24'
+    - 'jy-ORG-25'
+    - 'jy-ORG-27'
+    - 'jy-ORG-39'
+    - 'jy-ORG-41'
+    - 'jy-ORG-52'
+    - 'jy-ORG-55'
+    - 'jy-ORG-35'
+  magicFacultyCode: 'jy-ORG-25'
+  ignoredFacultyCodes: []
+

@@ -65,7 +65,7 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
-    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} -sc /opt/nats/nats.cfg --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs 0 -store file -dir /datastore"
+    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} -sc /opt/nats/nats.cfg --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs {{ nats_max_msgs }} -store file -dir /datastore"
     read_only: true
     tmpfs:
       - /tmp

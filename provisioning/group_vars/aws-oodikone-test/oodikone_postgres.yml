@@ -1,0 +1,3 @@
+oodikone_postgres_host: "{{ aws_rds_primary }}"
+oodikone_postgres_port: 5432
+oodikone_postgres_user_password_length: 48

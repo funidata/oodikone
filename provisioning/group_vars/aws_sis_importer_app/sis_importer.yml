@@ -1,2 +1,13 @@
 sis_importer_gid: "{{ system_users['sis-importer'].gid }}"
 sis_importer_uid: "{{ system_users['sis-importer'].uid }}"
+
+sis_importer_registry_base: 637423527834.dkr.ecr.eu-north-1.amazonaws.com/sis-importer
+
+sis_importer_mankeli_docker_image: "{{ sis_importer_registry_base }}/importer-mankeli:{{ sis_importer_version }}"
+sis_importer_db_api_docker_image: "{{ sis_importer_registry_base }}/importer-db-api:{{ sis_importer_version }}"
+sis_importer_api_docker_image: "{{ sis_importer_registry_base }}/importer-api:{{ sis_importer_version }}"
+
+sis_importer_nats_uri: "{{ nats_cid }}://localhost:4222"
+sis_importer_nats_auth_token: "{{ nats_auth_token }}"
+
+sis_importer_valkey_uri: redis://localhost:6379

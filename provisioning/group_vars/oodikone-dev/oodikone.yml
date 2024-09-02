@@ -9,25 +9,6 @@ oodikone_root_org_id: testu-university-root-id
 oodikone_staging: false
 oodikone_node_env: production
 
-# oodikone_registry_base: quay.io/toska
-oodikone_registry_base: 637423527834.dkr.ecr.eu-north-1.amazonaws.com/oodikone
-
-oodikone_backend_docker_image: "{{ oodikone_registry_base }}/oodikone-backend:{{ oodikone_version }}"
-oodikone_frontend_docker_image: "{{ oodikone_registry_base }}/oodikone-frontend:{{ oodikone_version }}"
-
-oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
-
-oodikone_sis_updater_scheduler_docker_image: "{{ oodikone_registry_base }}/updater-scheduler:{{ oodikone_version }}"
-oodikone_sis_updater_worker_docker_image: "{{ oodikone_registry_base }}/updater-worker:{{ oodikone_version }}"
-
-oodikone_nats_uri: "{{ nats_cid }}://localhost:4222"
-oodikone_valkey_uri: "//localhost:{{ valkey_port }}"
-
-oodikone_sis_updater_scheduler_url: http://localhost:8082
-oodikone_sis_importer_db_api_url: "http://{{ importer_db_api_host }}:3000"
-
-# oodikone_postgres_database: oodikone
-
 oodikone_nginx_identity_providers:
   - "{{ oodikone_nginx_env_configs_identityProvider_SIS }}"
 
