@@ -5,7 +5,6 @@ oodikone_sis_application_account: fd-oodikone-dev-01
 oodikone_sis_host: https://sis-demo.funidata.fi
 oodikone_root_org_id: testu-university-root-id
 
-oodikone_version: infra-dev-20240816-01
 # containers have been built with staging = 'true', use staging configuration in oodikone_nginx
 oodikone_staging: false
 oodikone_node_env: production
