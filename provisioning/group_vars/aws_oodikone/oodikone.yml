@@ -5,3 +5,6 @@ oodikone_backend_http_port: 8080
 oodikone_frontend_http_port: 5000
 
 importer_db_api_host: "{{ groups['aws_sis_importer_app'] | first }}"
+
+oodikone_sis_importer_db_api_user: "{{ oodikone_site }}-backend"
+oodikone_sis_importer_db_api_password: "{{ oodikone_sis_importer_db_api_user | funidata.infra.hmac(oodikone_sis_import_db_api_password_secret) }}"

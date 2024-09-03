@@ -58,7 +58,7 @@
     labels:
       fi.funidata.sis-importer.application: api
       fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
-      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
+      fi.funidata.sis-importer.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -71,12 +71,13 @@
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
       SONIC: "{{ sis_importer_api_sonic | default(0) | to_json }}"
-      HOSTNAME: "{{ sis_importer_site }}-api" # defines NATS client_id
+      HOSTNAME: "{{ oodikone_site }}-api" # defines NATS client_id
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
       ROOT_ORG_ID: "{{ sis_importer_root_org_id }}"
+      NODE_OPTIONS: "--max-old-space-size={{ oodikone_sis_importer_max_old_space_size }}"
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:

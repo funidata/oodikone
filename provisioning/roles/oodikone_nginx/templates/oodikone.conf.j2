@@ -62,26 +62,7 @@ server {
         more_set_headers "Content-Security-Policy: default-src 'self'; script-src 'none'";
     }
 
-
-
-{% if oodikone_staging %}
     location / {
-        rewrite ^/(.*)$ /oodikone/$1 permanent;
-    }
-
-    # staging image should default to basepath /oodikone but some requests go to /api
-    location /api/ {
-        shib_request @shibauthorizer;
-        shib_request_use_headers on;
-
-        include /etc/nginx/backend.conf;
-
-        proxy_pass http://oodikone-backend/{% if oodikone_node_env == 'development' %}api/{% endif %};
-    }
-{% endif %}
-
-
-    location /{% if oodikone_staging %}oodikone/{% endif%} {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
         proxy_pass http://oodikone-frontend/;
@@ -94,12 +75,12 @@ server {
         }
     }
 
-    location /{% if oodikone_staging %}oodikone/{% endif%}api/ {
+    location /api/ {
         shib_request @shibauthorizer;
         shib_request_use_headers on;
 
         include /etc/nginx/backend.conf;
 
-        proxy_pass http://oodikone-backend/{% if oodikone_node_env == 'development' %}api/{% endif %};
+        proxy_pass http://oodikone-backend/;
     }
 }

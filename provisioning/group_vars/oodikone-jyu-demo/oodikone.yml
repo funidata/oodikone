@@ -1,13 +1,11 @@
-oodikone_site: oodikone-jyu-demo
+oodikone_site: oodikone-jyu-demo # matching name with sis_importer_site
 oodikone_server_name: oodikone-jyu-demo.funidata.fi
 
 oodikone_sis_application_account: oodikone-jyu-demo
 oodikone_sis_host: https://sis-jyu-staging.funidata.fi
 oodikone_root_org_id: jyu-university-root-id
 
-oodikone_version: infra-dev-20240816-01
-# containers have been built with staging = 'true', use staging configuration in oodikone_nginx
-oodikone_staging: false
+oodikone_version: infra-dev-20240828
 oodikone_node_env: production
 
 oodikone_nginx_identity_providers:
@@ -66,4 +64,3 @@ oodikone_backend_organisation_config:
     - 'jy-ORG-35'
   magicFacultyCode: 'jy-ORG-25'
   ignoredFacultyCodes: []
-

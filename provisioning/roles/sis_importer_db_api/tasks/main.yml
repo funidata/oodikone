@@ -33,6 +33,7 @@
   copy:
     content: |
       DB_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
+      IMPORTER_DB_API_PASSWORD={{ oodikone_sis_importer_db_api_password }}
     dest: /opt/sis-importer-db-api/secrets.env
     owner: root
     group: sis-importer
@@ -56,7 +57,7 @@
     labels:
       fi.funidata.sis-importer.application: db-api
       fi.funidata.sis-importer.deploy: "{{ sis_importer_version }}"
-      fi.funidata.sis-importer.site: "{{ sis_importer_site }}"
+      fi.funidata.sis-importer.site: "{{ oodikone_site }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
@@ -70,6 +71,7 @@
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"
+      IMPORTER_DB_API_USER: "{{ oodikone_sis_importer_db_api_user }}"
     env_file: /opt/sis-importer-db-api/secrets.env
     read_only: true
     tmpfs:
@@ -85,10 +87,13 @@
   uri:
     url: "http://127.0.0.1:3000/health"
     method: GET
-    status_code: [200,403] # backend expects authenticated requests
+    status_code: 200
+    user: "{{ oodikone_sis_importer_db_api_user }}"
+    password: "{{ oodikone_sis_importer_db_api_password }}"
+    force_basic_auth: true
   register: result
   when: not ansible_check_mode
-  until: result.status in [200,403]
+  until: result.status == 200
   retries: 60
   delay: 1
   tags: sis_importer_db_api_wait

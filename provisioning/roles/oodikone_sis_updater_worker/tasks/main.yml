@@ -68,9 +68,10 @@
       ROOT_ORG_ID: "{{ oodikone_root_org_id }}"
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ oodikone_node_env }}"
-      SENTRY_ENVIRONMENT: ''
-      SENTRY_RELEASE: ''
-      SENTRY_DSN: ''
+      SENTRY_ENVIRONMENT: ""
+      SENTRY_RELEASE: ""
+      SENTRY_DSN: ""
+      NODE_OPTIONS: "--max-old-space-size={{ oodikone_sis_updater_worker_max_old_space_size }}"
     env_file: /opt/oodikone-sis-updater-worker/secrets.env
     read_only: true
     tmpfs:

@@ -66,9 +66,10 @@
       HOSTNAME: "{{ oodikone_site }}-scheduler" # defines NATS client_id
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ oodikone_node_env }}"
-      SENTRY_ENVIRONMENT: ''
-      SENTRY_RELEASE: ''
-      SENTRY_DSN: ''
+      SENTRY_ENVIRONMENT: ""
+      SENTRY_RELEASE: ""
+      SENTRY_DSN: ""
+      NODE_OPTIONS: "--max-old-space-size={{ oodikone_sis_updater_scheduler_max_old_space_size }}"
     env_file: /opt/oodikone-sis-updater-scheduler/secrets.env
     read_only: true
     tmpfs:
