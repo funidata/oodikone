@@ -36,6 +36,7 @@ pipeline {
   stages {
     stage("Docker build images") {
       steps {
+        sh "env | sort"
         sh "docker-compose -f docker-compose.fd.ci.yml build oodikone-backend oodikone-frontend updater-scheduler updater-worker"
       }
     }
@@ -77,7 +78,8 @@ pipeline {
         // deploy to oodikone-dev
         build job: params.MASTER_DEPLOY_JOB, wait: false, propagate: false, parameters: [
           // docker image tag
-          [$class: 'StringParameterValue', name: 'VERSION', value: "${env.VERSION}"],
+          [$class: 'StringParameterValue', name: 'OODIKONE_VERSION', value: "${env.VERSION}"],
+          [$class: 'StringParameterValue', name: 'SIS_IMPORTER_VERSION', value: ""],
           [$class: 'StringParameterValue', name: 'ANSIBLE_OODIKONE_HOSTS', value: params.ANSIBLE_OODIKONE_HOSTS ],
         ]
       }

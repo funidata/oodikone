@@ -66,7 +66,7 @@ pipeline {
         sshagent(credentials: [params.ANSIBLE_SSH_CREDENTIALS]) {
           dir('provisioning') {
             sh(script: "${env.ANSIBLE_PLAYBOOK} oodikone-stop.yml")
-            sh(script: "${env.ANSIBLE_PLAYBOOK} aws-oodikone-install.yml -e oodikone_version=${params.VERSION} -e sis_importer_version=${params.VERSION}")
+            sh(script: "${env.ANSIBLE_PLAYBOOK} aws-oodikone-install.yml -e oodikone_version=${params.OODIKONE_VERSION} -e sis_importer_version=${params.SIS_IMPORTER_VERSION}")
           }
         }
       }
