@@ -70,7 +70,6 @@ pipeline {
       when {
         allOf {
           branch 'master'
-          environment name: 'RJPP_BRANCH', value: 'main'
           expression { params.MASTER_DEPLOY_JOB }
         }
       }
