@@ -53,14 +53,31 @@ oodikone_app_users:
 
 oodikone_backend_organisation_config:
   facultyCodes:
-    - 'jy-ORG-12'
-    - 'jy-ORG-24'
-    - 'jy-ORG-25'
-    - 'jy-ORG-27'
-    - 'jy-ORG-39'
-    - 'jy-ORG-41'
-    - 'jy-ORG-52'
-    - 'jy-ORG-55'
-    - 'jy-ORG-35'
-  magicFacultyCode: 'jy-ORG-25'
+    - "urn:organisation:jyu-lib / jy-ORG-48"
+    - "urn:organisation:jyu-ktl / jy-ORG-40"
+    - "urn:organisation:jyu-lak / jy-ORG-46"
+    - "urn:organisation:jyu-yop / jy-ORG-90"
+    - "urn:organisation:jyu-vaksit / jy-ORG-117"
+    - "urn:organisation:jyu-yhteiset / jy-ORG-115"
+    - "urn:organisation:jyu-ymtk / jy-ORG-96"
+    - "urn:organisation:jyu-avoinyo / jy-ORG-12"
+    - "urn:organisation:jyu-kyc / jy-ORG-41"
+    - "urn:organisation:jyu-tkk / jy-ORG-77"
+    - "urn:organisation:jyu-museum / jy-ORG-59"
+    - "urn:organisation:jyu-ltk / jy-ORG-52"
+    - "urn:organisation:jyu-pake / jy-ORG-133"
+    - "urn:organisation:jyu-mltk / jy-ORG-55"
+    - "urn:organisation:jyu-itk / jy-ORG-25"
+    - "urn:organisation:jyu-jsbe / jy-ORG-27"
+    - "urn:organisation:jyu-ktk / jy-ORG-39"
+    - "urn:organisation:jyu-htk / jy-ORG-24"
+    - "urn:organisation:jyu-thk / jy-ORG-97"
+    - "urn:organisation:jyu-siivous / jy-ORG-116"
+    - "urn:organisation:jyu-agc / jy-ORG-94"
+    - "urn:organisation:jyu-see / jy-ORG-95"
+    - "urn:organisation:jyu-kie / jy-ORG-35"
+    - "urn:organisation:jyu-ytk / jy-ORG-91"
+    - "urn:organisation:jyu-yopaino / jy-ORG-99"
+    - "urn:organisation:jyu-ttk / jy-ORG-79"
+  magicFacultyCode: "urn:organisation:jyu-mltk / jy-ORG-55"
   ignoredFacultyCodes: []
