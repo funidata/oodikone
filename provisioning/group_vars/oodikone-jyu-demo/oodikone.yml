@@ -62,5 +62,5 @@ oodikone_backend_organisation_config:
     - "urn:organisation:jyu-ltk / jy-ORG-52"
     - "urn:organisation:jyu-mltk / jy-ORG-55"
     - "urn:organisation:jyu-kie / jy-ORG-35"
-  magicFacultyCode: "urn:organisation:jyu-mltk / jy-ORG-55"
+  magicFacultyCode: "urn:organisation:jyu-itk / jy-ORG-25"
   ignoredFacultyCodes: []
