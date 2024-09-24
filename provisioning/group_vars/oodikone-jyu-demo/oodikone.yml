@@ -53,14 +53,14 @@ oodikone_app_users:
 
 oodikone_backend_organisation_config:
   facultyCodes:
-    - 'jy-ORG-12'
-    - 'jy-ORG-24'
-    - 'jy-ORG-25'
-    - 'jy-ORG-27'
-    - 'jy-ORG-39'
-    - 'jy-ORG-41'
-    - 'jy-ORG-52'
-    - 'jy-ORG-55'
-    - 'jy-ORG-35'
-  magicFacultyCode: 'jy-ORG-25'
+    - "urn:organisation:jyu-avoinyo / jy-ORG-12"
+    - "urn:organisation:jyu-htk / jy-ORG-24"
+    - "urn:organisation:jyu-itk / jy-ORG-25"
+    - "urn:organisation:jyu-jsbe / jy-ORG-27"
+    - "urn:organisation:jyu-ktk / jy-ORG-39"
+    - "urn:organisation:jyu-kyc / jy-ORG-41"
+    - "urn:organisation:jyu-ltk / jy-ORG-52"
+    - "urn:organisation:jyu-mltk / jy-ORG-55"
+    - "urn:organisation:jyu-kie / jy-ORG-35"
+  magicFacultyCode: "urn:organisation:jyu-itk / jy-ORG-25"
   ignoredFacultyCodes: []
