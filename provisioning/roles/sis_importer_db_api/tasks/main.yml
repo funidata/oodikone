@@ -34,7 +34,7 @@
     content: |
       DB_PASSWORD={{ sis_importer_postgres_importer_db_database.password }}
       IMPORTER_DB_API_PASSWORD={{ oodikone_sis_importer_db_api_password }}
-      SIS_API_PASSWORD="{{ sis_importer_sis_integration_user_password }}
+      SIS_API_PASSWORD={{ sis_importer_sis_integration_user_password }}
     dest: /opt/sis-importer-db-api/secrets.env
     owner: root
     group: sis-importer
