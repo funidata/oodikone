@@ -18,9 +18,9 @@ oodikone_nginx_env_configs_identityProvider_TUNI:
 # DB needs to have user row ready in order for login to work
 oodikone_app_users:
   - full_name: Piia Asunmaa
-    eppn: piia.asunmaa@tuni.fi
+    eppn: lahtin45@tuni.fi
     language: fi
-    sisu_person_id: jy-jutahonk # TODO
+    sisu_person_id: tuni-person-lahtin45
     roles:
       - admin
       - courseStatistics
@@ -29,9 +29,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Suvi-Päivikki Ikonen
-    eppn: suvi.ikonen@tuni.fi
+    eppn: viitala4@tuni.fi
     language: fi
-    sisu_person_id: jy-kirkopo # TODO
+    sisu_person_id: tuni-person-viitala4
     roles:
       - admin
       - courseStatistics
@@ -40,9 +40,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Ville-Matti Erkintalo
-    eppn: ville-matti.erkintalo@tuni.fi
+    eppn: ve73680@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-ve73680
     roles:
       - admin
       - courseStatistics
@@ -51,9 +51,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Sari Pulkkinen
-    eppn: sari.pulkkinen@tuni.fi
+    eppn: stsasa@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-stsasa
     roles:
       - admin
       - courseStatistics
@@ -62,9 +62,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Marja-Liisa Laine
-    eppn: marja-liisa.laine@tuni.fi
+    eppn: laine38@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-laine38
     roles:
       - admin
       - courseStatistics
@@ -73,9 +73,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Jaana Kunnari
-    eppn: jaana.kunnari@tuni.fi
+    eppn: jinha@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-jinha
     roles:
       - admin
       - courseStatistics
@@ -84,9 +84,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Soila Uskola
-    eppn: soila.uskola@tuni.fi
+    eppn: kolari3@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-kolari3
     roles:
       - admin
       - courseStatistics
@@ -95,9 +95,9 @@ oodikone_app_users:
       - teachers
     programme_rights: []
   - full_name: Arja Tusa
-    eppn: arja.tusa@tuni.fi
+    eppn: tusaa@tuni.fi
     language: fi
-    sisu_person_id: jy-ankamesa # TODO
+    sisu_person_id: tuni-person-tusaa
     roles:
       - admin
       - courseStatistics
