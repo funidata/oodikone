@@ -61,7 +61,7 @@ shibboleth_sp_metadata_haka_jyu:
 shibboleth_sp_session_initiator_tuni:
   name: tuni
   location: /TUNILogin
-  entityID: https://login.tuni.fi/idp/shibboleth
+  entityID: https://idp.tuni.fi/idp/shibboleth
   isDefault: true
 shibboleth_sp_metadata_haka_tuni:
   name: tuni-haka
