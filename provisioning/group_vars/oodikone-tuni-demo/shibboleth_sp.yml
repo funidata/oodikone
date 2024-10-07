@@ -1,0 +1,5 @@
+shibboleth_sp_session_initiators:
+  - "{{ shibboleth_sp_session_initiator_tuni }}"
+
+shibboleth_sp_metadata:
+  - "{{ shibboleth_sp_metadata_haka_tuni }}"

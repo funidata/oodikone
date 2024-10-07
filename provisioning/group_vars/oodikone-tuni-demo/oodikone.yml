@@ -1,0 +1,125 @@
+oodikone_site: oodikone-tuni-demo # matching name with sis_importer_site
+oodikone_server_name: oodikone-tuni-demo.funidata.fi
+
+oodikone_sis_application_account: oodikone-tuni-demo
+oodikone_sis_host: https://sis-tuni-staging.funidata.fi
+oodikone_root_org_id: tuni-university-root-id
+
+oodikone_version: jenkins-aws-oodikone-master-109
+oodikone_node_env: production
+
+oodikone_nginx_identity_providers:
+  - "{{ oodikone_nginx_env_configs_identityProvider_TUNI }}"
+
+oodikone_nginx_env_configs_identityProvider_TUNI:
+  name: TUNI Login
+  navigate: /Shibboleth.sso/TUNILogin?target=
+
+# DB needs to have user row ready in order for login to work
+oodikone_app_users:
+  - full_name: Piia Asunmaa
+    eppn: piia.asunmaa@tuni.fi
+    language: fi
+    sisu_person_id: jy-jutahonk # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Suvi-Päivikki Ikonen
+    eppn: suvi.ikonen@tuni.fi
+    language: fi
+    sisu_person_id: jy-kirkopo # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Ville-Matti Erkintalo
+    eppn: ville-matti.erkintalo@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Sari Pulkkinen
+    eppn: sari.pulkkinen@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Marja-Liisa Laine
+    eppn: marja-liisa.laine@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Jaana Kunnari
+    eppn: jaana.kunnari@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Soila Uskola
+    eppn: soila.uskola@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+  - full_name: Arja Tusa
+    eppn: arja.tusa@tuni.fi
+    language: fi
+    sisu_person_id: jy-ankamesa # TODO
+    roles:
+      - admin
+      - courseStatistics
+      - studyGuidanceGroups
+      - facultyStatistics
+      - teachers
+    programme_rights: []
+
+oodikone_backend_organisation_config:
+  facultyCodes:
+    - tuni-1301000002
+    - tuni-1301000060
+    - tuni-1301000008
+    - tuni-1301000015
+    - tuni-1301000059
+    - tuni-1301000057
+    - tuni-1301000058
+    - tuni-1301000018
+    - tuni-1301000022
+    - tuni-1301000026
+    - tuni-1301000549
+    - tuni-1301000031
+    - tuni-1301000077
+  magicFacultyCode: tuni-1301000002
+  ignoredFacultyCodes: []
