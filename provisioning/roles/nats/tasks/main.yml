@@ -60,11 +60,11 @@
     cmd_args:
       # https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan/stan-nats-streaming-server/configuring/command-line-arguments
       # args that do not work from nats.cfg
-      stan_config: /opt/nats/nats.cfg
-      http_port: "{{ nats_http_port }}"
-      port: "{{ nats_client_port }}"
-      store: file
-      dir: /datastore
+      - --stan_config=/opt/nats/nats.cfg
+      - --http_port="{{ nats_http_port }}"
+      - --port="{{ nats_client_port }}"
+      - --store=file
+      - --dir=/datastore
   docker_container:
     name: nats
     image: "{{ nats_docker_image }}"
@@ -72,7 +72,7 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
-    command: "{% for key, value in cmd_args | dictsort %}--{{ key }} {{ value }} {% endfor %}"
+    command: "{{ cmd_args | sort | join(' ') }}"
     read_only: true
     tmpfs:
       - /tmp
