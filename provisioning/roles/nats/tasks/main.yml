@@ -63,6 +63,7 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
+    # store and dir not working from nats.cfg for some reason
     command: "--stan_config /opt/nats/nats.cfg -store file -dir /datastore"
     read_only: true
     tmpfs:
