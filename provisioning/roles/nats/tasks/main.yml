@@ -28,18 +28,16 @@
   with_items:
     - /opt/nats
 
-- name: Create NATS secrets configuration file
-  copy:
-    content: |
-      authorization: {
-        token: {{ nats_auth_token }}
-      }
+- name: Create NATS configuration file
+  template:
+    src: "nats.cfg.j2"
     dest: /opt/nats/nats.cfg
     owner: root
     group: nats
     mode: 0640
   diff: "{{ diff_secrets | default(false) }}"
-  tags: nats_secrets
+  notify: restart nats
+  tags: nats_cfg
 
 - name: Data directory
   file:
