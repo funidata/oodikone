@@ -1,3 +1,22 @@
-authorization: {
-  token: {{ nats_auth_token }}
+{
+  token: "{{ nats_auth_token }}"
+  cluster_id: "{{ nats_cid }}"
+  http_port: "{{ nats_http_port | int }}"
+  port: "{{ nats_client_port | int }}"
+
+  store: "file"
+  dir: "/datastore"
+
+  file_options: {
+    slice_max_bytes: 0
+    slice_max_age: "60s"
+  }
+
+  streaming: {
+    store_limits {
+        max_msgs: "{{ nats_max_msgs | int }}"
+        max_channels: "{{ nats_max_channels | int }}"
+        max_bytes: "{{ nats_max_bytes }}"
+    }
+  }
 }
