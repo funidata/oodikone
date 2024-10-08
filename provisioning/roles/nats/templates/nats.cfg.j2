@@ -1,8 +1,6 @@
 {
   # https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan/stan-nats-streaming-server/configuring/configuration-file
   token: "{{ nats_auth_token }}"
-  http_port: {{ nats_http_port | int }}
-  port: {{ nats_client_port | int }}
 
   file_options: {
     slice_max_bytes: 0
