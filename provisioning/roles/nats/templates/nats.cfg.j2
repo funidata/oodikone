@@ -4,9 +4,6 @@
   http_port: {{ nats_http_port | int }}
   port: {{ nats_client_port | int }}
 
-  store: file
-  dir: "/datastore"
-
   file_options: {
     slice_max_bytes: 0
     slice_max_age: "60s"

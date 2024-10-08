@@ -63,7 +63,7 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
-    command: "--stan_config /opt/nats/nats.cfg"
+    command: "--stan_config /opt/nats/nats.cfg -store file -dir /datastore"
     read_only: true
     tmpfs:
       - /tmp
