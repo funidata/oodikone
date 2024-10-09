@@ -28,18 +28,16 @@
   with_items:
     - /opt/nats
 
-- name: Create NATS secrets configuration file
-  copy:
-    content: |
-      authorization: {
-        token: {{ nats_auth_token }}
-      }
+- name: Create NATS configuration file
+  template:
+    src: "nats.cfg.j2"
     dest: /opt/nats/nats.cfg
     owner: root
     group: nats
     mode: 0640
   diff: "{{ diff_secrets | default(false) }}"
-  tags: nats_secrets
+  notify: restart nats
+  tags: nats_cfg
 
 - name: Data directory
   file:
@@ -58,6 +56,15 @@
   tags: nats_docker_image
 
 - name: Deploy NATS Docker container
+  vars:
+    cmd_args:
+      # https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan/stan-nats-streaming-server/configuring/command-line-arguments
+      # args that do not work from nats.cfg
+      - --stan_config=/opt/nats/nats.cfg
+      - --http_port="{{ nats_http_port }}"
+      - --port="{{ nats_client_port }}"
+      - --store=file
+      - --dir=/datastore
   docker_container:
     name: nats
     image: "{{ nats_docker_image }}"
@@ -65,7 +72,7 @@
     restart_policy: unless-stopped
     network_mode: host
     user: "{{ nats_uid }}:{{ nats_gid }}"
-    command: "-cid {{ nats_cid }} -m {{ nats_http_port }} -p {{ nats_client_port }} -sc /opt/nats/nats.cfg --file_slice_max_bytes 0 --file_slice_max_age 60s --max_msgs {{ nats_max_msgs }} -store file -dir /datastore"
+    command: "{{ cmd_args | sort | join(' ') }}"
     read_only: true
     tmpfs:
       - /tmp

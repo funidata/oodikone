@@ -1,0 +1,18 @@
+{
+  # https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan/stan-nats-streaming-server/configuring/configuration-file
+  token: "{{ nats_auth_token }}"
+
+  file_options: {
+    slice_max_bytes: 0
+    slice_max_age: "60s"
+  }
+
+  streaming: {
+    cluster_id: "{{ nats_cid }}"
+    store_limits {
+        max_msgs: {{ nats_max_msgs | int }}
+        max_channels: {{ nats_max_channels | int }}
+        max_bytes: {{ nats_max_bytes | int }}
+    }
+  }
+}

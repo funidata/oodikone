@@ -8,3 +8,5 @@ nats_cid: nats
 nats_client_port: 4222
 nats_http_port: 8222
 nats_max_msgs: 5000
+nats_max_channels: 100 # default
+nats_max_bytes: "{{ 45 * 1024 * 1024 }}" # should be limited to fit all channels to lvNats
