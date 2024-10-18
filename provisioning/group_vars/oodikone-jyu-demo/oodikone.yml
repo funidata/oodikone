@@ -5,7 +5,7 @@ oodikone_sis_application_account: oodikone-jyu-demo
 oodikone_sis_host: https://sis-jyu-staging.funidata.fi
 oodikone_root_org_id: jyu-university-root-id
 
-oodikone_version: jenkins-aws-oodikone-master-158
+oodikone_version: jenkins-aws-oodikone-master-162
 oodikone_node_env: production
 
 oodikone_nginx_identity_providers:
