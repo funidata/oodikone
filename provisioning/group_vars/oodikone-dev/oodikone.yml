@@ -39,10 +39,12 @@ oodikone_app_users:
 oodikone_backend_organisation_config:
   facultyCodes:
     - '01'
-    - 'KTT'
+    - 'AVOIN'
+    - 'IDR'
     - 'HTK'
-    - 'EPÄTOIVO1001'
-    - 'TSKK-TL'
-    - 'grr'
+    - 'KTT'
+    - 'KKK'
+    - 'KOTI1234'
+    - 'TSKK'
   magicFacultyCode: '01'
   ignoredFacultyCodes: []
