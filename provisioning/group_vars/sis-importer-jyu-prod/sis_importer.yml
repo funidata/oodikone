@@ -1,0 +1,10 @@
+oodikone_site: oodikone-jyu-prod # matching name with oodikone_site
+
+sis_importer_sis_host: https://oodikone.jyu.fi
+sis_importer_sis_integration_user: jyu-oodikone-prod.e
+sis_importer_root_org_id: jyu-university-root-id
+
+sis_importer_version: jenkins-aws-sis-importer-master-61
+sis_importer_node_env: production
+
+sis_importer_api_sonic: 1
