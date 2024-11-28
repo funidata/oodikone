@@ -2,4 +2,4 @@
 nginx_uid: "{{ system_users['nginx'].uid }}"
 nginx_gid: "{{ system_users['nginx'].gid }}"
 
-nginx_docker_image: "{{ aws_ecr_infra_namespace }}/nginx:1.26.1-dev.20240626"
+nginx_docker_image: "{{ aws_ecr_infra_namespace }}/nginx:1.26-20240916"
