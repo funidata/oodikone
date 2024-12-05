@@ -1,6 +1,6 @@
 oodikone_site: oodikone-dev # matching name with oodikone_site
 
-sis_importer_sis_host: https://sis-demo.funidata.fi
+sis_importer_sis_host: https://sis-qa.funidata.fi
 sis_importer_sis_integration_user: funidata-oodikone-dev.e
 sis_importer_root_org_id: testu-university-root-id
 
