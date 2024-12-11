@@ -9,10 +9,10 @@ oodikone_version: jenkins-aws-oodikone-master-209
 oodikone_node_env: production
 
 oodikone_nginx_identity_providers:
-  - "{{ oodikone_nginx_env_configs_identityProvider_SIS }}"
+  - "{{ oodikone_nginx_env_configs_identityProvider_JYU }}"
 
-oodikone_nginx_env_configs_identityProvider_SIS:
-  name: SIS Login
+oodikone_nginx_env_configs_identityProvider_JYU:
+  name: JYU Login
   navigate: /Shibboleth.sso/JYULogin?target=
 
 # DB needs to have user row ready in order for login to work
