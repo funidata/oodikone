@@ -4,7 +4,7 @@ sis_importer_sis_host: https://sis-tuni-staging.funidata.fi
 sis_importer_sis_integration_user: tuni-oodikone-demo.e
 sis_importer_root_org_id: tuni-university-root-id
 
-sis_importer_version: jenkins-aws-sis-importer-master-61
+sis_importer_version: jenkins-aws-sis-importer-master-70
 sis_importer_node_env: production
 
 sis_importer_api_sonic: 1
