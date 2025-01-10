@@ -41,6 +41,8 @@
       fi.funidata.oodikone.application: frontend
       fi.funidata.oodikone.deploy: "{{ oodikone_version }}"
       fi.funidata.oodikone.site: "{{ oodikone_site }}"
+    env:
+      REACT_APP_SIS_URL: "{{ oodikone_sis_host }}"
     state: started
     restart_policy: unless-stopped
     network_mode: host
