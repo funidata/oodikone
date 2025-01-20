@@ -1,3 +1,5 @@
+shibboleth_sp_require_mfa: true
+
 shibboleth_sp_session_initiators:
   - "{{ shibboleth_sp_session_initiator_jyu }}"
 
