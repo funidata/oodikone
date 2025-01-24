@@ -14,9 +14,12 @@ shibboleth_sp_errors_supportContact: asiakaspalvelu@funidata.fi
 # This should match nginx more_clear_input_headers
 shibboleth_sp_attribute_prefix: X-Shibboleth-
 
+shibboleth_sp_require_mfa: false
+
 shibboleth_sp_hosts:
   - name: "{{ oodikone_server_name }}"
     require_session: true
+    require_mfa: "{{ shibboleth_sp_require_mfa }}"
 
 shibboleth_sp_entityID: "https://{{ oodikone_server_name }}/Shibboleth.sso"
 
