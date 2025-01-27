@@ -9,6 +9,7 @@ oodikone_version: jenkins-aws-oodikone-master-302
 oodikone_node_env: production
 
 oodikone_sis_updater_worker_max_old_space_size: 1536
+oodikone_backend_max_old_space_size: 1536
 
 oodikone_nginx_identity_providers:
   - "{{ oodikone_nginx_env_configs_identityProvider_TUNI }}"
