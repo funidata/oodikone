@@ -9,7 +9,8 @@ oodikone_sis_updater_scheduler_docker_image: "{{ oodikone_registry_base }}/updat
 oodikone_sis_updater_worker_docker_image: "{{ oodikone_registry_base }}/updater-worker:{{ oodikone_version }}"
 
 oodikone_nats_uri: "{{ nats_cid }}://localhost:4222"
-oodikone_valkey_uri: "//localhost:{{ valkey_port }}"
+oodikone_valkey_host: localhost
+oodikone_valkey_uri: "//{{ oodikone_valkey_host }}:{{ valkey_port }}"
 
 oodikone_sis_updater_scheduler_url: http://localhost:8082
 oodikone_sis_importer_db_api_url: "http://{{ importer_db_api_host }}:3000"
