@@ -59,6 +59,7 @@
     user: "{{ oodikone_uid }}:{{ oodikone_gid }}"
     env:
       REDIS_URI: "{{ oodikone_valkey_uri }}"
+      REDIS_HOST: "{{ oodikone_valkey_host }}"
       SIS_IMPORTER_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       SIS_IMPORTER_HOST: "{{ oodikone_postgres_host }}"
       SIS_IMPORTER_USER: "{{ sis_importer_postgres_importer_db_database.user }}" # TODO should probably be a read only user
