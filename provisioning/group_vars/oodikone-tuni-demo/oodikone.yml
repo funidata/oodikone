@@ -5,7 +5,7 @@ oodikone_sis_application_account: oodikone-tuni-demo
 oodikone_sis_host: https://sis-tuni-staging.funidata.fi
 oodikone_root_org_id: tuni-university-root-id
 
-oodikone_version: jenkins-aws-oodikone-master-314
+oodikone_version: jenkins-aws-oodikone-master-375
 oodikone_node_env: production
 
 oodikone_sis_updater_worker_max_old_space_size: 1536
