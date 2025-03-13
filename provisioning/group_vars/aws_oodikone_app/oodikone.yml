@@ -8,7 +8,6 @@ oodikone_sis_updater_nats_docker_image: "nats-streaming:0.25.6"
 oodikone_sis_updater_scheduler_docker_image: "{{ oodikone_registry_base }}/updater-scheduler:{{ oodikone_version }}"
 oodikone_sis_updater_worker_docker_image: "{{ oodikone_registry_base }}/updater-worker:{{ oodikone_version }}"
 
-oodikone_nats_uri: "{{ nats_cid }}://localhost:4222"
 oodikone_valkey_host: localhost
 oodikone_valkey_uri: "//{{ oodikone_valkey_host }}:{{ valkey_port }}"
 
