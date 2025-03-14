@@ -1,0 +1,49 @@
+- hosts: aws_oodikone_app
+  tasks:
+    - name: remove NATS Docker container
+      docker_container:
+        name: nats
+        state: absent
+      tags: oodikone_nats_remove
+
+    - name: Check if lvNats exists
+      check_mode: no
+      command: lvdisplay /dev/vgData/lvNats
+      register: lv_nats_check
+      changed_when: false
+
+    - name: prompt lv remove
+      run_once: true
+      pause:
+        prompt: |-
+          This playbook will DELETE the following lv: /dev/vgData/lvNats
+          Enter the word "DELETE" to continue. Press Ctrl+C to interrupt and enter the letter 'A' to abort
+        echo: yes
+      register: prompt_nats
+      when: lv_nats_check.stat.exists
+
+    - name: Assert prompt verb
+      run_once: true
+      any_errors_fatal: true
+      assert:
+        fail_msg: "The DELETE verb was missing from prompt confirmation!"
+        success_msg: "The DELETE verb was confirmed"
+        that:
+          - "prompt_nats.user_input == 'DELETE'"
+      when: lv_nats_check.stat.exists
+
+    - name: Unmount lvNats
+      command: umount -fl /dev/vgData/lvNats
+      register: unmount_result
+      retries: 3
+      delay: 5
+      until: unmount_result.rc == 0
+      when: lv_nats_check.stat.exists
+
+    - name: Remove lvNats
+      lvol:
+        vg: vgData
+        lv: lvNats
+        state: absent
+        force: yes
+      when: lv_nats_check.stat.exists
