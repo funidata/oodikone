@@ -1,26 +1,34 @@
 - hosts: aws_oodikone_app
   tasks:
-    - name: remove NATS Docker container
-      docker_container:
+    - name: Check for existing NATS container
+      docker_container_info:
         name: nats
-        state: absent
-      tags: oodikone_nats_remove
+      register: nats_container_check
 
-    - name: Check if lvNats exists
-      check_mode: no
-      command: lvdisplay /dev/vgData/lvNats
-      register: lv_nats_check
-      changed_when: false
+    - name: Check LV existence
+      stat:
+        path: /dev/vgData/lvNats
+      register: lv_check
+
+    - name: Check if /srv/nats is mounted
+      set_fact:
+        mount_exists: "{{ ansible_mounts | selectattr('mount', 'equalto', '/srv/nats') | list | length > 0 }}"
 
     - name: prompt lv remove
       run_once: true
       pause:
         prompt: |-
-          This playbook will DELETE the following lv: /dev/vgData/lvNats
+          This will PERMANENTLY remove:
+          {% if nats_container_check.exists %}- Docker container: nats
+          {% endif %}
+          {% if lv_check.stat.exists %}- Logical Volume: /dev/vgData/lvNats
+          {% endif %}
+          {% if mount_exists %}- Active mount: /srv/nats
+          {% endif %}
           Enter the word "DELETE" to continue. Press Ctrl+C to interrupt and enter the letter 'A' to abort
         echo: yes
       register: prompt_nats
-      when: lv_nats_check.stat.exists
+      when: nats_container_check.exists or lv_check.stat.exists or mount_exists
 
     - name: Assert prompt verb
       run_once: true
@@ -30,15 +38,20 @@
         success_msg: "The DELETE verb was confirmed"
         that:
           - "prompt_nats.user_input == 'DELETE'"
-      when: lv_nats_check.stat.exists
+      when: prompt_nats.skipped is not defined
 
-    - name: Unmount lvNats
-      command: umount -fl /dev/vgData/lvNats
-      register: unmount_result
-      retries: 3
-      delay: 5
-      until: unmount_result.rc == 0
-      when: lv_nats_check.stat.exists
+    - name: remove NATS Docker container
+      docker_container:
+        name: nats
+        state: absent
+      tags: oodikone_nats_remove
+      when: nats_container_check.exists
+
+    - name: Remove mount and fstab entry
+      mount:
+        path: /srv/nats
+        state: absent
+      when: mount_exists
 
     - name: Remove lvNats
       lvol:
@@ -46,4 +59,10 @@
         lv: lvNats
         state: absent
         force: yes
-      when: lv_nats_check.stat.exists
+      when: lv_check.stat.exists
+
+    - name: Remove mount directory
+      file:
+        path: /srv/nats
+        state: absent
+      when: mount_exists
