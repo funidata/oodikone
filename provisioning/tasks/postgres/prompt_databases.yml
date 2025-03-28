@@ -1,0 +1,40 @@
+# pause module runs for first host only
+- name: Prompt for confirmation
+  vars:
+    oodikone_postgres_kone_databases: "{{ (ansible_play_hosts | map('extract', hostvars, 'oodikone_postgres_kone_db_database') | list) if (kone_dbs | default(false)) else [] }}"
+    oodikone_postgres_sis_databases: "{{ (ansible_play_hosts | map('extract', hostvars, 'oodikone_postgres_sis_db_database') | list) if (sis_dbs | default(false)) else [] }}"
+    oodikone_postgres_user_databases: "{{ (ansible_play_hosts | map('extract', hostvars, 'oodikone_postgres_user_db_database') | list) if (user_dbs | default(false)) else [] }}"
+    sis_importer_postgres_importer_databases: "{{ (ansible_play_hosts | map('extract', hostvars, 'sis_importer_postgres_importer_db_database') | list) if (importer_dbs | default(false)) else [] }}"
+    postgres_databases: "{{ (oodikone_postgres_kone_databases + oodikone_postgres_sis_databases + oodikone_postgres_user_databases + sis_importer_postgres_importer_databases) | list | sort(attribute='name') }}"
+    oodikone_sites: "{{ ansible_play_hosts | map('extract', hostvars, 'oodikone_site') | list }}"
+  pause:
+    prompt: |-
+      This playbook will {{ prompt_operation_verb }} the following oodikone databases:
+      {% for item in postgres_databases %}
+        - {{ item.name }} on {{ postgresql_admin_host }}
+      {% endfor %}
+
+      The oodikone backends MUST be stopped on the following group:
+      {% for item in oodikone_sites %}
+        - {{ item }}
+      {% endfor %}
+
+      Enter the word "{{ prompt_operation_verb }}" to continue. Press Ctrl+C to interrupt and enter the letter 'A' to abort
+    echo: yes
+  register: prompt_databases
+
+- name: Set prompt facts
+  run_once: true
+  any_errors_fatal: true
+  set_fact:
+    prompt_confirmed_verb: "{{ prompt_databases.user_input.split() | first | default(None) }}"
+
+- name: Assert databases prompt verb
+  run_once: true
+  any_errors_fatal: true
+  assert:
+    fail_msg: "The {{ prompt_operation_verb }} verb was missing from prompt confirmation!"
+    success_msg: "The {{ prompt_operation_verb }} verb was confirmed"
+    that:
+      - "prompt_operation_verb == prompt_confirmed_verb"
+
