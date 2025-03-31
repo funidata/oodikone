@@ -1,5 +1,14 @@
 - hosts: aws_oodikone_app
   tasks:
+    - import_tasks: tasks/postgres/prompt_databases.yml
+      vars:
+        postgresql_admin_host: "{{ oodikone_postgres_admin_host }}"
+        kone_dbs: true
+        sis_dbs: true
+        user_dbs: true
+        prompt_operation_verb: DESTROY
+      tags: prompt_databases
+
     - import_tasks: tasks/postgres/drop_database.yml
       vars:
         postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
@@ -43,6 +52,13 @@
 
 - hosts: aws_sis_importer_app
   tasks:
+    - import_tasks: tasks/postgres/prompt_databases.yml
+      vars:
+        postgresql_admin_host: "{{ oodikone_postgres_admin_host }}"
+        importer_dbs: true
+        prompt_operation_verb: DESTROY
+      tags: prompt_databases
+
     - import_tasks: tasks/postgres/drop_database.yml
       vars:
         postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
