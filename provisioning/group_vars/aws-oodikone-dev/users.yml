@@ -1,16 +1,11 @@
-infra_users:
+oodikone_postgres_read_users:
   - terom
   - toni
   - tommi
   - atle
   - iirow
-
-oodikone_admin_users:
   - mattir
   - janr
   - harrih
 
-oodikone_read_users: []
-
-oodikone_postgres_read_users: "{{ oodikone_read_users }}"
-oodikone_postgres_admin_users: "{{ infra_users + oodikone_admin_users }}"
+oodikone_postgres_admin_users: []
