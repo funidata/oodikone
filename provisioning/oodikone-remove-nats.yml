@@ -1,0 +1,68 @@
+- hosts: aws_oodikone_app
+  tasks:
+    - name: Check for existing NATS container
+      docker_container_info:
+        name: nats
+      register: nats_container_check
+
+    - name: Check LV existence
+      stat:
+        path: /dev/vgData/lvNats
+      register: lv_check
+
+    - name: Check if /srv/nats is mounted
+      set_fact:
+        mount_exists: "{{ ansible_mounts | selectattr('mount', 'equalto', '/srv/nats') | list | length > 0 }}"
+
+    - name: prompt lv remove
+      run_once: true
+      pause:
+        prompt: |-
+          This will PERMANENTLY remove:
+          {% if nats_container_check.exists %}- Docker container: nats
+          {% endif %}
+          {% if lv_check.stat.exists %}- Logical Volume: /dev/vgData/lvNats
+          {% endif %}
+          {% if mount_exists %}- Active mount: /srv/nats
+          {% endif %}
+          Enter the word "DELETE" to continue. Press Ctrl+C to interrupt and enter the letter 'A' to abort
+        echo: yes
+      register: prompt_nats
+      when: nats_container_check.exists or lv_check.stat.exists or mount_exists
+
+    - name: Assert prompt verb
+      run_once: true
+      any_errors_fatal: true
+      assert:
+        fail_msg: "The DELETE verb was missing from prompt confirmation!"
+        success_msg: "The DELETE verb was confirmed"
+        that:
+          - "prompt_nats.user_input == 'DELETE'"
+      when: prompt_nats.skipped is not defined
+
+    - name: remove NATS Docker container
+      docker_container:
+        name: nats
+        state: absent
+      tags: oodikone_nats_remove
+      when: nats_container_check.exists
+
+    - name: Remove mount and fstab entry
+      mount:
+        path: /srv/nats
+        state: absent
+      when: mount_exists
+
+    - name: Remove lvNats
+      lvol:
+        vg: vgData
+        lv: lvNats
+        state: absent
+        force: yes
+      when: lv_check.stat.exists
+
+    - name: Remove mount directory
+      file:
+        path: /srv/nats
+        state: absent
+      when: mount_exists

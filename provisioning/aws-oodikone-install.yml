@@ -20,22 +20,6 @@
     - role: oodikone_frontend
       tags: oodikone_frontend
 
-    - role: funidata.infra.lvm_filesystem
-      vars:
-        lvm_filesystem_vg: "{{ aws_lvm_data_volume_group }}"
-        lvm_filesystem_lv: lvNats
-        lvm_filesystem_size: "{{ aws_nats_lvm_filesystem_size }}"
-        lvm_filesystem_mountpoint: "{{ aws_nats_data_path }}"
-        lvm_filesystem_owner: root
-        lvm_filesystem_group: "{{ nats_gid }}"
-        lvm_filesystem_mode: '0775'
-      tags:
-        - lvm_filesystem
-        - lvm_filesystem_oodikone_sis_updater_nats
-
-    - role: nats
-      tags: oodikone_sis_updater_nats
-
     - role: oodikone_sis_updater_scheduler
       tags: oodikone_sis_updater_scheduler
     - role: oodikone_sis_updater_worker
