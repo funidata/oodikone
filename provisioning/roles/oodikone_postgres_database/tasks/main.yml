@@ -11,7 +11,7 @@
   import_role:
     name: simple_postgres_database
   tags:
-    - oodikone_postgres_database 
+    - oodikone_postgres_database
     - oodikone_kone_db_database
 
 - name: Provision sis-db database
@@ -27,8 +27,8 @@
   import_role:
     name: simple_postgres_database
   tags:
-    - oodikone_postgres_database 
-    - oodikone_kone_db_database
+    - oodikone_postgres_database
+    - oodikone_sis_db_database
 
 - name: Provision user-db database
   vars:
@@ -43,6 +43,5 @@
   import_role:
     name: simple_postgres_database
   tags:
-    - oodikone_postgres_database 
-    - oodikone_kone_db_database
-
+    - oodikone_postgres_database
+    - oodikone_user_db_database
