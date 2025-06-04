@@ -95,7 +95,7 @@
     env_file: /opt/oodikone-backend/secrets.env
     read_only: true
     volumes:
-      - /opt/oodikone-backend/config:/opt/app-root/backend/src/environment:ro
+      - /opt/oodikone-backend/config:/opt/app-root/backend/dist/src/environment:ro
     tmpfs:
       - /tmp
     cap_drop:
