@@ -69,6 +69,8 @@
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
+      REDIS_HOST: "{{ sis_importer_valkey_host }}"
+      REDIS_PORT: "{{ sis_importer_valkey_port }}"
       HOSTNAME: "{{ oodikone_site }}-mankeli" # defines NATS client_id
       SERVICE_PROVIDER: fd
       NODE_ENV: "{{ sis_importer_node_env }}"

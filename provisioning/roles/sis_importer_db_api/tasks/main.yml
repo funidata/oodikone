@@ -69,6 +69,8 @@
       DB_HOST: "{{ oodikone_postgres_host }}"
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
+      REDIS_HOST: "{{ sis_importer_valkey_host }}"
+      REDIS_PORT: "{{ sis_importer_valkey_port }}"
       SIS_API_URL: "{{ sis_importer_sis_host }}"
       SIS_API_USER: "{{ sis_importer_sis_integration_user }}"
       SERVICE_PROVIDER: fd
