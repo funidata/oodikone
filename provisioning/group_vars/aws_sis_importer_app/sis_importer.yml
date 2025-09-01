@@ -10,4 +10,6 @@ sis_importer_api_docker_image: "{{ sis_importer_registry_base }}/importer-api:{{
 sis_importer_nats_uri: "{{ nats_cid }}://localhost:4222"
 sis_importer_nats_auth_token: "{{ nats_auth_token }}"
 
-sis_importer_valkey_uri: redis://localhost:6379
+sis_importer_valkey_host: localhost
+sis_importer_valkey_port: "{{ valkey_port }}"
+sis_importer_valkey_uri: redis://{{ sis_importer_valkey_host }}:{{ sis_importer_valkey_port }}

@@ -70,6 +70,8 @@
       DB_DATABASE: "{{ sis_importer_postgres_importer_db_database.name }}"
       NATS_URI: "{{ sis_importer_nats_uri }}"
       REDIS_URI: "{{ sis_importer_valkey_uri }}"
+      REDIS_HOST: "{{ sis_importer_valkey_host }}"
+      REDIS_PORT: "{{ sis_importer_valkey_port }}"
       SONIC: "{{ sis_importer_api_sonic | default(0) | to_json }}"
       HOSTNAME: "{{ oodikone_site }}-api" # defines NATS client_id
       SIS_API_URL: "{{ sis_importer_sis_host }}"
