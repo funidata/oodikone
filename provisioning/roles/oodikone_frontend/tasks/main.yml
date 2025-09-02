@@ -52,6 +52,8 @@
       - /tmp
     cap_drop:
       - net_raw
+    volumes:
+      - /opt/oodikone-frontend/config:/opt/app-root/frontend/public/frontend:ro
     log_driver: "{{ docker_log_driver }}"
     log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.frontend' }) }}"
   register: oodikone_frontend_docker_container
@@ -61,7 +63,7 @@
   copy:
     content: |
       {{ oodikone_frontend_config | to_nice_json }}
-    dest: /opt/app-root/frontend/public/frontend-config.json
+    dest: /opt/oodikone-frontend/config/config.json
     owner: "{{ oodikone_uid }}"
     group: "{{ oodikone_gid }}"
     mode: 0644
