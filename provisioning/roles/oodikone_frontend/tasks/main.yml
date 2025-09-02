@@ -25,6 +25,16 @@
     - /opt/oodikone-frontend
     - /opt/oodikone-frontend/config
 
+- name: Generate frontend env configs
+  copy:
+    content: |
+      {{ oodikone_frontend_config | to_nice_json }}
+    dest: /opt/oodikone-frontend/config/frontend-config.json
+    owner: "{{ oodikone_uid }}"
+    group: "{{ oodikone_gid }}"
+    mode: 0644
+  tags: oodikone_frontend_config
+
 - name: Pull frontend Docker image
   docker_image:
     name: "{{ oodikone_frontend_docker_image }}"
@@ -53,21 +63,11 @@
     cap_drop:
       - net_raw
     volumes:
-      - /opt/oodikone-frontend/config:/opt/app-root/frontend/public/frontend:ro
+      - /opt/oodikone-frontend/config/frontend-config.json:/opt/app-root/frontend/public/frontend-config.json
     log_driver: "{{ docker_log_driver }}"
     log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.frontend' }) }}"
   register: oodikone_frontend_docker_container
   tags: oodikone_frontend_docker_container
-
-- name: Generate frontend env configs
-  copy:
-    content: |
-      {{ oodikone_frontend_config | to_nice_json }}
-    dest: /opt/oodikone-frontend/config/config.json
-    owner: "{{ oodikone_uid }}"
-    group: "{{ oodikone_gid }}"
-    mode: 0644
-  tags: oodikone_frontend_config
 
 - name: Wait for oodikone.frontend startup
   uri:
