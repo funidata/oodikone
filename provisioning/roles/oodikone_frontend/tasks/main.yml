@@ -33,6 +33,7 @@
     owner: "{{ oodikone_uid }}"
     group: "{{ oodikone_gid }}"
     mode: 0644
+  notify: restart oodikone.frontend
   tags: oodikone_frontend_config
 
 - name: Pull frontend Docker image
