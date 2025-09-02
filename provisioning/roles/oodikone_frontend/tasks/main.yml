@@ -57,6 +57,16 @@
   register: oodikone_frontend_docker_container
   tags: oodikone_frontend_docker_container
 
+- name: Generate frontend env configs
+  copy:
+    content: |
+      {{ oodikone_frontend_config | to_nice_json }}
+    dest: /opt/app-root/frontend/public/frontend-config.json
+    owner: "{{ oodikone_uid }}"
+    group: "{{ oodikone_gid }}"
+    mode: 0644
+  tags: oodikone_frontend_config
+
 - name: Wait for oodikone.frontend startup
   uri:
     url: "http://127.0.0.1:{{ oodikone_frontend_http_port }}/"

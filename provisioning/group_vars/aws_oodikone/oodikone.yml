@@ -4,6 +4,9 @@ oodikone_gid: "{{ system_users['oodikone'].gid }}"
 oodikone_backend_http_port: 8080
 oodikone_frontend_http_port: 5000
 
+oodikone_frontend_config:
+    sisUrl: "{{ oodikone_sis_host }}"
+
 importer_db_api_host: "{{ groups['aws_sis_importer_app'] | first }}"
 
 oodikone_sis_importer_db_api_user: "{{ oodikone_site }}-backend"
