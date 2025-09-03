@@ -64,7 +64,7 @@
     cap_drop:
       - net_raw
     volumes:
-      - /opt/oodikone-frontend/config/frontend-config.json:/opt/app-root/frontend/public/frontend-config.json
+      - /opt/oodikone-frontend/config/frontend-config.json:/opt/app-root/frontend/build/frontend-config.json
     log_driver: "{{ docker_log_driver }}"
     log_options: "{{ docker_log_opts | combine({ 'tag': 'oodikone.frontend' }) }}"
   register: oodikone_frontend_docker_container
