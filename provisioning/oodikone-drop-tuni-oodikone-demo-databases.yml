@@ -1,0 +1,70 @@
+- name: Drop oodikone-tuni-demo oodikone and sis-importer databases
+  hosts: aws_oodikone_app:&oodikone-tuni-demo:&one
+  tasks:
+    - import_tasks: tasks/postgres/prompt_databases.yml
+      vars:
+        postgresql_admin_host: "{{ oodikone_postgres_admin_host }}"
+        kone_dbs: true
+        sis_dbs: true
+        user_dbs: true
+        prompt_operation_verb: DESTROY
+      tags: prompt_databases
+
+    - import_tasks: tasks/postgres/drop_database.yml
+      vars:
+        postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+        postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+        postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+        postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+        postgres_admin_database: "{{ oodikone_postgres_admin_database }}"
+
+        # db to be dropped
+        postgres_database: "{{ oodikone_postgres_kone_db_database.name }}"
+      tags: oodikone_postgres_drop_kone_db_database
+
+    - import_tasks: tasks/postgres/drop_database.yml
+      vars:
+        postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+        postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+        postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+        postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+        postgres_admin_database: "{{ oodikone_postgres_admin_database }}"
+
+        # db to be dropped
+        postgres_database: "{{ oodikone_postgres_sis_db_database.name }}"
+      tags: oodikone_postgres_drop_sis_db_database
+
+    - import_tasks: tasks/postgres/drop_database.yml
+      vars:
+        postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+        postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+        postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+        postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+        postgres_admin_database: "{{ oodikone_postgres_admin_database }}"
+
+        # db to be dropped
+        postgres_database: "{{ oodikone_postgres_user_db_database.name }}"
+      tags: oodikone_postgres_drop_user_db_database
+
+
+- hosts: aws_sis_importer_app:&sis-importer-tuni-demo:&one
+  tasks:
+    - import_tasks: tasks/postgres/prompt_databases.yml
+      vars:
+        postgresql_admin_host: "{{ oodikone_postgres_admin_host }}"
+        importer_dbs: true
+        prompt_operation_verb: DESTROY
+      tags: prompt_databases
+
+    - import_tasks: tasks/postgres/drop_database.yml
+      vars:
+        postgres_admin_host: "{{ oodikone_postgres_admin_host }}"
+        postgres_admin_port: "{{ oodikone_postgres_admin_port }}"
+        postgres_admin_user: "{{ oodikone_postgres_admin_user }}"
+        postgres_admin_password: "{{ oodikone_postgres_admin_password }}"
+        postgres_admin_database: "{{ oodikone_postgres_admin_database }}"
+
+        # db to be dropped
+        postgres_database: "{{ sis_importer_postgres_importer_db_database.name }}"
+      tags: oodikone_postgres_drop_sis_importer_database
+
