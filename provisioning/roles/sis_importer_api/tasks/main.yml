@@ -80,6 +80,10 @@
       NODE_ENV: "{{ sis_importer_node_env }}"
       ROOT_ORG_ID: "{{ sis_importer_root_org_id }}"
       NODE_OPTIONS: "--max-old-space-size={{ oodikone_sis_importer_max_old_space_size }}"
+      QUEUE_COMPLETE_COUNT: "1"
+      QUEUE_COMPLETE_AGE: "1"
+      QUEUE_FAIL_COUNT: "2"
+      QUEUE_FAIL_AGE: "2"
     env_file: /opt/sis-importer-api/secrets.env
     read_only: true
     tmpfs:

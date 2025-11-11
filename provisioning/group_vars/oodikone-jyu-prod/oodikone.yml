@@ -5,7 +5,7 @@ oodikone_sis_application_account: oodikone-jyu-prod
 oodikone_sis_host: https://sisu.jyu.fi
 oodikone_root_org_id: jyu-university-root-id
 
-oodikone_version: jenkins-aws-oodikone-master-720
+oodikone_version: jenkins-aws-oodikone-master-786
 oodikone_node_env: production
 
 oodikone_sis_updater_scheduler_max_old_space_size: 1024
