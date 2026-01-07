@@ -4,7 +4,7 @@ sis_importer_sis_host: https://sis-jyu-staging.funidata.fi
 sis_importer_sis_integration_user: jyu-oodikone-demo.e
 sis_importer_root_org_id: jyu-university-root-id
 
-sis_importer_version: jenkins-aws-sis-importer-master-124
+sis_importer_version: jenkins-aws-sis-importer-master-125
 sis_importer_node_env: production
 
 sis_importer_api_sonic: 1

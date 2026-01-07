@@ -5,8 +5,10 @@ oodikone_sis_application_account: oodikone-jyu-demo
 oodikone_sis_host: https://sis-jyu-staging.funidata.fi
 oodikone_root_org_id: jyu-university-root-id
 
-oodikone_version: jenkins-aws-oodikone-master-823
+oodikone_version: jenkins-aws-oodikone-master-869
 oodikone_node_env: production
+
+oodikone_sis_updater_scheduler_max_old_space_size: 1024
 
 oodikone_nginx_identity_providers:
   - "{{ oodikone_nginx_env_configs_identityProvider_JYU }}"
