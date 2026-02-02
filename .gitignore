@@ -68,3 +68,6 @@ venv/
 
 # secrets
 /provisioning/*.secret
+
+# galaxy
+/provisioning/collections
