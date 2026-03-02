@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directories:
+      - '/services/backend'
+      - '/services/frontend'
+      - '/services/shared'
+      - '/updater/sis-updater-scheduler'
+      - '/updater/sis-updater-worker'
+    schedule:
+      interval: 'daily'
+    open-pull-requests-limit: 0 # This is only for version update, security updates has its own internal value
+    labels:
+      - 'AutoBulla' # Borrowed from OTMs dependabot yml
