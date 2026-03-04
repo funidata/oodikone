@@ -23,9 +23,7 @@ https://jira.funidata.fi/browse/<ood-ticket>
 
 ### Manual Testing checklist
 
-- [ ] Tested resetting the DB and re-running the VAPA integrations
 - [ ] Tested full application flow, beginning to end
-- [ ] Tested email services
 - [ ] Tested the accessibility of the feature (if applicalbe)
 
 ### Reviewer's checklist
