@@ -20,7 +20,7 @@
     "@sentry/browser": "^10.5.0",
     "@tanstack/react-table": "^8.21.3",
     "@types/lodash-es": "^4.17.12",
-    "axios": "^1.13.5",
+    "axios": "^1.15.0",
     "dayjs": "^1.11.13",
     "highcharts": "^11.4.8",
     "lodash-es": "^4.17.23",
