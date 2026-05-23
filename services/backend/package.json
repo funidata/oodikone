@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "cron": "^4.3.1",
     "dayjs": "^1.11.13",
-    "express": "^4.21.2",
+    "express": "^4.22.2",
     "express-async-errors": "^3.1.1",
     "lodash-es": "^4.17.23",
     "lru-cache": "^11.1.0",
